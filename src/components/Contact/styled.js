@@ -35,4 +35,24 @@ export const useStyles = makeStyles((theme) => ({
             borderRadius: "8px",
         },
     },
+    actionCell: {
+        width: "100%",
+        display: "flex !important",
+        justifyContent: "center",
+        alignItems: "center",
+        maxWidth: "initial !important",
+        gap: "10px",
+        "& .MuiButton-root": {
+            width: "calc(100%/2)",
+            // minWidth: "70px !important",
+            fontSize: "12px !important",
+        },
+        "@media(max-width: 1052px)": {
+            flexDirection: "column",
+            "& .MuiButton-root": {
+                width: "100%",
+                height: "100%",
+            },
+        },
+    },
 }));

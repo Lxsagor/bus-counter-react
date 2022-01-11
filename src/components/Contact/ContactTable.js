@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import Edit from "@mui/icons-material/Edit";
 import { Button, Dialog, DialogContent, Grid, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { SiteUrl } from "../../constants/urls";
+import { SuperAdminUrl } from "../../constants/urls";
 import SuspendCompany from "./../Suspend/SuspendCompanyDialog";
 
 function createData(
@@ -161,6 +161,7 @@ const ContactTable = () => {
                             <TableCell
                                 align="center"
                                 sx={{ maxWidth: "250px" }}
+                                className={classes.actionCell}
                             >
                                 <Button
                                     variant="contained"
@@ -172,7 +173,7 @@ const ContactTable = () => {
                                     }}
                                     onClick={() =>
                                         history.push(
-                                            SiteUrl.contact.view.replace(
+                                            SuperAdminUrl.contact.view.replace(
                                                 ":id",
                                                 1
                                             )

@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import Edit from "@mui/icons-material/Edit";
 import { Button, Dialog, DialogContent, Grid, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
-// import { SiteUrl } from "../../constants/urls";
+// import { SuperAdminUrl } from "../../constants/urls";
 // import SuspendCompany from "./../Suspend/SuspendCompanyDialog";
 
 function createData(
@@ -129,7 +129,10 @@ const SubsTable = () => {
                             </TableCell>
 
                             {/* <TableCell align="center">{row.action}</TableCell> */}
-                            <TableCell align="center">
+                            <TableCell
+                                align="center"
+                                className={classes.actionCell}
+                            >
                                 <Button
                                     variant="contained"
                                     size="large"

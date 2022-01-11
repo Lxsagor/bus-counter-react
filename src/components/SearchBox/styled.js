@@ -14,5 +14,4 @@ export const useStyles = makeStyles(() => ({
             backgroundColor: "#FFFFFF",
         },
     },
-   
 }));

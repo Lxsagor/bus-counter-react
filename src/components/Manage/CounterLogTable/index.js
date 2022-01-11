@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import { useStyles } from "./styled";
-import { SiteUrl } from "./../../../constants/urls";
+import { SuperAdminUrl } from "./../../../constants/urls";
 import { useHistory } from "react-router-dom";
 import SuspendCompany from "./../../Suspend/SuspendCompanyDialog";
 
@@ -111,6 +111,7 @@ const CounterLogTable = () => {
                                 {/* <TableCell align="center">{row.action}</TableCell> */}
                                 <TableCell
                                     align="center"
+                                    className={classes.actionCell}
                                     // sx={{ maxWidth: "250px" }}
                                 >
                                     <Button
@@ -148,7 +149,7 @@ const CounterLogTable = () => {
                                         }}
                                         onClick={() =>
                                             history.push(
-                                                SiteUrl.dashboard.show.replace(
+                                                SuperAdminUrl.dashboard.show.replace(
                                                     ":id",
                                                     1
                                                 )

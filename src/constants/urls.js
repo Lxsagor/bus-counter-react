@@ -1,27 +1,54 @@
-export const SiteUrl = {
+export const SuperAdminUrl = {
     dashboard: {
-        index: "/dashboard",
-        show: "/dashboard/profile/:id",
+        index: "/superadmin/dashboard",
+        show: "/superadmin/dashboard/profile/:id",
     },
 
     // profile: "/profile",
 
     manageCompany: {
-        index: "/manage",
-        add: "/manage/addcompany",
-        view: "/manage/viewdetails",
-        more: "/manage/moredetails",
+        index: "/superadmin/manage",
+        add: "/superadmin/manage/addcompany",
+        view: "/superadmin/manage/viewdetails",
+        more: "/superadmin/manage/moredetails",
     },
     contact: {
-        index: "/contact",
-        view: "/contact/viewdetails/:id",
+        index: "/superadmin/contact",
+        view: "/superadmin/contact/viewdetails/:id",
     },
     logs: {
-        index: "/logs",
+        index: "/superadmin/logs",
     },
     subscription: {
-        index: "/subscription",
+        index: "/superadmin/subscription",
     },
 
-    settings: "/settings",
+    settings: "/superadmin/settings",
+};
+export const AdminUrl = {
+    dashboard: {
+        index: "/admin/dashboard",
+    },
+    manageCounter: {
+        index: "/admin/manageCounter",
+        edit: "/admin/manageCounter/edit/:id",
+    },
+    manageBus: {
+        index: "/admin/manageBus",
+        editbusinfo: "/admin/manageBus/editbusinfo",
+        addbus: "/admin/manageBus/addbus",
+    },
+    manageSchedule: {
+        index: "/admin/manageSchedule",
+        editinfo: "/admin/manageSchedule/editinfo",
+    },
+    trackBus: {
+        index: "/admin/trackBus",
+    },
+    accountHistory: {
+        index: "/admin/accountHistory",
+    },
+    customize: {
+        index: "/admin/customize",
+    },
 };

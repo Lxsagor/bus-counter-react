@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import { SiteUrl } from "../../constants/urls";
+import { SuperAdminUrl } from "../../constants/urls";
 import { useStyles } from "../dashboard/styled";
 
 function createData(
@@ -107,17 +107,19 @@ const DashboardTable = () => {
                             {/* <TableCell align="center">{row.action}</TableCell> */}
                             <TableCell
                                 align="center"
+
                                 // sx={{ maxWidth: "250px" }}
                             >
                                 <Button
                                     variant="contained"
+                                    fullWidth
                                     sx={{
                                         borderRadius: "14px",
                                         textTransform: "initial",
                                     }}
                                     onClick={() =>
                                         history.push(
-                                            SiteUrl.manageCompany.view.replace()
+                                            SuperAdminUrl.manageCompany.view.replace()
                                         )
                                     }
                                 >

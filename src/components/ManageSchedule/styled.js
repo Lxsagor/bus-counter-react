@@ -1,8 +1,14 @@
 import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme) => ({
+    card: {
+        backgroundColor: "#FFFFFF",
+        borderRadius: "9px",
+        height: "100%",
+    },
     table: {
         borderCollapse: "separate !important",
         borderSpacing: "0 10px !important",
+
         // "& .MuiTableCell-head": {
         //     backgroundColor: theme.palette.primary.main,
         //     color: "white",
@@ -15,18 +21,25 @@ export const useStyles = makeStyles((theme) => ({
         "& .MuiTableRow-head": {
             backgroundColor: theme.palette.primary.main,
             color: "white",
-
             "& .MuiTableCell-head": {
                 color: "white",
             },
         },
         "& .MuiTableBody-root": {
             "& .MuiTableRow-root": {
-                backgroundColor: "#E5E5E5",
+                backgroundColor: "#fff",
                 color: "#000",
             },
         },
     },
+    field: {
+        "& .MuiOutlinedInput-input": {
+            borderRadius: "8px",
+            // width: "368px",
+            backgroundColor: "#FFFFFF",
+        },
+    },
+
     actionCell: {
         width: "100%",
         display: "flex !important",
@@ -35,7 +48,10 @@ export const useStyles = makeStyles((theme) => ({
         maxWidth: "initial !important",
         gap: "10px",
         "& .MuiButton-root": {
-            width: "100%",
+            width: "50%",
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            borderRadius: "8px",
+            textTransform: "initial",
             // minWidth: "70px !important",
             fontSize: "12px !important",
         },

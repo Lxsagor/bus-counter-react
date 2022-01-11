@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import Edit from "@mui/icons-material/Edit";
 import { Button, Dialog, DialogContent, Grid, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
-// import { SiteUrl } from "../../constants/urls";
+// import { SuperAdminUrl } from "../../constants/urls";
 // import SuspendCompany from "./../Suspend/SuspendCompanyDialog";
 
 function createData(user, activity, activity_desc, compnay, IP, admin, action) {
@@ -92,6 +92,7 @@ const LogsTable = () => {
                             <TableCell
                                 align="center"
                                 sx={{ maxWidth: "250px" }}
+                                className={classes.actionCell}
                             >
                                 <Button
                                     variant="contained"
@@ -129,7 +130,7 @@ const LogsTable = () => {
 
                                     // onClick={() =>
                                     //     history.push(
-                                    //         SiteUrl.dashboard.show.replace(
+                                    //         SuperAdminUrl.dashboard.show.replace(
                                     //             ":id",
                                     //             1
                                     //         )

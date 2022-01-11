@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import { SiteUrl } from "../../constants/urls";
+import { SuperAdminUrl } from "../../constants/urls";
 import SuspendCompany from "./../Suspend/SuspendCompanyDialog";
 import { useStyles } from "./styled";
 
@@ -105,16 +105,17 @@ const DashboardTable = () => {
                             {/* <TableCell align="center">{row.action}</TableCell> */}
                             <TableCell
                                 align="center"
+                                className={classes.actionCell}
                                 sx={{ maxWidth: "250px" }}
                             >
                                 <Button
                                     variant="contained"
                                     color="error"
                                     size="large"
+                                    fullWidth
                                     sx={{
                                         borderRadius: "14px",
                                         textTransform: "initial",
-                                        mr: 1,
                                     }}
                                     onClick={() =>
                                         setSuspendCompanyDialog(true)
@@ -136,13 +137,14 @@ const DashboardTable = () => {
                                 <Button
                                     variant="contained"
                                     size="large"
+                                    fullWidth
                                     sx={{
                                         borderRadius: "14px",
                                         textTransform: "initial",
                                     }}
                                     onClick={() =>
                                         history.push(
-                                            SiteUrl.dashboard.show.replace(
+                                            SuperAdminUrl.dashboard.show.replace(
                                                 ":id",
                                                 1
                                             )
