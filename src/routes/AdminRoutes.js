@@ -37,6 +37,15 @@ const AdminRoutes = [
         ),
     },
     {
+        path: AdminUrl.manageCounter.add,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/ManageCounter/ManageUserEditInfo"),
+            suspenseOption
+        ),
+    },
+    {
         path: AdminUrl.manageBus.index,
         layout: AdminLayout,
         meta: { requiresAuth: false },

@@ -1,11 +1,9 @@
 import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme) => ({
     button: {
-        "& .MuiButton-root": {
-            borderRadius: "4px",
-            minHeight: "64px",
-            textTransform: "initial",
-        },
+        borderRadius: "4px",
+        minHeight: "64px",
+        textTransform: "capitalize !important",
     },
     field: {
         "& .MuiOutlinedInput-input": {
@@ -13,5 +11,18 @@ export const useStyles = makeStyles((theme) => ({
             // width: "368px",
             backgroundColor: "#FFFFFF",
         },
+    },
+    title: {
+        borderRadius: "4px",
+        backgroundColor: theme.palette.primary.main,
+        minHeight: "64px",
+        color: "white",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        // alignItems: "center",
+        // textAlign: "center",
+
+        // marginTop: "50%",
     },
 }));

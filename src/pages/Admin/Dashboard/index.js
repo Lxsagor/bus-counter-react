@@ -7,6 +7,8 @@ import dash3 from "../../../assets/admin_dashboard_image/dash3.png";
 import Card from "../../../components/dashboard/DashboardCard";
 import { useStyles } from "./styled";
 import AdminDashboardTable from "../../../components/dashboard/AdminDashboardTable";
+import { Link } from "react-router-dom";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Dashboard = () => {
     const classes = useStyles();
@@ -19,6 +21,7 @@ const Dashboard = () => {
                             title={"Total Countries"}
                             number={7}
                             src={dash1}
+                            text={<Link href="#">See All</Link>}
                         />
                     </Grid>
                     <Grid item xs={12} lg={3}>
@@ -26,6 +29,7 @@ const Dashboard = () => {
                             title={"Ticket Sold today"}
                             number={1410}
                             src={dash2}
+                            text={<Link href="#">See All</Link>}
                         />
                     </Grid>
                     <Grid item xs={12} lg={3}>
@@ -33,6 +37,7 @@ const Dashboard = () => {
                             title={"Bus On The Trip"}
                             number={15}
                             src={dash3}
+                            text={<Link href="#">See All</Link>}
                         />
                     </Grid>
                 </Grid>
@@ -48,8 +53,12 @@ const Dashboard = () => {
                                 }}
                             ></Box>
                         </Grid>
-                        <Grid item lg={2} className={classes.button}>
-                            <Button fullWidth variant="contained">
+                        <Grid item lg={2}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                className={classes.button}
+                            >
                                 Print as PDF
                             </Button>
                         </Grid>

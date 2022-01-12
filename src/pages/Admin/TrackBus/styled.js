@@ -1,11 +1,9 @@
 import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme) => ({
     button: {
-        "& .MuiButton-root": {
-            borderRadius: "8px",
-            minHeight: "55px",
-            textTransform: "initial",
-        },
+        borderRadius: "8px",
+        minHeight: "55px",
+        textTransform: "capitalize !important",
     },
     field: {
         "& .MuiOutlinedInput-input": {

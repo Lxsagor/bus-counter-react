@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme) => ({
     field: {
         "& .MuiOutlinedInput-input": {
             borderRadius: "8px",
@@ -11,20 +11,16 @@ export const useStyles = makeStyles(() => ({
         },
     },
     button: {
-        "& .MuiButton-root": {
-            minHeight: "55px",
-            borderRadius: "8px",
-            textTransform: "initial",
-        },
+        minHeight: "55px",
+        borderRadius: "8px",
+        textTransform: "initial !important",
     },
     pdfButton: {
-        "& .MuiButton-root": {
-            minHeight: "43px",
-            borderRadius: "21.5px",
-            textTransform: "initial",
-            backgroundColor: "#FFFFFF",
-            color: "black",
-        },
+        minHeight: "43px !important",
+        borderRadius: "21.5px !important",
+        backgroundColor: "#FFFFFF !important",
+        color: "black !important",
+        textTransform: "initial !important",
     },
     textField: {
         "& .MuiOutlinedInput-input": {
@@ -35,5 +31,18 @@ export const useStyles = makeStyles(() => ({
         "& .MuiInputBase-adornedEnd": {
             backgroundColor: "#FFFFFF",
         },
+    },
+    title: {
+        borderRadius: "4px",
+        backgroundColor: theme.palette.primary.main,
+        minHeight: "64px",
+        color: "white",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        // alignItems: "center",
+        // textAlign: "center",
+
+        // marginTop: "50%",
     },
 }));

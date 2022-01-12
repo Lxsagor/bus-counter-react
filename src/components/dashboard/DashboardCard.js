@@ -13,7 +13,7 @@ import { useStyles } from "./styled";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 // import img1 from "../../assets/dash1.png";
 
-const DashboardCard = ({ title, number, src }) => {
+const DashboardCard = ({ title, number, src, text, nextIcon }) => {
     const classes = useStyles();
     return (
         <Card className={classes.card}>
@@ -30,6 +30,12 @@ const DashboardCard = ({ title, number, src }) => {
                     <Grid item>
                         <Typography sx={{ fontSize: "24px" }}>
                             {number}
+                        </Typography>
+                        <Typography
+                            sx={{ fontSize: "14px" }}
+                            className={classes.text}
+                        >
+                            {text}
                         </Typography>
                     </Grid>
                     <Grid item>

@@ -56,13 +56,7 @@ const ManageSchedule = () => {
                     </Grid>
                     <Box mt={3}>
                         <Grid container spacing={4}>
-                            <Grid
-                                item
-                                lg={4}
-                                md={4}
-                                xs={12}
-                                className={classes.field}
-                            >
+                            <Grid item lg={4} md={4} xs={12}>
                                 <LocalizationProvider
                                     dateAdapter={AdapterDateFns}
                                 >
@@ -73,16 +67,21 @@ const ManageSchedule = () => {
                                             setValue(newValue);
                                         }}
                                         renderInput={(params) => (
-                                            <TextField {...params} fullWidth />
+                                            <TextField
+                                                {...params}
+                                                fullWidth
+                                                className={classes.field}
+                                            />
                                         )}
                                     />
                                 </LocalizationProvider>
                             </Grid>
-                            <Grid item lg={2} xs={3} className={classes.button}>
+                            <Grid item lg={2} xs={3}>
                                 <Button
                                     variant="contained"
                                     size="large"
                                     fullWidth
+                                    className={classes.button}
                                 >
                                     Search
                                 </Button>
@@ -95,8 +94,12 @@ const ManageSchedule = () => {
                         <Grid item lg={2}>
                             <Typography variant="h6">Showing Result</Typography>
                         </Grid>
-                        <Grid item lg={2} className={classes.pdfButton}>
-                            <Button fullWidth variant="text">
+                        <Grid item lg={2}>
+                            <Button
+                                fullWidth
+                                variant="text"
+                                className={classes.pdfButton}
+                            >
                                 Print as PDF
                             </Button>
                         </Grid>

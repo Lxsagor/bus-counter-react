@@ -28,7 +28,7 @@ const TrackBus = () => {
                         backgroundColor: "#33A551",
                     }}
                 ></Box>
-                <Box mt={5} className={classes.field}>
+                <Box mt={5}>
                     <Grid container>
                         <Grid item lg={3} xs={12}>
                             <FormControl fullWidth>
@@ -36,6 +36,7 @@ const TrackBus = () => {
                                     Bus Number
                                 </InputLabel>
                                 <Select
+                                    className={classes.field}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     value={value}
@@ -49,14 +50,19 @@ const TrackBus = () => {
                 </Box>
                 <Box mt={4}>
                     <Grid container spacing={3}>
-                        <Grid item lg={6} xs={12} className={classes.field}>
+                        <Grid item lg={6} xs={12}>
                             <TextField
+                                className={classes.field}
                                 fullWidth
                                 placeholder="DHK-GHA-1264551"
                             />
                         </Grid>
-                        <Grid item lg={2} xs={3} className={classes.button}>
-                            <Button fullWidth variant="contained">
+                        <Grid item lg={2} xs={3}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                className={classes.button}
+                            >
                                 Track Bus
                             </Button>
                         </Grid>

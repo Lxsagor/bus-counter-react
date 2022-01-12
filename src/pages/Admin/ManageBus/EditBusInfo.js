@@ -19,16 +19,10 @@ const EditBusInfo = () => {
                 ></Box>
                 <Box mt={4}>
                     <Grid container>
-                        <Grid item lg={10} xs={12} className={classes.button}>
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                style={{ cursor: "initial" }}
-                            >
-                                <Typography textAlign="left">
-                                    BUS NO : GHA-1254689
-                                </Typography>
-                            </Button>
+                        <Grid item lg={10} xs={12}>
+                            <Box className={classes.title}>
+                                <Typography>BUS NO : GHA-1254689</Typography>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Box>
@@ -38,22 +32,27 @@ const EditBusInfo = () => {
                 <Box mt={3}>
                     <Grid container>
                         <Grid item lg={6} xs={12}>
-                            <Grid
-                                container
-                                spacing={3}
-                                className={classes.field}
-                            >
+                            <Grid container spacing={3}>
                                 <Grid item lg={6} xs={12}>
                                     <Typography>From</Typography>
-                                    <TextField fullWidth />
+                                    <TextField
+                                        fullWidth
+                                        className={classes.field}
+                                    />
                                 </Grid>
                                 <Grid item lg={6} xs={12}>
                                     <Typography>To</Typography>
-                                    <TextField fullWidth />
+                                    <TextField
+                                        fullWidth
+                                        className={classes.field}
+                                    />
                                 </Grid>
                                 <Grid item lg={6} xs={12}>
                                     <Typography>Fare</Typography>
-                                    <TextField fullWidth />
+                                    <TextField
+                                        fullWidth
+                                        className={classes.field}
+                                    />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -63,18 +62,18 @@ const EditBusInfo = () => {
                     <Typography variant="h6">Drivers Inforamtion</Typography>
                 </Box>
                 <Box mt={3}>
-                    <Grid container spacing={3} className={classes.field}>
+                    <Grid container spacing={3}>
                         <Grid item lg={3} xs={12}>
                             <Typography>Name</Typography>
-                            <TextField fullWidth />
+                            <TextField fullWidth className={classes.field} />
                         </Grid>
                         <Grid item lg={3} xs={12}>
                             <Typography>Phone</Typography>
-                            <TextField fullWidth />
+                            <TextField fullWidth className={classes.field} />
                         </Grid>
                         <Grid item lg={3} xs={12}>
                             <Typography>Driving Licence Number</Typography>
-                            <TextField fullWidth />
+                            <TextField fullWidth className={classes.field} />
                         </Grid>
                     </Grid>
                 </Box>
@@ -82,14 +81,14 @@ const EditBusInfo = () => {
                     <Typography variant="h6">Supervison Information</Typography>
                 </Box>
                 <Box mt={3}>
-                    <Grid container spacing={3} className={classes.field}>
+                    <Grid container spacing={3}>
                         <Grid item lg={3} xs={12}>
                             <Typography>Name</Typography>
-                            <TextField fullWidth />
+                            <TextField fullWidth className={classes.field} />
                         </Grid>
                         <Grid item lg={3} xs={12}>
                             <Typography>Phone</Typography>
-                            <TextField fullWidth />
+                            <TextField fullWidth className={classes.field} />
                         </Grid>
                     </Grid>
                 </Box>
@@ -97,26 +96,35 @@ const EditBusInfo = () => {
                     <Typography variant="h6">Helper Information</Typography>
                 </Box>
                 <Box mt={3}>
-                    <Grid container spacing={3} className={classes.field}>
+                    <Grid container spacing={3}>
                         <Grid item lg={3} xs={12}>
                             <Typography>Name</Typography>
-                            <TextField fullWidth />
+                            <TextField fullWidth className={classes.field} />
                         </Grid>
                         <Grid item lg={3} xs={12}>
                             <Typography>Phone</Typography>
-                            <TextField fullWidth />
+                            <TextField fullWidth className={classes.field} />
                         </Grid>
                     </Grid>
                 </Box>
                 <Box mt={5}>
                     <Grid container spacing={3}>
-                        <Grid item lg={3} xs={6} className={classes.button}>
-                            <Button fullWidth variant="contained">
+                        <Grid item lg={3} xs={6}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                className={classes.button}
+                            >
                                 Save Information
                             </Button>
                         </Grid>
-                        <Grid item lg={3} xs={6} className={classes.button}>
-                            <Button fullWidth variant="contained" color="error">
+                        <Grid item lg={3} xs={6}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                color="error"
+                                className={classes.button}
+                            >
                                 Delete
                             </Button>
                         </Grid>

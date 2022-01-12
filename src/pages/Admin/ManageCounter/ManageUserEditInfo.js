@@ -17,42 +17,57 @@ const ManageUserEditInfo = () => {
                         backgroundColor: "#33A551",
                     }}
                 ></Box>
-                <Grid container spacing={3} className={classes.field}>
+                <Grid container spacing={3}>
                     <Grid item lg={8} xs={12}>
                         <Grid container spacing={3}>
                             <Grid item lg={5} xs={12}>
                                 <Typography>Division</Typography>
-                                <TextField fullWidth />
+                                <TextField
+                                    fullWidth
+                                    className={classes.field}
+                                />
                             </Grid>
                             <Grid item lg={5} xs={12}>
                                 <Typography>District</Typography>
-                                <TextField fullWidth />
+                                <TextField
+                                    fullWidth
+                                    className={classes.field}
+                                />
                             </Grid>
                             <Grid item lg={5} xs={12}>
                                 <Typography>Counter Manager Name</Typography>
-                                <TextField fullWidth />
+                                <TextField
+                                    fullWidth
+                                    className={classes.field}
+                                />
                             </Grid>
                             <Grid item lg={5} xs={12}>
                                 <Typography>Phone Number</Typography>
-                                <TextField fullWidth />
+                                <TextField
+                                    fullWidth
+                                    className={classes.field}
+                                />
                             </Grid>
                             <Grid item lg={5} xs={12}>
                                 <Typography>Initial Password</Typography>
-                                <TextField fullWidth />
+                                <TextField
+                                    fullWidth
+                                    className={classes.field}
+                                />
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Box mt={4}>
                     <Grid container spacing={2}>
-                        <Grid
-                            item
-                            lg={2}
-                            xs={12}
-                            className={classes.editButton}
-                        >
-                            <Button fullWidth variant="contained" size="large">
-                                Edit Information
+                        <Grid item lg={2} xs={12}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                size="large"
+                                className={classes.editButton}
+                            >
+                                Save Information
                             </Button>
                         </Grid>
                     </Grid>

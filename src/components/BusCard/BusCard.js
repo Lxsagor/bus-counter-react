@@ -13,8 +13,8 @@ const BusCard = ({
     const classes = useStyles();
     const history = useHistory();
     return (
-        <Card className={classes.card}>
-            <CardContent>
+        <Card>
+            <CardContent className={classes.card}>
                 <Box mt={2}>
                     <Typography variant="h6">{title}</Typography>
                 </Box>
@@ -22,7 +22,12 @@ const BusCard = ({
                     <Typography> {subTitle}</Typography>
                 </Box>
                 <Box mt={2}>
-                    <Button fullWidth variant="contained" onClick={control}>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={control}
+                        className={classes.button}
+                    >
                         {button}
                     </Button>
                 </Box>

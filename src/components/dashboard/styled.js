@@ -60,4 +60,7 @@ export const useStyles = makeStyles((theme) => ({
             },
         },
     },
+    text: {
+        color: theme.palette.primary.main,
+    },
 }));

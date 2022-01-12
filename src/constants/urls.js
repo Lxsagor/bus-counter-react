@@ -31,6 +31,7 @@ export const AdminUrl = {
     },
     manageCounter: {
         index: "/admin/manageCounter",
+        add: "/admin/manageCounter/add",
         edit: "/admin/manageCounter/edit/:id",
     },
     manageBus: {
@@ -50,5 +51,22 @@ export const AdminUrl = {
     },
     customize: {
         index: "/admin/customize",
+    },
+};
+export const CounterUrl = {
+    dashboard: {
+        index: "/counter/dashboard",
+    },
+    accounts: {
+        index: "/counter/accounts",
+    },
+    history: {
+        index: "/counter/history",
+    },
+    counters: {
+        index: "/counter/counters",
+    },
+    trackbus: {
+        index: "/counter/trackbus",
     },
 };

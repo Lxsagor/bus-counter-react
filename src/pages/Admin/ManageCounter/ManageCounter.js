@@ -1,17 +1,10 @@
-import {
-    Autocomplete,
-    Box,
-    Button,
-    Grid,
-    TextField,
-    Typography,
-} from "@mui/material";
-import React from "react";
 import AddIcon from "@mui/icons-material/Add";
-import { useStyles } from "./styled";
-import BusCard from "../../../components/BusCard/BusCard";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import React from "react";
 import { useHistory } from "react-router-dom";
+import BusCard from "../../../components/BusCard/BusCard";
 import { AdminUrl } from "../../../constants/urls";
+import { useStyles } from "./styled";
 
 const ManageCounter = () => {
     const classes = useStyles();
@@ -31,8 +24,17 @@ const ManageCounter = () => {
                             }}
                         ></Box>
                     </Grid>
-                    <Grid item className={classes.addbutton}>
-                        <Button fullWidth variant="contained">
+                    <Grid item>
+                        <Button
+                            className={classes.addbutton}
+                            fullWidth
+                            variant="contained"
+                            onClick={() =>
+                                history.push(
+                                    AdminUrl.manageCounter.add.replace()
+                                )
+                            }
+                        >
                             <AddIcon />
                             Add Counter
                         </Button>
@@ -44,18 +46,21 @@ const ManageCounter = () => {
                         // justifyContent="space-between"
                         alignItems="flex-end"
                         spacing={3}
-                        className={classes.field}
                     >
                         <Grid item lg={4} md={4} xs={12}>
                             <Typography>Choose Division</Typography>
-                            <TextField fullWidth />
+                            <TextField fullWidth className={classes.field} />
                         </Grid>
                         <Grid item lg={4} md={4} xs={12}>
                             <Typography>Choose District</Typography>
-                            <TextField fullWidth />
+                            <TextField fullWidth className={classes.field} />
                         </Grid>
-                        <Grid item className={classes.searchButton}>
-                            <Button variant="contained" fullWidth>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                fullWidth
+                                className={classes.searchButton}
+                            >
                                 Search Counter
                             </Button>
                         </Grid>
