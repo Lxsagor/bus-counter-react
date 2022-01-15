@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme) => ({
     field: {
         "& .MuiOutlinedInput-input": {
-            borderRadius: "8px",
+            borderRadius: "12px !important",
             backgroundColor: "#FFFFFF",
         },
         "& .MuiInputBase-adornedEnd": {
@@ -23,6 +23,7 @@ export const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         borderRadius: "5px",
         minHeight: "52px",
+        color: "#FFFFFF",
         // textAlign: "center",
     },
     bus: {
@@ -30,4 +31,8 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: "#F6F7FB",
         borderRadius: "10px",
     },
+    // searchRoot: {
+    //     backgroundColor: "#FFFFFF",
+    //     borderRadius: "10px",
+    // },
 }));

@@ -19,6 +19,15 @@ const CounterRoute = [
         ),
     },
     {
+        path: CounterUrl.dashboard.search,
+        layout: CounterLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Counter/Dashboard/Search"),
+            suspenseOption
+        ),
+    },
+    {
         path: CounterUrl.accounts.index,
         layout: CounterLayout,
         meta: { requiresAuth: false },

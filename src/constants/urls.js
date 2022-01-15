@@ -56,6 +56,7 @@ export const AdminUrl = {
 export const CounterUrl = {
     dashboard: {
         index: "/counter/dashboard",
+        search: "/counter/dashboard/search",
     },
     accounts: {
         index: "/counter/accounts",
@@ -68,5 +69,11 @@ export const CounterUrl = {
     },
     trackbus: {
         index: "/counter/trackbus",
+    },
+};
+export const LandingUrl = {
+    landing: {
+        home: "/",
+        buses: "/buses",
     },
 };

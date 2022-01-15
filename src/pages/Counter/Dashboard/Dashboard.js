@@ -16,7 +16,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import "date-fns";
 import { useStyles } from "./styled";
-import Bus from "../../../components/TrackBus/Bus";
+import Bus from "../../../components/BusComponent/Bus";
 
 const Dashboard = () => {
     const classes = useStyles();
@@ -122,7 +122,7 @@ const Dashboard = () => {
                     </Grid>
                 </Box>
                 <Grid container>
-                    <Grid item lg={10}>
+                    <Grid item lg={12} xl={10}>
                         <Box className={classes.root}>
                             <Grid
                                 container

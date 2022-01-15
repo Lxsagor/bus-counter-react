@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useStyles } from "./styled";
-import Track from "../../../components/TrackBus";
+import Track from "../../../components/BusComponent/TrackMap";
 
 const TrackBus = () => {
     const [value, setValue] = React.useState("");

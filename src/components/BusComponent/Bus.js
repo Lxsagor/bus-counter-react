@@ -1,11 +1,30 @@
-import { Avatar, Button, Divider, Grid, Typography } from "@mui/material";
+import {
+    Avatar,
+    Button,
+    Container,
+    Divider,
+    Fade,
+    Grid,
+    Slide,
+    TextField,
+    Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useStyles } from "./styled";
 import Busimage from "../../assets/bus.png";
+import Available from "../../assets/available.png";
+import Booked from "../../assets/booked.png";
+import Selected from "../../assets/selected.png";
+import { Icon } from "@iconify/react";
+import BusSeat from "./BusSeat";
+import BusTicket from "./BusTicket";
 
 const Bus = () => {
     const classes = useStyles();
+
+    const [collapseStatus, setCollapseStatus] = useState(false);
+
     return (
         <>
             <Grid container justifyContent="space-between">
@@ -49,8 +68,8 @@ const Bus = () => {
                                         src={Busimage}
                                         alt="bus"
                                         sx={{
-                                            width: "100%",
-                                            height: "100%",
+                                            width: "34px",
+                                            height: "23px",
                                             borderRadius: 0,
                                         }}
                                     />
@@ -66,6 +85,7 @@ const Bus = () => {
                             variant="contained"
                             size="large"
                             className={classes.button}
+                            onClick={() => setCollapseStatus(!collapseStatus)}
                         >
                             View Seats
                         </Button>
@@ -82,6 +102,8 @@ const Bus = () => {
                     </Box>
                 </Box>
             </Box>
+
+            {collapseStatus && <BusSeat />}
         </>
     );
 };

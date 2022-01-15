@@ -1,11 +1,11 @@
 import { Avatar, Button, Divider, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import Map from "../../assets/map.png";
+import Track from "../../assets/map.png";
 import { useStyles } from "./styled";
 import Bus from "./Bus.js";
 
-const TrackBus = () => {
+const TrackMap = () => {
     const classes = useStyles();
     return (
         <>
@@ -16,7 +16,7 @@ const TrackBus = () => {
                     <Grid item lg={5}>
                         <Box mt={5}>
                             <Avatar
-                                src={Map}
+                                src={Track}
                                 alt="map"
                                 sx={{
                                     width: "100%",
@@ -32,4 +32,4 @@ const TrackBus = () => {
     );
 };
 
-export default TrackBus;
+export default TrackMap;

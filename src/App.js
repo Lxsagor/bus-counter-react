@@ -1,10 +1,9 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import React, { useMemo } from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import PublicRoute from "./components/shared/Router/PublicRoute";
-import SuperAdminLayout from "./layouts/SuperAdminLayout";
-import routes from "./routes";
 import { SuperAdminUrl } from "./constants/urls";
+import routes from "./routes";
 
 const App = () => {
     const theme = useMemo(() => {
@@ -27,9 +26,9 @@ const App = () => {
 
                 {/* <AppLayout> */}
                 <Switch>
-                    <Route exact path="/">
+                    {/* <Route exact path="/">
                         <Redirect to={SuperAdminUrl.dashboard.index} />
-                    </Route>
+                    </Route> */}
                     {routes.map((item, i) => (
                         <PublicRoute
                             key={i}
