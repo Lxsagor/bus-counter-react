@@ -75,5 +75,6 @@ export const LandingUrl = {
     landing: {
         home: "/",
         buses: "/buses",
+        ticketpay: "/ticketpay",
     },
 };

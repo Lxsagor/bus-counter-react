@@ -1,51 +1,55 @@
-import { Button, Container, Grid, Typography } from "@mui/material";
+import {
+    Button,
+    Container,
+    Grid,
+    TableCell,
+    TableRow,
+    Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
+import UserBusSeat from "./UserBusSeat";
 import { useStyles } from "./styled";
 
 const BusComp = () => {
+    const [collapseStatus, setCollapseStatus] = useState(false);
+
     const classes = useStyles();
     return (
         <>
-            <Container maxWidth="md">
-                <Box p={3} className={classes.busComp}>
-                    <Grid container justifyContent="space-between">
-                        <Grid item>
-                            <Typography>SR Travels</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography>10:00 PM</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography>06:00 PM</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography>$800</Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid
-                        container
-                        justifyContent="space-between"
-                        alignItems="flex-end"
-                    >
-                        <Grid item lg={2}>
-                            <Box className={classes.routeDetails}>
-                                <Typography>Route:</Typography>
-                                <Typography>Dhaka-Bogura-Rangpur</Typography>
-                                <Typography>Start:Dhaka</Typography>
+            <TableRow>
+                <TableCell>
+                    <Typography>SR Travels</Typography>
 
-                                <Typography>Last Destination:</Typography>
-                                <Typography>Rangpur</Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item lg={2}>
-                            <Button fullWidth variant="contained">
-                                Book Ticket
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Container>
+                    <>
+                        <Typography>
+                            <strong>Route:</strong>
+                        </Typography>
+                        <Typography>Dhaka-Bogura-Rangpur</Typography>
+                        <Typography>Start:Dhaka</Typography>
+                        <Typography>Last Destination:</Typography>
+                        <Typography>Rangpur</Typography>
+                    </>
+                </TableCell>
+                <TableCell>10:00 PM</TableCell>
+                <TableCell>06:00 PM</TableCell>
+                <TableCell>40</TableCell>
+                <TableCell>
+                    ৳800
+                    <Box pt={10}>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            className={classes.bookTicketBtn}
+                            onClick={() => setCollapseStatus(!collapseStatus)}
+                        >
+                            Book Ticket
+                        </Button>
+                    </Box>
+                </TableCell>
+            </TableRow>
+
+            {/* {collapseStatus && <UserBusSeat />} */}
         </>
     );
 };

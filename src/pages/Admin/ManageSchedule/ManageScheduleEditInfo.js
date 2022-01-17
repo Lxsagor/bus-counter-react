@@ -34,7 +34,7 @@ const ManageScheduleEditInfo = () => {
                     <Grid container>
                         <Grid item lg={10} xs={12}>
                             <Box className={classes.title}>
-                                <Typography>DTR- 0000001</Typography>
+                                <Typography ml={3}>DTR- 0000001</Typography>
                             </Box>
                         </Grid>
                     </Grid>

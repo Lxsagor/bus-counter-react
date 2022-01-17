@@ -27,5 +27,14 @@ const LandingRoute = [
             suspenseOption
         ),
     },
+    {
+        path: LandingUrl.landing.ticketpay,
+        layout: LandingLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Landing/TicketPayment"),
+            suspenseOption
+        ),
+    },
 ];
 export default LandingRoute;

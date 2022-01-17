@@ -21,7 +21,10 @@ const EditBusInfo = () => {
                     <Grid container>
                         <Grid item lg={10} xs={12}>
                             <Box className={classes.title}>
-                                <Typography>BUS NO : GHA-1254689</Typography>
+                                <Typography ml={3}>
+                                    {" "}
+                                    BUS NO : GHA-1254689
+                                </Typography>
                             </Box>
                         </Grid>
                     </Grid>

@@ -397,7 +397,7 @@ const BusSeat = () => {
                                             />
                                         </Box>
                                         <Box my={4}>
-                                            <Typography variant="h5">
+                                            <Typography variant="h5" mb={3}>
                                                 Phone Number
                                             </Typography>
                                             <TextField

@@ -15,13 +15,15 @@ import {
 import React from "react";
 import { useStyles } from "./styled";
 import Logo from "../../../assets/landing/Logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { Menu } from "@mui/icons-material";
 import Navbar from "./Navbar";
 import NavAuth from "./NavAuth";
+import { LandingUrl } from "../../../constants/urls";
 
 const Header = () => {
     const classes = useStyles();
+    const history = useHistory();
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const drawerHandler = (state) => {
         setDrawerOpen(state);
@@ -36,7 +38,14 @@ const Header = () => {
                         justifyContent="space-between"
                     >
                         <Grid item xs={10} sm={2} lg={2}>
-                            <Button variant="text">
+                            <Button
+                                variant="text"
+                                onClick={() =>
+                                    history.push(
+                                        LandingUrl.landing.home.replace()
+                                    )
+                                }
+                            >
                                 <Avatar
                                     src={Logo}
                                     style={{

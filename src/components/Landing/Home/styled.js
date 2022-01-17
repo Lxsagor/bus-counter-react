@@ -48,10 +48,10 @@ export const useStyles = makeStyles(() => ({
         },
     },
     avatar: {
-        width: "165px",
-        height: "76px",
-        borderRadius: 0,
-        marginBottom: "20px",
+        width: "165px !important",
+        height: "76px !important",
+        borderRadius: "0 !important",
+        marginBottom: "20px !important",
     },
     footerList: {
         color: "#fff",
@@ -75,18 +75,18 @@ export const useStyles = makeStyles(() => ({
         minHeight: "59.55px",
     },
     subBtn: {
-        borderRadius: "40.4064px",
-        minHeight: "59.55px",
-        textTransform: "capitalize",
+        borderRadius: "40.4064px !important",
+        minHeight: "59.55px !important",
+        textTransform: "capitalize !important",
         // float: "right",
     },
     serviceroot: {
         textAlign: "center",
     },
     serviceTitle: {
-        fontWeight: 600,
-        fontSize: "20px",
-        position: "relative",
+        fontWeight: "600 !important",
+        fontSize: "20px !important",
+        position: "relative ",
         "&::after": {
             content: "''",
             width: "114px",
@@ -95,7 +95,7 @@ export const useStyles = makeStyles(() => ({
             position: "absolute",
             bottom: 0,
             left: "50%",
-            transform: "translateX(-50%)",
+            transform: "translateX(-50%) ",
         },
     },
     aboutRoot: {
@@ -114,6 +114,9 @@ export const useStyles = makeStyles(() => ({
         left: 0,
         position: "absolute",
         backgroundColor: "rgba(0, 0, 0, 0.53)",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
     },
     aboutTitle: {
         fontSize: "30px",
@@ -127,7 +130,7 @@ export const useStyles = makeStyles(() => ({
             position: "absolute",
             bottom: 0,
             // left: "50%",
-            transform: "translateX(-155%)",
+            transform: "translateX(-155%) !important",
         },
     },
     aboutDesc: {
@@ -160,8 +163,8 @@ export const useStyles = makeStyles(() => ({
         },
     },
     srchBtn: {
-        borderRadius: "8px",
+        borderRadius: "8px !important",
         minHeight: "30px !important",
-        textTransform: "capitalize",
+        textTransform: "capitalize !important",
     },
 }));

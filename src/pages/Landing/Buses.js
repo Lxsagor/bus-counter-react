@@ -1,60 +1,52 @@
 import React from "react";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import {
+    Box,
+    Button,
+    Container,
+    Grid,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
+} from "@mui/material";
 import { useStyles } from "./styled";
 import { Icon } from "@iconify/react";
 import BusComp from "../../components/Landing/Buses/BusComp";
+import UserBusSeat from "../../components/Landing/Buses/UserBusSeat";
+import RouteTitle from "../../components/Landing/Buses/RouteTitle";
 
 const Buses = () => {
     const classes = useStyles();
     return (
         <>
-            <Box className={classes.busesroot}>
-                <Container maxWidth="xl">
-                    <Box className={classes.main} my={9}>
-                        <Grid
-                            container
-                            alignItems="center"
-                            justifyContent="space-between"
-                        >
-                            <Grid item lg={3} xs={6}>
-                                <Typography
-                                    variant="body1"
-                                    pl={3}
-                                    className={classes.routeText}
-                                >
-                                    Showing Buses
-                                </Typography>
-                            </Grid>
-                            <Grid item lg={3} xs={6}>
-                                <Box className={classes.route}>
-                                    <Icon icon="fa-solid:route" />
-                                    <Typography
-                                        variant="body1"
-                                        mx={2}
-                                        className={classes.routeText}
-                                    >
-                                        Dhaka To Rangpur
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                        </Grid>
-                    </Box>
+            <RouteTitle />
+            <Box py={3}>
+                <Container maxWidth="lg">
+                    <TableContainer>
+                        <Table className={classes.table}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Operator</TableCell>
+                                    <TableCell>Deprature Time</TableCell>
+                                    <TableCell>Arrival Time</TableCell>
+                                    <TableCell>Seat Available</TableCell>
+                                    <TableCell>Rent</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <BusComp />
+                                <BusComp />
+                                <BusComp />
+                                <BusComp />
+                                <BusComp />
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <UserBusSeat />
                 </Container>
-            </Box>
-            <Box className={classes.busComp} my={3}>
-                <BusComp />
-            </Box>
-            <Box className={classes.busComp} my={3}>
-                <BusComp />
-            </Box>
-            <Box className={classes.busComp} my={3}>
-                <BusComp />
-            </Box>
-            <Box className={classes.busComp} my={3}>
-                <BusComp />
-            </Box>
-            <Box className={classes.busComp} my={3}>
-                <BusComp />
             </Box>
         </>
     );

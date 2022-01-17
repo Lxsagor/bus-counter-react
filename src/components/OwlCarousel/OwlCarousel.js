@@ -8,16 +8,16 @@ import { Box } from "@mui/system";
 const OwlCarouselcomp = () => {
     return (
         <>
-            <OwlCarousel className="owl-theme" loop margin={10} nav>
+            <OwlCarousel className="owl-theme" loop margin={10}>
                 <div class="item">
                     <CarouselCom />
-                </div>{" "}
+                </div>
                 <div class="item">
                     <CarouselCom />
-                </div>{" "}
+                </div>
                 <div class="item">
                     <CarouselCom />
-                </div>{" "}
+                </div>
                 <div class="item">
                     <CarouselCom />
                 </div>
