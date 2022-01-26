@@ -2,12 +2,15 @@ import { makeStyles } from "@mui/styles";
 import loginBG from "../../assets/auth/loginBG.png";
 
 export const useStyles = makeStyles((theme) => ({
+  // specialOutline: {
+  //   border: "none",
+  // },
   loginBG: {
-    backgroundImage: `url(${loginBG})`,
-    backgroundSize: "40% 100% ",
-    backgroundRepeat: "no-repeat",
+    backgroundSize: "65% 160%",
+    background: `url(${loginBG}) left center no-repeat`,
     width: "100%",
-    height: "100vh",
+    height: "100%",
+    minHeight: "100vh",
   },
   loginForm: {
     display: "flex",
@@ -17,10 +20,22 @@ export const useStyles = makeStyles((theme) => ({
   },
   field: {
     marginBottom: "30px !important",
+
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "none",
+      },
+      // "&:hover fieldset": {},
+      // "&.Mui-focused fieldset": { },
+    },
+
     "& .MuiOutlinedInput-input": {
-      borderRadius: "20px !important",
-      borderStyle: "none !important",
+      borderRadius: "10px !important",
       backgroundColor: "#F6F7FB",
+
+      // "& .MuiInputBase-adornedEnd": {
+      //   backgroundColor: "#F6F7FB",
+      // },
     },
   },
   login: {
