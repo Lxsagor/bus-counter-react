@@ -5,66 +5,59 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import moment from "moment";
 import * as React from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AdminUrl } from "../../constants/urls";
+import { fetchSchedules } from "../../store/actions/counterAction";
 import { useStyles } from "./styled";
-
-function createData(
-    bus_no,
-    boarding_time,
-    destination,
-    dep_time,
-    total_fare,
-    action
-) {
-    return { bus_no, boarding_time, destination, dep_time, total_fare, action };
-}
-
-const rows = [
-    createData("DTR- 0000001", "KP- Ac Counter", "Cumilla", "9.35 AM", "200"),
-    createData("DTR- 0000001", "KP- Ac Counter", "Cumilla", "9.35 AM", "200"),
-    createData("DTR- 0000001", "KP- Ac Counter", "Cumilla", "9.35 AM", "200"),
-    createData("DTR- 0000001", "KP- Ac Counter", "Cumilla", "9.35 AM", "200"),
-];
 
 const ManageScheduleTable = () => {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
+    const { schedules } = useSelector((state) => state.counter);
+
+    useEffect(() => {
+        dispatch(fetchSchedules());
+    }, [dispatch]);
 
     return (
         <TableContainer>
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
-                        <TableCell align="center">Bus No</TableCell>
                         <TableCell align="center">Boarding From</TableCell>
                         <TableCell align="center">Destination</TableCell>
                         <TableCell align="center">Dep. Time</TableCell>
-                        <TableCell align="center">Total Fare</TableCell>
+                        <TableCell align="center">Bus No</TableCell>
+
+                        <TableCell align="center">Mid Counters</TableCell>
                         <TableCell align="center">Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row, i) => (
+                    {schedules?.data?.map((item, i) => (
                         <TableRow key={i}>
                             <TableCell
                                 component="th"
                                 scope="row"
                                 align="center"
                             >
-                                {row.bus_no}
+                                {item?.start_counter?.name}
                             </TableCell>
                             <TableCell align="center">
-                                {row.boarding_time}
+                                {" "}
+                                {item?.end_counter?.name}
                             </TableCell>
                             <TableCell align="center">
-                                {row.destination}
+                                {moment(item.date_time).format("HH:mm:ss")}
                             </TableCell>
-                            <TableCell align="center">{row.dep_time}</TableCell>
-                            <TableCell align="center">
-                                {row.total_fare}
-                            </TableCell>
+                            <TableCell align="center"> {item.bus_no}</TableCell>
+                            <TableCell align="center"></TableCell>
 
                             <TableCell
                                 align="center"
@@ -72,17 +65,25 @@ const ManageScheduleTable = () => {
                             >
                                 <Button
                                     variant="contained"
-                                    size="large"
+                                    fullWidth
+                                    className={classes.editBtn}
                                     onClick={() =>
                                         history.push(
-                                            AdminUrl.manageSchedule.editinfo.replace(
+                                            AdminUrl.manageSchedule.editSchedule.replace(
                                                 ":id",
-                                                1
+                                                item.id
                                             )
                                         )
                                     }
                                 >
                                     Edit Info
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                >
+                                    Assign Bus
                                 </Button>
                             </TableCell>
                         </TableRow>

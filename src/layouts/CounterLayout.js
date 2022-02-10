@@ -1,17 +1,9 @@
-import { Menu } from "@mui/icons-material";
-import {
-    Avatar,
-    Container,
-    Hidden,
-    IconButton,
-    SwipeableDrawer,
-} from "@mui/material";
+import { Avatar, Container, Hidden, SwipeableDrawer } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Xcounter from "../assets/Xcounter.png";
 import AdminHeader from "../components/Header/AdminHeader";
-import AdminSideNav from "../components/SideNav/AdminSideNav";
 import CounterSideNav from "../components/SideNav/CounterSideNav";
 import { useStyles } from "./styled";
 

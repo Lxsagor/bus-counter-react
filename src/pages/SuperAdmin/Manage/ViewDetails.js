@@ -6,18 +6,42 @@ import {
     Button,
     Card,
     CardContent,
+    Dialog,
+    DialogContent,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import SearchBox from "../../../components/SearchBox/index";
 import { useStyles } from "./styled";
 import Divider from "@mui/material/Divider";
-import CounterLogTable from "../../../components/Manage/CounterLogTable";
+import AdminTable from "../../../components/Manage/AdminTable";
 import { SuperAdminUrl } from "../../../constants/urls";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    fetchCompany,
+    searchAdmin,
+} from "../../../store/actions/companyAction";
+import AddContactDialog from "../../../components/AddContactDialog";
+import { useParams } from "react-router-dom";
 
 const ViewDetails = () => {
-    const history = useHistory();
     const classes = useStyles();
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const { admins, company } = useSelector((state) => state.company);
+    const [addContact, setAddContact] = React.useState(false);
+    const { id } = useParams();
+
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchCompany(id));
+        }
+    }, [dispatch, id]);
+
+    const searchHandler = (data) => {
+        dispatch(searchAdmin(id, data));
+    };
+
     return (
         <>
             <Box m={5}>
@@ -30,62 +54,89 @@ const ViewDetails = () => {
                         backgroundColor: "#33A551",
                     }}
                 ></Box>
-                <SearchBox />
+                <SearchBox searchHandler={searchHandler} />
                 <Card sx={{ mt: 5 }}>
                     <CardContent>
                         <Grid
                             container
+                            spacing={3}
                             justifyContent="space-between"
                             alignItems="center"
+                            py={3}
                         >
-                            <Grid item lg={3}>
+                            <Grid item lg={9}>
                                 <Grid container>
-                                    <Grid item lg={6}>
-                                        <Typography mb={3}>
-                                            Company Name:
-                                        </Typography>
-                                        <Typography mb={3}>
-                                            Number Of Admin:
-                                        </Typography>
-                                        <Typography mb={3}>
-                                            Number Of User:
-                                        </Typography>
+                                    <Grid item lg={5}>
+                                        <Box display="flex">
+                                            <Typography>
+                                                Company Name:
+                                            </Typography>
+                                            <Typography ml={3} color="primary">
+                                                {company.name}
+                                            </Typography>
+                                        </Box>
                                     </Grid>
-                                    <Grid item lg={6}>
-                                        <Typography mb={3} color="primary">
-                                            SR Group
-                                        </Typography>
-                                        <Typography mb={3} color="primary">
-                                            01
-                                        </Typography>
-                                        <Typography mb={3} color="primary">
-                                            10
-                                        </Typography>
+                                    <Grid item lg={4}>
+                                        <Box display="flex">
+                                            <Typography>
+                                                Number Of Admins:
+                                            </Typography>
+                                            <Typography ml={3} color="primary">
+                                                {admins?.meta?.total}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item lg={3}>
+                                        <Box display="flex">
+                                            <Typography>
+                                                Number Of Counters:
+                                            </Typography>
+
+                                            <Typography ml={3} color="primary">
+                                                {company.no_of_counters}
+                                            </Typography>
+                                        </Box>
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item lg={2}>
-                                <Button
-                                    variant="contained"
-                                    size="large"
-                                    sx={{
-                                        textTransform: "initial",
-                                        borderRadius: "8px",
-                                    }}
-                                    onClick={() =>
-                                        history.push(
-                                            SuperAdminUrl.manageCompany.more.replace()
-                                        )
-                                    }
-                                >
-                                    More Details
-                                </Button>
+                            <Grid item lg={3}>
+                                <Box className={classes.infopageBtn}>
+                                    {/* <Button
+                                        variant="contained"
+                                        size="large"
+                                        sx={{
+                                            textTransform: "initial",
+                                            borderRadius: "8px",
+                                        }}
+                                        onClick={() => setAddContact(true)}
+                                    >
+                                        Add Contact
+                                    </Button> */}
+                                    <Button
+                                        variant="contained"
+                                        size="large"
+                                        sx={{
+                                            textTransform: "initial",
+                                            borderRadius: "8px",
+                                        }}
+                                        onClick={() =>
+                                            history.push(
+                                                SuperAdminUrl.manageCompany.addAdmin.replace(
+                                                    ":id",
+                                                    company.id
+                                                )
+                                            )
+                                        }
+                                    >
+                                        Add Admin
+                                    </Button>
+                                </Box>
                             </Grid>
                         </Grid>
                         <Divider />
                         <Box pt={3}>
                             <Typography variant="h6" color="primary">
-                                View Counter Log
+                                View Admins
                             </Typography>
                             <Box
                                 mb={3}
@@ -95,42 +146,20 @@ const ViewDetails = () => {
                                     backgroundColor: "#33A551",
                                 }}
                             ></Box>
-                            <CounterLogTable />
+                            <AdminTable />
                         </Box>
                     </CardContent>
                 </Card>
-
-                {/* <Box className={classes.root} my={5}>
-                    <Grid container spacing={4} justifyContent="space-between">
-                        <Grid item lg={4}>
-                            <Grid container spacing={4}>
-                                <Grid item lg={6}>
-                                    <Typography variant="h6">
-                                        Company Name:
-                                    </Typography>
-                                    <Typography variant="h6">
-                                        Number of Admin:
-                                    </Typography>
-                                    <Typography variant="h6">
-                                        Number of User:
-                                    </Typography>
-                                </Grid>
-                                <Grid item lg={6}>
-                                    <Typography variant="h6">
-                                        SR Group
-                                    </Typography>
-                                    <Typography variant="h6">10</Typography>
-                                    <Typography variant="h6">01</Typography>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid item lg={2}>
-                            <Button size="large" variant="contained">
-                                More Details
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Box> */}
+                <Dialog
+                    maxWidth="sm"
+                    fullWidth
+                    open={addContact}
+                    onClose={() => setAddContact(false)}
+                >
+                    <DialogContent>
+                        <AddContactDialog />
+                    </DialogContent>
+                </Dialog>
             </Box>
         </>
     );

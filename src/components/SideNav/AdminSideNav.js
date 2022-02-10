@@ -10,6 +10,7 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import HistoryIcon from "@mui/icons-material/History";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
+import { Icon } from "@iconify/react";
 const AdminSideNav = () => {
     const classes = useStyles();
     return (
@@ -53,6 +54,18 @@ const AdminSideNav = () => {
                             <LocationOnIcon />
                         </ListItemIcon>
                         <ListItemText>Track Bus</ListItemText>
+                    </ListItem>
+                </NavLink>
+                <NavLink to={AdminUrl.staff.index}>
+                    <ListItem>
+                        <ListItemIcon>
+                            <Icon
+                                icon="ant-design:user-outlined"
+                                width="25"
+                                height="25"
+                            />
+                        </ListItemIcon>
+                        <ListItemText>Manage Staff</ListItemText>
                     </ListItem>
                 </NavLink>
                 <NavLink to={AdminUrl.accountHistory.index}>

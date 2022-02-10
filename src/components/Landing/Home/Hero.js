@@ -20,36 +20,35 @@ const Hero = () => {
     return (
         <>
             <Box pt={7} pl={3}>
-                <Grid container>
-                    <Grid item lg={6}>
-                        <Typography
-                            variant="body2"
-                            color="white"
-                            className={classes.stop}
-                        >
-                            Stop Looking
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            color="primary"
-                            className={classes.stop}
-                            mb={3}
-                        >
-                            Start Tracking
-                        </Typography>
-                        <Typography
-                            varinat="body2"
-                            color="white"
-                            className={classes.subtext}
-                        >
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Convallis amet sem quam egestas at arcu quis
-                            proin nulla. Sollicitudin turpis imperdiet sed
-                            venenatis dui ultrices vitae ac. Ultrices lorem
-                            feugiat in sem nunc proin. Et vitae massa nec sit.
-                        </Typography>
-                    </Grid>
-                </Grid>
+                <Box className={classes.heroTop}>
+                    <Typography
+                        variant="body2"
+                        color="white"
+                        className={classes.stop}
+                    >
+                        Stop Looking
+                    </Typography>
+                    <Typography
+                        variant="body2"
+                        color="primary"
+                        className={classes.stop}
+                        mb={3}
+                    >
+                        Start Tracking
+                    </Typography>
+                    <Typography
+                        varinat="body2"
+                        color="white"
+                        className={classes.subtext}
+                    >
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Convallis amet sem quam egestas at arcu quis proin
+                        nulla. Sollicitudin turpis imperdiet sed venenatis dui
+                        ultrices vitae ac. Ultrices lorem feugiat in sem nunc
+                        proin. Et vitae massa nec sit.
+                    </Typography>
+                </Box>
+
                 <Box mt={7} className={classes.ticketOption}>
                     <Grid
                         container
@@ -57,6 +56,8 @@ const Hero = () => {
                         alignItems="center"
                         justifyContent="space-around"
                         px={5}
+                        pt={1}
+                        pb={6}
                     >
                         <Grid item lg={3} xs={6}>
                             <Typography mb={2} color="primary">

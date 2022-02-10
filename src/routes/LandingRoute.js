@@ -4,37 +4,37 @@ import { LandingUrl } from "../constants/urls";
 import LandingLayout from "../layouts/LandingLayout";
 
 const suspenseOption = {
-  fallback: <ProgressBar />,
-  layoutComponent: LandingLayout,
+    fallback: <ProgressBar />,
+    layoutComponent: LandingLayout,
 };
 
 const LandingRoute = [
-  {
-    path: LandingUrl.landing.home,
-    layout: LandingLayout,
-    meta: { requiresAuth: false },
-    component: LazyLoading(
-      () => import("../pages/Landing/Home"),
-      suspenseOption
-    ),
-  },
-  {
-    path: LandingUrl.landing.buses,
-    layout: LandingLayout,
-    meta: { requiresAuth: false },
-    component: LazyLoading(
-      () => import("../pages/Landing/Buses"),
-      suspenseOption
-    ),
-  },
-  {
-    path: LandingUrl.landing.ticketpay,
-    layout: LandingLayout,
-    meta: { requiresAuth: false },
-    component: LazyLoading(
-      () => import("../pages/Landing/TicketPayment"),
-      suspenseOption
-    ),
-  },
+    {
+        path: LandingUrl.landing.home,
+        layout: LandingLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Landing/Home"),
+            suspenseOption
+        ),
+    },
+    {
+        path: LandingUrl.landing.buses,
+        layout: LandingLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Landing/Buses"),
+            suspenseOption
+        ),
+    },
+    {
+        path: LandingUrl.landing.ticketpay,
+        layout: LandingLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Landing/TicketPayment"),
+            suspenseOption
+        ),
+    },
 ];
 export default LandingRoute;

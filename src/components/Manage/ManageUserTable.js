@@ -1,73 +1,55 @@
-import { Button } from "@mui/material";
+import { Button, Dialog, DialogContent, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import * as React from "react";
-import { useHistory } from "react-router-dom";
+import moment from "moment";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import { SuperAdminUrl } from "../../constants/urls";
-import { useStyles } from "../dashboard/styled";
-
-function createData(
-    compnay_name,
-    number_of_user,
-    phone,
-    last_sub_date,
-    next_sub_date,
-    action
-) {
-    return {
-        compnay_name,
-        number_of_user,
-        phone,
-        last_sub_date,
-        next_sub_date,
-        action,
-    };
-}
-
-const rows = [
-    createData(
-        "SR Group",
-        "2",
-        "0184737443",
-        "12/07/2021",
-        "12/07/2021",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "2",
-        "0184737443",
-        "12/07/2021",
-        "12/07/2021",
-        "edit"
-    ),
-
-    createData(
-        "SR Group",
-        "2",
-        "0184737443",
-        "12/07/2021",
-        "12/07/2021",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "2",
-        "0184737443",
-        "12/07/2021",
-        "12/07/2021",
-        "edit"
-    ),
-];
+import {
+    fetchAdmin,
+    fetchCompanies,
+    fetchCompany,
+} from "../../store/actions/companyAction";
+import ExtendSubs from "./ExtendSubs";
+import { useStyles } from "./styled";
 
 const DashboardTable = () => {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
+    const companies = useSelector((state) => state.company.companies);
+    const [extend, setExtend] = React.useState(false);
+
+    useEffect(() => {
+        dispatch(fetchCompanies());
+    }, [dispatch]);
+    // const submitHandler = (e) => {
+    //     e.preventDefault();
+
+    //     dispatch(confirm, () =>
+    //         history.push(
+    //             SuperAdminUrl.manageCompany.view.replace(":id", item.id)
+    //         )
+    //     );
+    // };
+
+    console.log(companies);
+
+    const extendSub = (id) => {
+        dispatch(
+            fetchCompany(id, () => {
+                setExtend(true);
+            })
+        );
+    };
+
     return (
+        // <form onSubmit={submitHandler}>
         <TableContainer>
             <Table sx={{ minWidth: 650 }} className={classes.table}>
                 <TableHead>
@@ -75,62 +57,111 @@ const DashboardTable = () => {
                         <TableCell align="center">Company Name</TableCell>
                         <TableCell align="center">Number Of User</TableCell>
                         <TableCell align="center">Phone</TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                             Last Subscription Date
+                        </TableCell> */}
+                        <TableCell align="center">
+                            Subscription End Date
                         </TableCell>
                         <TableCell align="center">
-                            Next Subscription Date
+                            Subscription Remaining
                         </TableCell>
                         <TableCell align="center">Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row, i) => (
+                    {companies?.data?.map((item, i) => (
                         <TableRow key={i}>
                             <TableCell
                                 component="th"
                                 scope="row"
                                 align="center"
                             >
-                                {row.compnay_name}
+                                {item.name}
                             </TableCell>
                             <TableCell align="center">
-                                {row.number_of_user}
+                                {item.no_of_counters}
                             </TableCell>
-                            <TableCell align="center">{row.phone}</TableCell>
+                            <TableCell align="center">{item.phone}</TableCell>
+                            {/* <TableCell align="center">
+                                {moment(item.sub_start_date).format("M/D/Y")}
+                            </TableCell> */}
                             <TableCell align="center">
-                                {row.last_sub_date}
+                                {moment(item.sub_end_date).format("M/D/Y")}
                             </TableCell>
                             <TableCell align="center">
-                                {row.next_sub_date}
+                                {item.sub_remaining >= 0 ? (
+                                    <Typography color="primary">
+                                        <strong>
+                                            {item.sub_remaining} days remaining
+                                        </strong>
+                                    </Typography>
+                                ) : (
+                                    <Typography color="error">
+                                        <strong>Subscription Ended</strong>
+                                    </Typography>
+                                )}
                             </TableCell>
-                            {/* <TableCell align="center">{row.action}</TableCell> */}
+
                             <TableCell
                                 align="center"
-
-                                // sx={{ maxWidth: "250px" }}
+                                sx={{ maxWidth: "250px" }}
+                                className={classes.actionCell}
                             >
                                 <Button
                                     variant="contained"
                                     fullWidth
+                                    type="submit"
                                     sx={{
                                         borderRadius: "14px",
-                                        textTransform: "initial",
+                                        textTransform: "capitalize",
                                     }}
                                     onClick={() =>
-                                        history.push(
-                                            SuperAdminUrl.manageCompany.view.replace()
+                                        dispatch(
+                                            fetchCompany(item.id),
+                                            history.push(
+                                                SuperAdminUrl.manageCompany.view.replace(
+                                                    ":id",
+                                                    item.id
+                                                )
+                                            )
                                         )
                                     }
                                 >
                                     View Details
                                 </Button>
+                                <Button
+                                    variant="contained"
+                                    fullWidth
+                                    sx={{
+                                        borderRadius: "14px",
+                                        textTransform: "capitalize",
+                                        backgroundColor: "black",
+                                    }}
+                                    onClick={() => extendSub(item.id)}
+                                >
+                                    Extend Subscription
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}
+                    <Dialog
+                        maxWidth="sm"
+                        fullWidth
+                        open={extend}
+                        onClose={() => setExtend(false)}
+                    >
+                        <DialogContent>
+                            <ExtendSubs
+                                isControl={true}
+                                controlHandler={() => setExtend(false)}
+                            />
+                        </DialogContent>
+                    </Dialog>
                 </TableBody>
             </Table>
         </TableContainer>
+        // </form>
     );
 };
 export default DashboardTable;

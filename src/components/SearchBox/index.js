@@ -1,22 +1,38 @@
+import { Add, Search } from "@mui/icons-material";
 import {
-    Box,
     Button,
     Grid,
     IconButton,
     InputAdornment,
     TextField,
-    Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { searchCompany } from "../../store/actions/companyAction";
 import { useStyles } from "./styled";
-import { Add, Search } from "@mui/icons-material";
 
 const ManageSearchBox = ({
     isControl = false,
     controlLabel = "Add",
     controlHandler = () => {},
+    searchHandler = (prop) => {},
 }) => {
+    const dispatch = useDispatch();
     const classes = useStyles();
+    const [formData, setFormData] = useState({
+        keyword: "",
+    });
+
+    const fieldChangeHandler = (field, value) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+    };
+    const submitHandler = () => {
+        searchHandler(formData);
+        // dispatch(searchCompany(formData));
+    };
     return (
         <>
             <Grid
@@ -25,16 +41,22 @@ const ManageSearchBox = ({
                 alignItems="stretch"
                 spacing={4}
             >
-                <Grid item lg={5} xs={7} className={classes.field}>
+                <Grid item lg={5} xs={7}>
                     <TextField
                         sx={{ mr: 1 }}
                         fullWidth
                         label="Search"
+                        className={classes.field}
+                        onChange={(e) =>
+                            fieldChangeHandler("keyword", e.target.value)
+                        }
+                        value={formData.keyword}
+                        onKeyPress={(e) => e.key === "Enter" && submitHandler()}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
                                     <IconButton>
-                                        <Search />
+                                        <Search onClick={submitHandler} />
                                     </IconButton>
                                 </InputAdornment>
                             ),

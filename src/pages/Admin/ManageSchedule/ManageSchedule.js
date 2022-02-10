@@ -16,9 +16,16 @@ import "date-fns";
 import { useStyles } from "./styled";
 import ManageScheduleTable from "../../../components/ManageSchedule/ManageScheduleTable";
 import DataPaginator from "../../../components/shared/DataPaginator";
+import { useHistory } from "react-router-dom";
+import { AdminUrl } from "../../../constants/urls";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchSchedules } from "../../../store/actions/counterAction";
 
 const ManageSchedule = () => {
     const classes = useStyles();
+    const history = useHistory();
+    const dispatch = useDispatch();
     const [value, setValue] = React.useState(null);
 
     return (
@@ -47,12 +54,6 @@ const ManageSchedule = () => {
                                 label="Search By Counter"
                             />
                         </Grid>
-                        <Grid item lg={2}>
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="Search By Counter"
-                            />
-                        </Grid>
                     </Grid>
                     <Box mt={3}>
                         <Grid container spacing={4}>
@@ -61,7 +62,6 @@ const ManageSchedule = () => {
                                     dateAdapter={AdapterDateFns}
                                 >
                                     <DatePicker
-                                        // label="Subscription End Date"
                                         value={value}
                                         onChange={(newValue) => {
                                             setValue(newValue);
@@ -94,14 +94,28 @@ const ManageSchedule = () => {
                         <Grid item lg={2}>
                             <Typography variant="h6">Showing Result</Typography>
                         </Grid>
-                        <Grid item lg={2}>
-                            <Button
-                                fullWidth
-                                variant="text"
-                                className={classes.pdfButton}
-                            >
-                                Print as PDF
-                            </Button>
+                        <Grid item lg={3}>
+                            <Box display="flex">
+                                <Button
+                                    fullWidth
+                                    variant="text"
+                                    className={classes.pdfButton}
+                                >
+                                    Print as PDF
+                                </Button>{" "}
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    className={classes.scheduleButton}
+                                    onClick={() =>
+                                        history.push(
+                                            AdminUrl.manageSchedule.addSchedule
+                                        )
+                                    }
+                                >
+                                    Add Schedule
+                                </Button>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Box>

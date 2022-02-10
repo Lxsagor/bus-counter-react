@@ -1,88 +1,29 @@
-import * as React from "react";
+import { Button } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { useStyles } from "./styled";
-import { Box } from "@mui/system";
-import Edit from "@mui/icons-material/Edit";
-import { Button, Dialog, DialogContent, Grid, Typography } from "@mui/material";
+import moment from "moment";
+
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useStyles } from "./styled";
+import { useDispatch, useSelector } from "react-redux";
 // import { SuperAdminUrl } from "../../constants/urls";
 // import SuspendCompany from "./../Suspend/SuspendCompanyDialog";
-
-function createData(
-    company_name,
-    number_of_user,
-    last_subs_date,
-    next_subs_date,
-    subs_deadline,
-
-    action
-) {
-    return {
-        company_name,
-        number_of_user,
-        last_subs_date,
-        next_subs_date,
-        subs_deadline,
-
-        action,
-    };
-}
-
-const rows = [
-    createData(
-        "SR group",
-        "2",
-        "12/07/2021",
-        "12/07/2021",
-        "Subscription ended",
-        "edit"
-    ),
-    createData(
-        "SR group",
-        "2",
-        "12/07/2021",
-        "12/07/2021",
-        "2 days remaining",
-        "edit"
-    ),
-    createData(
-        "SR group",
-        "2",
-        "12/07/2021",
-        "12/07/2021",
-        "Subscription ended",
-        "edit"
-    ),
-    createData(
-        "SR group",
-        "2",
-        "12/07/2021",
-        "12/07/2021",
-        "2 days remaining",
-
-        "edit"
-    ),
-    createData(
-        "SR group",
-        "2",
-        "12/07/2021",
-        "12/07/2021",
-        "Subscription ended",
-        "edit"
-    ),
-];
-
+import { fetchCompanies } from "../../store/actions/companyAction";
 const SubsTable = () => {
     const classes = useStyles();
     const history = useHistory();
-    const [suspendCompanyDialog, setSuspendCompanyDialog] =
-        React.useState(false);
+    const dispatch = useDispatch();
+    const companies = useSelector((state) => state.company.companies);
+
+    useEffect(() => {
+        dispatch(fetchCompanies());
+    }, [dispatch]);
+
     return (
         <TableContainer>
             <Table sx={{ minWidth: 650 }} className={classes.table}>
@@ -105,28 +46,26 @@ const SubsTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row, i) => (
+                    {companies?.data?.map((item, i) => (
                         <TableRow key={i}>
                             <TableCell
                                 component="th"
                                 scope="row"
                                 align="center"
                             >
-                                {row.company_name}
+                                {item.name}
                             </TableCell>
                             <TableCell align="center">
-                                {row.number_of_user}
-                            </TableCell>
-                            <TableCell align="center">
-                                {row.last_subs_date}
-                            </TableCell>
-                            <TableCell align="center">
-                                {row.next_subs_date}
+                                {item.no_of_counters}
                             </TableCell>
 
                             <TableCell align="center">
-                                {row.subs_deadline}
+                                {moment(item.sub_start_date).format("M/D/Y")}
                             </TableCell>
+                            <TableCell align="center">
+                                {moment(item.sub_end_date).format("M/D/Y")}
+                            </TableCell>
+                            <TableCell align="center">Remaining time</TableCell>
 
                             {/* <TableCell align="center">{row.action}</TableCell> */}
                             <TableCell

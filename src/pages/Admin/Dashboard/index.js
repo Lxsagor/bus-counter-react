@@ -18,7 +18,7 @@ const Dashboard = () => {
                 <Grid container spacing={2} alignItems="stretch">
                     <Grid item xs={12} lg={3}>
                         <Card
-                            title={"Total Countries"}
+                            title={"Total Counters"}
                             number={7}
                             src={dash1}
                             text={<Link href="#">See All</Link>}

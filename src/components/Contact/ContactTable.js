@@ -13,114 +13,22 @@ import { Button, Dialog, DialogContent, Grid, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { SuperAdminUrl } from "../../constants/urls";
 import SuspendCompany from "./../Suspend/SuspendCompanyDialog";
+import moment from "moment";
 
-function createData(
-    compnay_name,
-    last_subs_date,
-    next_subs_date,
-    email,
-    phone,
-    action
-) {
-    return {
-        compnay_name,
-        last_subs_date,
-        next_subs_date,
-        email,
-        phone,
-        action,
-    };
-}
-
-const rows = [
-    createData(
-        "SR Group",
-        "12/12/2021",
-        "12/12/2021",
-
-        "srgroup@gmail.com",
-        "+88 0265490841",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "12/12/2021",
-        "12/12/2021",
-
-        "srgroup@gmail.com",
-        "+88 0265490841",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "12/12/2021",
-        "12/12/2021",
-
-        "srgroup@gmail.com",
-        "+88 0265490841",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "12/12/2021",
-        "12/12/2021",
-
-        "srgroup@gmail.com",
-        "+88 0265490841",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "12/12/2021",
-        "12/12/2021",
-
-        "srgroup@gmail.com",
-        "+88 0265490841",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "12/12/2021",
-        "12/12/2021",
-
-        "srgroup@gmail.com",
-        "+88 0265490841",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "12/12/2021",
-        "12/12/2021",
-
-        "srgroup@gmail.com",
-        "+88 0265490841",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "12/12/2021",
-        "12/12/2021",
-
-        "srgroup@gmail.com",
-        "+88 0265490841",
-        "edit"
-    ),
-    createData(
-        "SR Group",
-        "12/12/2021",
-        "12/12/2021",
-
-        "srgroup@gmail.com",
-        "+88 0265490841",
-        "edit"
-    ),
-];
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { fetchCompanies } from "../../store/actions/companyAction";
 
 const ContactTable = () => {
     const classes = useStyles();
+
     const history = useHistory();
-    const [suspendCompanyDialog, setSuspendCompanyDialog] =
-        React.useState(false);
+    const dispatch = useDispatch();
+    const companies = useSelector((state) => state.company.companies);
+
+    React.useEffect(() => {
+        dispatch(fetchCompanies());
+    }, [dispatch]);
 
     return (
         <TableContainer>
@@ -140,23 +48,23 @@ const ContactTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row, i) => (
+                    {companies?.data?.map((item, i) => (
                         <TableRow key={i}>
                             <TableCell
                                 component="th"
                                 scope="row"
                                 align="center"
                             >
-                                {row.compnay_name}
+                                {item.name}
                             </TableCell>
                             <TableCell align="center">
-                                {row.last_subs_date}
+                                {moment(item.sub_start_date).format("M/D/Y")}
                             </TableCell>
                             <TableCell align="center">
-                                {row.next_subs_date}
+                                {moment(item.sub_end_date).format("M/D/Y")}
                             </TableCell>
-                            <TableCell align="center">{row.email}</TableCell>
-                            <TableCell align="center">{row.phone}</TableCell>
+                            <TableCell align="center">{item.email}</TableCell>
+                            <TableCell align="center">{item.phone}</TableCell>
                             {/* <TableCell align="center">{row.action}</TableCell> */}
                             <TableCell
                                 align="center"
@@ -190,13 +98,13 @@ const ContactTable = () => {
                                         borderRadius: "14px",
                                         textTransform: "initial",
                                     }}
-                                    onClick={() =>
-                                        setSuspendCompanyDialog(true)
-                                    }
+                                    // onClick={() =>
+                                    //     setSuspendCompanyDialog(true)
+                                    // }
                                 >
                                     Suspend
                                 </Button>
-                                <Dialog
+                                {/* <Dialog
                                     maxWidth="xs"
                                     open={suspendCompanyDialog}
                                     onClose={() =>
@@ -206,7 +114,7 @@ const ContactTable = () => {
                                     <DialogContent>
                                         <SuspendCompany />
                                     </DialogContent>
-                                </Dialog>
+                                </Dialog> */}
                             </TableCell>
                         </TableRow>
                     ))}

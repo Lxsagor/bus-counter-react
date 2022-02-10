@@ -149,7 +149,7 @@ export const useStyles = makeStyles(() => ({
     },
     ticketOption: {
         backgroundColor: " #F6F7FB",
-        minHeight: "159px;",
+        // minHeight: "159px;",
         opacity: "0.9",
         borderRadius: "10px",
     },
@@ -164,7 +164,7 @@ export const useStyles = makeStyles(() => ({
     },
     srchBtn: {
         borderRadius: "8px !important",
-        minHeight: "30px !important",
+        minHeight: "55px !important",
         textTransform: "capitalize !important",
     },
 }));

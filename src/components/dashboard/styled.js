@@ -63,4 +63,16 @@ export const useStyles = makeStyles((theme) => ({
     text: {
         color: theme.palette.primary.main,
     },
+    fieldlast: {
+        "& .MuiOutlinedInput-input": {
+            borderRadius: "8px",
+            backgroundColor: "rgba(51, 165, 81, 0.11)",
+        },
+    },
+    fieldnext: {
+        "& .MuiOutlinedInput-input": {
+            borderRadius: "8px",
+            backgroundColor: "rgba(198, 30, 30, 0.11)",
+        },
+    },
 }));

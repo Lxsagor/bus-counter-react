@@ -23,7 +23,7 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/ManageCounter/ManageCounter"),
+            () => import("../pages/Admin/Counter/Counters"),
             suspenseOption
         ),
     },
@@ -32,7 +32,7 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/ManageCounter/ManageUserEditInfo"),
+            () => import("../pages/Admin/Counter/AddCounter"),
             suspenseOption
         ),
     },
@@ -41,7 +41,7 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/ManageCounter/ManageUserEditInfo"),
+            () => import("../pages/Admin/Counter/AddCounter"),
             suspenseOption
         ),
     },
@@ -50,7 +50,7 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/ManageBus/ManageBus"),
+            () => import("../pages/Admin/Bus/ManageBus"),
             suspenseOption
         ),
     },
@@ -59,7 +59,7 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/ManageBus/EditBusInfo"),
+            () => import("../pages/Admin/Bus/EditBusInfo"),
             suspenseOption
         ),
     },
@@ -68,7 +68,7 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/ManageBus/AddBus"),
+            () => import("../pages/Admin/Bus/AddBus"),
             suspenseOption
         ),
     },
@@ -82,12 +82,20 @@ const AdminRoutes = [
         ),
     },
     {
-        path: AdminUrl.manageSchedule.editinfo,
+        path: AdminUrl.manageSchedule.addSchedule,
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () =>
-                import("../pages/Admin/ManageSchedule/ManageScheduleEditInfo"),
+            () => import("../pages/Admin/ManageSchedule/AddSchedule"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageSchedule.editSchedule,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/ManageSchedule/EditSchedule"),
             suspenseOption
         ),
     },
@@ -98,6 +106,62 @@ const AdminRoutes = [
         meta: { requiresAuth: false },
         component: LazyLoading(
             () => import("../pages/Admin/TrackBus/TrackBus"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.staff.index,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Staff"),
+            suspenseOption
+        ),
+    },
+
+    {
+        path: AdminUrl.staff.addAdmin,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Admin/AddAdmin"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.staff.addDriver,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Driver/AddDriver"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.staff.driverDetails,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Driver/DriverDetails"),
+            suspenseOption
+        ),
+    },
+
+    {
+        path: AdminUrl.staff.addHelper,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Helper/AddHelper"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.staff.helperDetails,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Helper/HelperDetails"),
             suspenseOption
         ),
     },

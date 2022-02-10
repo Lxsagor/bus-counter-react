@@ -48,8 +48,8 @@ export const useStyles = makeStyles((theme) => ({
         maxWidth: "initial !important",
         gap: "10px",
         "& .MuiButton-root": {
-            width: "50%",
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            width: "calc(100%/3)",
+
             borderRadius: "8px",
             textTransform: "initial",
             // minWidth: "70px !important",
@@ -62,5 +62,9 @@ export const useStyles = makeStyles((theme) => ({
                 height: "100%",
             },
         },
+    },
+    editBtn: {
+        backgroundColor: "rgba(0, 0, 0, 0.7) !important",
+        textTransform: "capitalize !important",
     },
 }));

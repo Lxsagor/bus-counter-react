@@ -17,10 +17,16 @@ export const useStyles = makeStyles((theme) => ({
     },
     pdfButton: {
         minHeight: "43px !important",
-        borderRadius: "21.5px !important",
+        borderRadius: "10px !important",
         backgroundColor: "#FFFFFF !important",
         color: "black !important",
-        textTransform: "initial !important",
+        textTransform: "capitalize !important",
+        marginRight: "10px !important",
+    },
+    scheduleButton: {
+        minHeight: "43px !important",
+        borderRadius: "10px !important",
+        textTransform: "capitalize !important",
     },
     textField: {
         "& .MuiOutlinedInput-input": {
@@ -44,5 +50,9 @@ export const useStyles = makeStyles((theme) => ({
         // textAlign: "center",
 
         // marginTop: "50%",
+    },
+    fareBox: {
+        display: "flex",
+        alignItems: "center",
     },
 }));

@@ -19,11 +19,11 @@ const superAdminRoutes = [
         ),
     },
     {
-        path: SuperAdminUrl.dashboard.show,
+        path: SuperAdminUrl.manageCompany.viewAdmin,
         layout: SuperAdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/SuperAdmin/Dashboard/ViewProfile"),
+            () => import("../pages/SuperAdmin/Manage/ViewProfile"),
             suspenseOption
         ),
     },
@@ -56,11 +56,11 @@ const superAdminRoutes = [
         ),
     },
     {
-        path: SuperAdminUrl.manageCompany.more,
+        path: SuperAdminUrl.manageCompany.addAdmin,
         layout: SuperAdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/SuperAdmin/Manage/MoreDetails"),
+            () => import("../pages/SuperAdmin/Manage/AddAdmin"),
             suspenseOption
         ),
     },
