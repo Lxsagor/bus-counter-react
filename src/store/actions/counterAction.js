@@ -5,6 +5,10 @@ import { api_routes } from "../../constants/urls";
 import * as types from "../types";
 
 toast.configure();
+export const toggleLoading = (status) => ({
+    type: types.TOGGLE_LOADING,
+    payload: status,
+});
 
 const TOKEN = localStorage.getItem("token");
 
@@ -90,6 +94,8 @@ export const addCounter =
     };
 
 export const fetchCounters = () => (dispatch) => {
+    dispatch(toggleLoading(true));
+
     fetch(api_routes.counters.index, {
         method: "GET",
         headers: {
@@ -100,6 +106,8 @@ export const fetchCounters = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
+            dispatch(toggleLoading(false));
+
             console.log(response);
             if (response.status === "success") {
                 dispatch({
@@ -358,6 +366,7 @@ export const addSchedule =
             });
     };
 export const fetchSchedules = () => (dispatch) => {
+    dispatch(toggleLoading(true));
     fetch(api_routes.schedules.index, {
         method: "GET",
         headers: {
@@ -368,6 +377,7 @@ export const fetchSchedules = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
+            dispatch(toggleLoading(false));
             console.log(response);
             if (response.status === "success") {
                 dispatch({

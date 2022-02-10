@@ -12,6 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { ClipLoader, FadeLoader } from "react-spinners";
 import { AdminUrl } from "../../../constants/urls";
 import {
     fetchCounters,
@@ -21,12 +22,18 @@ import {
 } from "../../../store/actions/counterAction";
 import { FETCH_DISTRICTS, FETCH_DIVISIONS } from "../../../store/types";
 import { useStyles } from "./styled";
+import { css } from "@emotion/react";
 
+const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+`;
 const Counters = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { counters } = useSelector((state) => state.counter);
+    const { counters, loading } = useSelector((state) => state.counter);
     const [formData, setFormData] = useState({
         division_id: null,
         district_id: null,
@@ -95,130 +102,138 @@ const Counters = () => {
 
     return (
         <>
-            <Box m={5}>
-                <Grid container justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h6">Our Counters</Typography>
-                        <Box
-                            mb={3}
-                            sx={{
-                                width: "42px",
-                                height: "4px",
-                                backgroundColor: "#33A551",
-                            }}
-                        ></Box>
-                    </Grid>
-                    <Grid item>
-                        <Button
-                            className={classes.addbutton}
-                            fullWidth
-                            variant="contained"
-                            onClick={() =>
-                                history.push(AdminUrl.manageCounter.add)
-                            }
-                        >
-                            <AddIcon />
-                            Add Counter
-                        </Button>
-                    </Grid>
-                </Grid>
-                <Box my={3}>
-                    <Grid
-                        container
-                        // justifyContent="space-between"
-                        alignItems="flex-end"
-                        spacing={3}
-                    >
-                        <Grid item lg={4} md={4} xs={12}>
-                            <Typography mb={3}>Choose Division</Typography>
-                            <Autocomplete
-                                options={divisions}
-                                optionLabel="name"
-                                getOptionLabel={(option) => option.name}
-                                value={formData.division_id}
-                                onChange={(e, data) =>
-                                    fieldChangeHandler("division_id", data)
-                                }
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Division"
-                                        fullWidth
-                                        className={classes.field}
-                                    />
-                                )}
-                            />
-                        </Grid>
-                        <Grid item lg={4} md={4} xs={12}>
-                            <Typography mb={3}>Choose District</Typography>
-                            <Autocomplete
-                                options={districts}
-                                optionLabel="name"
-                                getOptionLabel={(option) => option.name}
-                                value={formData.district_id}
-                                onChange={(e, data) =>
-                                    fieldChangeHandler("district_id", data)
-                                }
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="District"
-                                        fullWidth
-                                        className={classes.field}
-                                    />
-                                )}
-                            />
+            {loading ? (
+                <FadeLoader
+                    color="green"
+                    loading={loading}
+                    css={override}
+                    size={150}
+                />
+            ) : (
+                <Box m={5}>
+                    <Grid container justifyContent="space-between">
+                        <Grid item>
+                            <Typography variant="h6">Our Counters</Typography>
+                            <Box
+                                mb={3}
+                                sx={{
+                                    width: "42px",
+                                    height: "4px",
+                                    backgroundColor: "#33A551",
+                                }}
+                            ></Box>
                         </Grid>
                         <Grid item>
                             <Button
-                                variant="contained"
+                                className={classes.addbutton}
                                 fullWidth
-                                className={classes.searchButton}
-                                onClick={submitHandler}
+                                variant="contained"
+                                onClick={() =>
+                                    history.push(AdminUrl.manageCounter.add)
+                                }
                             >
-                                Search Counter
+                                <AddIcon />
+                                Add Counter
                             </Button>
                         </Grid>
                     </Grid>
-                </Box>
-                <Typography variant="h6">Showing Result</Typography>
-                <Typography variant="p" style={{ opacity: 0.5 }}>
-                    {counters?.meta?.total} Counters in this location
-                </Typography>
-                <Box mt={5}>
-                    <Grid container spacing={3}>
-                        {counters?.data?.map((item, i) => (
-                            <Grid item xs={12} lg={3}>
-                                <Card>
-                                    <CardContent className={classes.card}>
-                                        <Box mt={2}>
-                                            <Typography variant="h6">
-                                                {item?.district?.name},
-                                                {item?.division?.name}
-                                            </Typography>
-                                        </Box>
-                                        <Box mt={1}>
-                                            <Typography>
-                                                Phone:
-                                                {item?.counter_managers?.map(
-                                                    (item) => item.phone
-                                                )}
-                                            </Typography>
-                                        </Box>
-                                        <Box mt={2}>
-                                            <Button
-                                                fullWidth
-                                                variant="contained"
-                                                className={classes.button}
-                                            >
-                                                Edit Information
-                                            </Button>
-                                        </Box>
-                                    </CardContent>
-                                </Card>
+                    <Box my={3}>
+                        <Grid
+                            container
+                            // justifyContent="space-between"
+                            alignItems="flex-end"
+                            spacing={3}
+                        >
+                            <Grid item lg={4} md={4} xs={12}>
+                                <Typography mb={3}>Choose Division</Typography>
+                                <Autocomplete
+                                    options={divisions}
+                                    optionLabel="name"
+                                    getOptionLabel={(option) => option.name}
+                                    value={formData.division_id}
+                                    onChange={(e, data) =>
+                                        fieldChangeHandler("division_id", data)
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Division"
+                                            fullWidth
+                                            className={classes.field}
+                                        />
+                                    )}
+                                />
                             </Grid>
-                        ))}
-                        {/* <Grid item lg={3} xs={12}>
+                            <Grid item lg={4} md={4} xs={12}>
+                                <Typography mb={3}>Choose District</Typography>
+                                <Autocomplete
+                                    options={districts}
+                                    optionLabel="name"
+                                    getOptionLabel={(option) => option.name}
+                                    value={formData.district_id}
+                                    onChange={(e, data) =>
+                                        fieldChangeHandler("district_id", data)
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="District"
+                                            fullWidth
+                                            className={classes.field}
+                                        />
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    variant="contained"
+                                    fullWidth
+                                    className={classes.searchButton}
+                                    onClick={submitHandler}
+                                >
+                                    Search Counter
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                    <Typography variant="h6">Showing Result</Typography>
+                    <Typography variant="p" style={{ opacity: 0.5 }}>
+                        {counters?.meta?.total} Counters in this location
+                    </Typography>
+                    <Box mt={5}>
+                        <Grid container spacing={3}>
+                            {counters?.data?.map((item, i) => (
+                                <Grid item xs={12} lg={3}>
+                                    <Card>
+                                        <CardContent className={classes.card}>
+                                            <Box mt={2}>
+                                                <Typography variant="h6">
+                                                    {item?.district?.name},
+                                                    {item?.division?.name}
+                                                </Typography>
+                                            </Box>
+                                            <Box mt={1}>
+                                                <Typography>
+                                                    Phone:
+                                                    {item?.counter_managers?.map(
+                                                        (item) => item.phone
+                                                    )}
+                                                </Typography>
+                                            </Box>
+                                            <Box mt={2}>
+                                                <Button
+                                                    fullWidth
+                                                    variant="contained"
+                                                    className={classes.button}
+                                                >
+                                                    Edit Information
+                                                </Button>
+                                            </Box>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
+                            {/* <Grid item lg={3} xs={12}>
                                                         <BusCard
                                                             title="Shyamoli, Dhaka"
                                                             subTitle="Phone: +88 0123456789"
@@ -323,9 +338,10 @@ const Counters = () => {
                                                             }
                                                         />
                                                     </Grid> */}
-                    </Grid>
+                        </Grid>
+                    </Box>
                 </Box>
-            </Box>
+            )}
         </>
     );
 };

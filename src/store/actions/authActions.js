@@ -25,6 +25,7 @@ export const login =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
                 if (response.status === "validate_error") {
                     Object.keys(response.data).forEach((key) => {
                         toast.error(response.data[key][0]);
@@ -51,17 +52,17 @@ export const login =
                 }
 
                 console.log(response);
-                dispatch(toggleAuthLoading(true));
             })
             .catch((err) => {
                 console.log(err);
-                dispatch(toggleAuthLoading(true));
             });
     };
 
 export const forget =
     (data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleAuthLoading(true));
+
         fetch(api_routes.auth_forget, {
             method: "post",
             headers: {
@@ -72,6 +73,8 @@ export const forget =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
                 if (response.status === "validate_error") {
                     Object.keys(response.data).forEach((key) => {
                         toast.error(response.data[key][0]);
@@ -102,6 +105,8 @@ export const forget =
 export const confirm =
     (data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleAuthLoading(true));
+
         fetch(api_routes.auth_confirm, {
             method: "post",
             headers: {
@@ -112,6 +117,8 @@ export const confirm =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
                 if (response.status === "validate_error") {
                     Object.keys(response.data).forEach((key) => {
                         toast.error(response.data[key][0]);
@@ -162,6 +169,8 @@ export const resend =
 export const changePass =
     (data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleAuthLoading(true));
+
         fetch(api_routes.auth_changePass, {
             method: "PATCH",
             headers: {
@@ -172,6 +181,8 @@ export const changePass =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
                 if (response.status === "validate_error") {
                     Object.keys(response.data).forEach((key) => {
                         toast.error(response.data[key][0]);
@@ -192,34 +203,37 @@ export const changePass =
                 console.log(err);
             });
     };
+
 const TOKEN = localStorage.getItem("token");
 
 export const logout =
     (cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleAuthLoading(true));
+
         fetch(api_routes.auth_logout, {
             method: "POST",
             headers: {
-                "content-type": "application/json",
                 Accept: "application/json",
-                Authorization: TOKEN,
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("token"),
             },
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
+                console.log(response);
+
                 if (response.status === "success") {
-                    localStorage.removeItem("token");
-
-                    // toast.success("Successfully Logout");
                     toast.success(response.message);
-
+                    localStorage.removeItem("token");
+                    dispatch({ type: types.LOGOUT });
                     cb();
-                } else if (response.status === "error") {
-                    toast.error(response.message);
                 }
-                console.log(localStorage.getItem("token"));
             })
             .catch((err) => {
                 console.log(err);
+                toast.error(err);
             });
     };

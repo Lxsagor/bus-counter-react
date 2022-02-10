@@ -13,7 +13,7 @@ const Forget = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { error } = useSelector((state) => state.auth);
+    const { error, authLoading } = useSelector((state) => state.auth);
     const [formData, setFormData] = useState({
         phone: "",
     });
@@ -91,6 +91,16 @@ const Forget = () => {
                                 fullWidth
                                 variant="contained"
                                 type="submit"
+                                {...(authLoading && {
+                                    disabled: true,
+                                    startIcon: (
+                                        <BeatLoader
+                                            color="white"
+                                            loading={true}
+                                            size={10}
+                                        />
+                                    ),
+                                })}
                             >
                                 Send Code
                             </Button>

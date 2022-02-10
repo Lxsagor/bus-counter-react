@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 import { AuthUrl } from "../../constants/urls";
 import { confirm, resend } from "../../store/actions/authActions";
 import { ERROR } from "../../store/types";
@@ -12,7 +13,7 @@ const OTPpage = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { forget } = useSelector((state) => state.auth);
+    const { forget,authLoading } = useSelector((state) => state.auth);
 
     const [OTP, setOTP] = useState("");
     function handleChange(OTP) {
@@ -75,6 +76,16 @@ const OTPpage = () => {
                                 fullWidth
                                 variant="contained"
                                 type="submit"
+                                {...(authLoading && {
+                                    disabled: true,
+                                    startIcon: (
+                                        <BeatLoader
+                                            color="white"
+                                            loading={true}
+                                            size={10}
+                                        />
+                                    ),
+                                })}
                             >
                                 Verify
                             </Button>

@@ -7,6 +7,7 @@ const initialState = {
     buses: [],
     bus: "",
     schedules: [],
+    loading: false,
 };
 const counterReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -44,6 +45,11 @@ const counterReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
+            };
+        case types.TOGGLE_LOADING:
+            return {
+                ...state,
+                loading: action.payload,
             };
         case types.DELETE_BUS:
             return {

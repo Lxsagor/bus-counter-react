@@ -26,71 +26,76 @@ const ManageScheduleTable = () => {
     }, [dispatch]);
 
     return (
-        <TableContainer>
-            <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="center">Boarding From</TableCell>
-                        <TableCell align="center">Destination</TableCell>
-                        <TableCell align="center">Dep. Time</TableCell>
-                        <TableCell align="center">Bus No</TableCell>
+        <>
+            <TableContainer>
+                <Table className={classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center">Boarding From</TableCell>
+                            <TableCell align="center">Destination</TableCell>
+                            <TableCell align="center">Dep. Time</TableCell>
+                            <TableCell align="center">Bus No</TableCell>
 
-                        <TableCell align="center">Mid Counters</TableCell>
-                        <TableCell align="center">Action</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {schedules?.data?.map((item, i) => (
-                        <TableRow key={i}>
-                            <TableCell
-                                component="th"
-                                scope="row"
-                                align="center"
-                            >
-                                {item?.start_counter?.name}
-                            </TableCell>
-                            <TableCell align="center">
-                                {" "}
-                                {item?.end_counter?.name}
-                            </TableCell>
-                            <TableCell align="center">
-                                {moment(item.date_time).format("HH:mm:ss")}
-                            </TableCell>
-                            <TableCell align="center"> {item.bus_no}</TableCell>
-                            <TableCell align="center"></TableCell>
-
-                            <TableCell
-                                align="center"
-                                className={classes.actionCell}
-                            >
-                                <Button
-                                    variant="contained"
-                                    fullWidth
-                                    className={classes.editBtn}
-                                    onClick={() =>
-                                        history.push(
-                                            AdminUrl.manageSchedule.editSchedule.replace(
-                                                ":id",
-                                                item.id
-                                            )
-                                        )
-                                    }
-                                >
-                                    Edit Info
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    fullWidth
-                                >
-                                    Assign Bus
-                                </Button>
-                            </TableCell>
+                            <TableCell align="center">Mid Counters</TableCell>
+                            <TableCell align="center">Action</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {schedules?.data?.map((item, i) => (
+                            <TableRow key={i}>
+                                <TableCell
+                                    component="th"
+                                    scope="row"
+                                    align="center"
+                                >
+                                    {item?.start_counter?.name}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {" "}
+                                    {item?.end_counter?.name}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {moment(item.date_time).format("HH:mm:ss")}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {" "}
+                                    {item.bus_no}
+                                </TableCell>
+                                <TableCell align="center"></TableCell>
+
+                                <TableCell
+                                    align="center"
+                                    className={classes.actionCell}
+                                >
+                                    <Button
+                                        variant="contained"
+                                        fullWidth
+                                        className={classes.editBtn}
+                                        onClick={() =>
+                                            history.push(
+                                                AdminUrl.manageSchedule.editSchedule.replace(
+                                                    ":id",
+                                                    item.id
+                                                )
+                                            )
+                                        }
+                                    >
+                                        Edit Info
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
+                                    >
+                                        Assign Bus
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
     );
 };
 export default ManageScheduleTable;

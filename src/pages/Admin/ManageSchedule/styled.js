@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     button: {
         minHeight: "55px",
-        borderRadius: "8px",
+        borderRadius: "8px !important",
         textTransform: "initial !important",
     },
     pdfButton: {

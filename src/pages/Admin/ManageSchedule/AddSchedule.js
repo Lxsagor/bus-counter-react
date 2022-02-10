@@ -32,7 +32,7 @@ const AddSchedule = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { counters, buses } = useSelector((state) => state.counter);
+    const { counters, buses, error } = useSelector((state) => state.counter);
     const [formData, setFormData] = useState({
         bus_id: "",
         bus_no: null,
@@ -50,7 +50,16 @@ const AddSchedule = () => {
         mid_counters_id: { text: "", show: false },
         date_time: { text: "", show: false },
     });
-
+    useEffect(() => {
+        if (error && Object.keys(error).length > 0) {
+            Object.keys(error).forEach((key) => {
+                setErrors((prevState) => ({
+                    ...prevState,
+                    [key]: { text: error[key][0], show: true },
+                }));
+            });
+        }
+    }, [error]);
     const fieldChangeHandler = (field, value) => {
         setErrors((prevState) => ({
             ...prevState,

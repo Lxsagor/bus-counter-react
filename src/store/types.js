@@ -1,5 +1,6 @@
 //Auth
 export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
 export const ERROR = "ERROR";
 export const FORGET = "FORGET";
 export const TOGGLE_AUTH_LOADING = "TOGGLE_AUTH_LOADING";
@@ -20,3 +21,4 @@ export const FETCH_BUSES = "FETCH_BUSES";
 export const FETCH_BUS = "FETCH_BUS";
 export const DELETE_BUS = "DELETE_BUS";
 export const FETCH_SCHEDULES = "FETCH_SCHEDULES";
+export const TOGGLE_LOADING = "TOGGLE_LOADING";
