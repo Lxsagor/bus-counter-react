@@ -18,11 +18,12 @@ import { deleteBus, fetchBuses } from "../../../store/actions/counterAction";
 import { useStyles } from "./styled";
 import { Delete } from "@mui/icons-material";
 import Swal from "sweetalert2";
+import { css } from "@emotion/react";
 
 const ManageBus = () => {
     const history = useHistory();
     const classes = useStyles();
-    const { buses } = useSelector((state) => state.counter);
+    const { buses, loading } = useSelector((state) => state.counter);
     const dispatch = useDispatch();
 
     useEffect(() => {

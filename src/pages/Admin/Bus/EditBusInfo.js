@@ -9,11 +9,20 @@ import { AdminUrl } from "../../../constants/urls";
 import { fetchBus, updateBus } from "../../../store/actions/counterAction";
 import { ERROR } from "../../../store/types";
 import { useStyles } from "./styled";
+import { css } from "@emotion/react";
+import { FadeLoader } from "react-spinners";
+
+const override = css`
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`;
 
 const EditBusInfo = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { bus, error } = useSelector((state) => state.counter);
+    const { bus, error, loading } = useSelector((state) => state.counter);
     const { id } = useParams();
     const dispatch = useDispatch();
 
@@ -102,132 +111,145 @@ const EditBusInfo = () => {
     }, [dispatch]);
     return (
         <>
-            <Box m={5}>
-                <Typography variant="h6">Edit Bus</Typography>
-                <Box
-                    mb={3}
-                    sx={{
-                        width: "42px",
-                        height: "4px",
-                        backgroundColor: "#33A551",
-                    }}
-                ></Box>
-                <Box mt={4}>
-                    <Grid container>
-                        <Grid item lg={8} xs={12}>
-                            <Box className={classes.title}>
-                                <Typography ml={3} className={classes.busno}>
-                                    <strong>BUS NO :</strong> {bus.bus_reg_no}
-                                </Typography>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </Box>
-                <form onSubmit={submitHandler}>
-                    <Box mt={3}>
-                        <Grid container spacing={6}>
-                            <Grid item lg={4} xs={12}>
-                                <Typography mb={2}>Bus No</Typography>
-                                <TextField
-                                    fullWidth
-                                    className={classes.field}
-                                    onChange={(e) =>
-                                        fieldChangeHandler(
-                                            "bus_no",
-                                            e.target.value
-                                        )
-                                    }
-                                    placeholder={bus.bus_no}
-                                    value={formData.bus_no}
-                                    error={errors.bus_no.show}
-                                    helperText={errors.bus_no.text}
-                                />
-                            </Grid>
-                            <Grid item lg={4} xs={12}>
-                                <Typography mb={2}>
-                                    Bus Registration No
-                                </Typography>
-                                <TextField
-                                    fullWidth
-                                    className={classes.field}
-                                    onChange={(e) =>
-                                        fieldChangeHandler(
-                                            "bus_reg_no",
-                                            e.target.value
-                                        )
-                                    }
-                                    value={formData.bus_reg_no}
-                                    error={errors.bus_reg_no.show}
-                                    helperText={errors.bus_reg_no.text}
-                                />
-                            </Grid>
-                            <Grid item lg={4} xs={12}>
-                                <Typography mb={2}>Chesis No</Typography>
-                                <TextField
-                                    fullWidth
-                                    className={classes.field}
-                                    onChange={(e) =>
-                                        fieldChangeHandler(
-                                            "chesis_no",
-                                            e.target.value
-                                        )
-                                    }
-                                    value={formData.chesis_no}
-                                    error={errors.chesis_no.show}
-                                    helperText={errors.chesis_no.text}
-                                />
-                            </Grid>{" "}
-                            <Grid item lg={4} xs={12}>
-                                <Typography mb={2}>Bus Type</Typography>
-                                <TextField
-                                    fullWidth
-                                    className={classes.field}
-                                    onChange={(e) =>
-                                        fieldChangeHandler(
-                                            "bus_type",
-                                            e.target.value
-                                        )
-                                    }
-                                    value={formData.bus_type}
-                                    error={errors.bus_type.show}
-                                    helperText={errors.bus_type.text}
-                                />
-                            </Grid>
-                            <Grid item lg={4} xs={12}>
-                                <Typography mb={2}>Total Seat</Typography>
-                                <TextField
-                                    fullWidth
-                                    className={classes.field}
-                                    onChange={(e) =>
-                                        fieldChangeHandler(
-                                            "total_seat",
-                                            e.target.value
-                                        )
-                                    }
-                                    value={formData.total_seat}
-                                    error={errors.total_seat.show}
-                                    helperText={errors.total_seat.text}
-                                />
+            {loading ? (
+                <FadeLoader
+                    color="green"
+                    loading={loading}
+                    css={override}
+                    size={150}
+                />
+            ) : (
+                <Box m={5}>
+                    <Typography variant="h6">Edit Bus</Typography>
+                    <Box
+                        mb={3}
+                        sx={{
+                            width: "42px",
+                            height: "4px",
+                            backgroundColor: "#33A551",
+                        }}
+                    ></Box>
+                    <Box mt={4}>
+                        <Grid container>
+                            <Grid item lg={8} xs={12}>
+                                <Box className={classes.title}>
+                                    <Typography
+                                        ml={3}
+                                        className={classes.busno}
+                                    >
+                                        <strong>BUS NO :</strong>{" "}
+                                        {bus.bus_reg_no}
+                                    </Typography>
+                                </Box>
                             </Grid>
                         </Grid>
                     </Box>
-                    <Grid container>
-                        <Grid item lg={2}>
-                            <Box mt={7}>
-                                <Button
-                                    fullWidth
-                                    size="large"
-                                    variant="contained"
-                                    className={classes.button}
-                                    type="submit"
-                                >
-                                    Save
-                                </Button>
-                            </Box>
+                    <form onSubmit={submitHandler}>
+                        <Box mt={3}>
+                            <Grid container spacing={6}>
+                                <Grid item lg={4} xs={12}>
+                                    <Typography mb={2}>Bus No</Typography>
+                                    <TextField
+                                        fullWidth
+                                        className={classes.field}
+                                        onChange={(e) =>
+                                            fieldChangeHandler(
+                                                "bus_no",
+                                                e.target.value
+                                            )
+                                        }
+                                        placeholder={bus.bus_no}
+                                        value={formData.bus_no}
+                                        error={errors.bus_no.show}
+                                        helperText={errors.bus_no.text}
+                                    />
+                                </Grid>
+                                <Grid item lg={4} xs={12}>
+                                    <Typography mb={2}>
+                                        Bus Registration No
+                                    </Typography>
+                                    <TextField
+                                        fullWidth
+                                        className={classes.field}
+                                        onChange={(e) =>
+                                            fieldChangeHandler(
+                                                "bus_reg_no",
+                                                e.target.value
+                                            )
+                                        }
+                                        value={formData.bus_reg_no}
+                                        error={errors.bus_reg_no.show}
+                                        helperText={errors.bus_reg_no.text}
+                                    />
+                                </Grid>
+                                <Grid item lg={4} xs={12}>
+                                    <Typography mb={2}>Chesis No</Typography>
+                                    <TextField
+                                        fullWidth
+                                        className={classes.field}
+                                        onChange={(e) =>
+                                            fieldChangeHandler(
+                                                "chesis_no",
+                                                e.target.value
+                                            )
+                                        }
+                                        value={formData.chesis_no}
+                                        error={errors.chesis_no.show}
+                                        helperText={errors.chesis_no.text}
+                                    />
+                                </Grid>{" "}
+                                <Grid item lg={4} xs={12}>
+                                    <Typography mb={2}>Bus Type</Typography>
+                                    <TextField
+                                        fullWidth
+                                        className={classes.field}
+                                        onChange={(e) =>
+                                            fieldChangeHandler(
+                                                "bus_type",
+                                                e.target.value
+                                            )
+                                        }
+                                        value={formData.bus_type}
+                                        error={errors.bus_type.show}
+                                        helperText={errors.bus_type.text}
+                                    />
+                                </Grid>
+                                <Grid item lg={4} xs={12}>
+                                    <Typography mb={2}>Total Seat</Typography>
+                                    <TextField
+                                        fullWidth
+                                        className={classes.field}
+                                        onChange={(e) =>
+                                            fieldChangeHandler(
+                                                "total_seat",
+                                                e.target.value
+                                            )
+                                        }
+                                        value={formData.total_seat}
+                                        error={errors.total_seat.show}
+                                        helperText={errors.total_seat.text}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <Grid container>
+                            <Grid item lg={2}>
+                                <Box mt={7}>
+                                    <Button
+                                        fullWidth
+                                        size="large"
+                                        variant="contained"
+                                        className={classes.button}
+                                        type="submit"
+                                    >
+                                        Save
+                                    </Button>
+                                </Box>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </form>
-            </Box>
+                    </form>
+                </Box>
+            )}
         </>
     );
 };

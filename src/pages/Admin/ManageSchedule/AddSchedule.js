@@ -476,18 +476,8 @@ const AddSchedule = () => {
                                             mb={1}
                                         >
                                             <strong>
-                                                {item?.starting_counter_id.name}
-                                                To
-                                            </strong>
-                                        </Typography>
-
-                                        <Typography
-                                            variant="body1"
-                                            color="black"
-                                            mb={1}
-                                            ml={1}
-                                        >
-                                            <strong>
+                                                {item?.starting_counter_id.name}{" "}
+                                                To{" "}
                                                 {
                                                     item?.destination_counter_id
                                                         .name

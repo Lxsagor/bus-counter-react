@@ -19,15 +19,24 @@ import DataPaginator from "../../../components/shared/DataPaginator";
 import { useHistory } from "react-router-dom";
 import { AdminUrl } from "../../../constants/urls";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchSchedules } from "../../../store/actions/counterAction";
 
 const ManageSchedule = () => {
     const classes = useStyles();
     const history = useHistory();
+    const { loading } = useSelector((state) => state.counter);
     const dispatch = useDispatch();
 
-    const [value, setValue] = React.useState(null);
+    const [formData, setFormData] = useState({
+        keyword: null,
+    });
+    const fieldChangeHandler = (field, value) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+    };
 
     return (
         <>
@@ -63,10 +72,13 @@ const ManageSchedule = () => {
                                     dateAdapter={AdapterDateFns}
                                 >
                                     <DatePicker
-                                        value={value}
-                                        onChange={(newValue) => {
-                                            setValue(newValue);
-                                        }}
+                                        onChange={(newValue) =>
+                                            fieldChangeHandler(
+                                                "keyword",
+                                                newValue
+                                            )
+                                        }
+                                        value={formData.keyword}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}

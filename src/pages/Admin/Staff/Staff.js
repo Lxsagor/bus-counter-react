@@ -77,7 +77,7 @@ const Staff = () => {
                             >
                                 {field === "admin" && "Add Admin"}
                                 {field === "driver" && "Add Driver"}
-                                {field === "staff" && "Add Staf"}
+                                {field === "staff" && "Add Staff"}
                             </Button>
                         </Grid>
                     </Grid>

@@ -17,6 +17,13 @@ const AuthReducer = (state = initialState, action) => {
                 isAuthenticate: action.payload.isAuthenticate,
                 currentUser: action.payload.currentUser,
             };
+        case types.CURRENT_USER:
+            return {
+                ...state,
+                token: action.payload.token,
+                isAuthenticate: action.payload.isAuthenticate,
+                currentUser: action.payload.currentUser,
+            };
 
         case types.ERROR:
             return {

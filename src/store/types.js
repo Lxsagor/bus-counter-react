@@ -4,6 +4,7 @@ export const LOGOUT = "LOGOUT";
 export const ERROR = "ERROR";
 export const FORGET = "FORGET";
 export const TOGGLE_AUTH_LOADING = "TOGGLE_AUTH_LOADING";
+export const CURRENT_USER = "CURRENT_USER";
 
 //Company
 export const FETCH_COMPANIES = "FETCH_COMPANIES";

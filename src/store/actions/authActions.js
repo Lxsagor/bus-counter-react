@@ -237,3 +237,30 @@ export const logout =
                 toast.error(err);
             });
     };
+export const fetchMe = () => (dispatch) => {
+    fetch(api_routes.auth_me, {
+        method: "GET",
+        headers: {
+            Accept: "application/json",
+            "Content-type": "application/json",
+            Authorization: TOKEN,
+        },
+    })
+        .then((response) => response.json())
+        .then((response) => {
+            console.log(response);
+            if (response.status === "success") {
+                dispatch({
+                    type: types.CURRENT_USER,
+                    payload: {
+                        token: TOKEN,
+                        currentUser: response.user,
+                        isAuthenticate: true,
+                    },
+                });
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};

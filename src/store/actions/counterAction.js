@@ -143,7 +143,7 @@ export const fetchCountersGet = () => (dispatch) => {
             console.log(err);
         });
 };
-export const searchCompany = (data) => (dispatch) => {
+export const searchCounter = (data) => (dispatch) => {
     fetch(api_routes.counters.searchCounter, {
         method: "POST",
         headers: {
@@ -203,6 +203,8 @@ export const addBus =
             });
     };
 export const fetchBuses = () => (dispatch) => {
+    dispatch(toggleLoading(true));
+
     fetch(api_routes.buses.index, {
         method: "GET",
         headers: {
@@ -213,6 +215,8 @@ export const fetchBuses = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
+            dispatch(toggleLoading(false));
+
             console.log(response);
             if (response.status === "success") {
                 dispatch({
@@ -249,6 +253,8 @@ export const fetchBusesGet = () => (dispatch) => {
         });
 };
 export const fetchBus = (id) => (dispatch) => {
+    dispatch(toggleLoading(true));
+
     fetch(api_routes.buses.show.replace(":id", id), {
         method: "GET",
         headers: {
@@ -259,6 +265,8 @@ export const fetchBus = (id) => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
+            dispatch(toggleLoading(false));
+
             if (response.status === "success") {
                 dispatch({
                     type: types.FETCH_BUS,

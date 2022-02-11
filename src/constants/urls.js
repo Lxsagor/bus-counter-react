@@ -7,6 +7,7 @@ export const api_routes = {
     auth_resend: API_URL + "auth/resend",
     auth_confirm: API_URL + "auth/confirm",
     auth_changePass: API_URL + "auth/changePass",
+    auth_me: API_URL + "auth/me",
 
     // SuperAdmin
     companies: {

@@ -22,7 +22,7 @@ const DriverDetails = () => {
                     </Box>
                     <Grid container spacing={5}>
                         <Grid item lg={2}>
-                            <Typography>Staff's Name :</Typography>
+                            <Typography>Driver's Name :</Typography>
                         </Grid>
                         <Grid item lg={6}>
                             <Typography className={classes.driverDText}>
