@@ -1,13 +1,13 @@
 import * as types from "../types";
 const initialState = {
     counters: [],
+    counter: [],
     divisions: [],
     districts: [],
     error: null,
     buses: [],
     bus: "",
     schedules: [],
-    loading: false,
 };
 const counterReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -15,6 +15,11 @@ const counterReducer = (state = initialState, action) => {
             return {
                 ...state,
                 counters: action.payload,
+            };
+        case types.FETCH_COUNTER:
+            return {
+                ...state,
+                counter: action.payload,
             };
         case types.FETCH_DIVISIONS:
             return {
@@ -46,11 +51,7 @@ const counterReducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload,
             };
-        case types.TOGGLE_LOADING:
-            return {
-                ...state,
-                loading: action.payload,
-            };
+
         case types.DELETE_BUS:
             return {
                 ...state,

@@ -1,24 +1,20 @@
-import React, { useEffect } from "react";
+import { Delete } from "@mui/icons-material";
+import AddIcon from "@mui/icons-material/AddCircleRounded";
 import {
     Box,
-    Typography,
-    Grid,
     Button,
     Card,
     CardContent,
+    Grid,
+    Typography,
 } from "@mui/material";
-import BusCard from "../../../components/BusCard/BusCard";
-import AddIcon from "@mui/icons-material/AddCircleRounded";
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AdminUrl } from "../../../constants/urls";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { deleteBus, fetchBuses } from "../../../store/actions/counterAction";
 import { useStyles } from "./styled";
-import { Delete } from "@mui/icons-material";
-import Swal from "sweetalert2";
-import { css } from "@emotion/react";
 
 const ManageBus = () => {
     const history = useHistory();
@@ -71,7 +67,7 @@ const ManageBus = () => {
                                             className={classes.deleteBox}
                                         >
                                             <Typography variant="h6">
-                                                Bus no: {item.bus_no}
+                                                Bus name: {item.bus_no}
                                             </Typography>
                                             <Delete
                                                 fontSize="large"
@@ -104,7 +100,7 @@ const ManageBus = () => {
                                                 }}
                                             />
                                         </Box>
-                                        <Box mt={2}>
+                                        <Box mt={1}>
                                             <Typography>
                                                 Bus Type: {item.bus_type}
                                             </Typography>
@@ -112,6 +108,12 @@ const ManageBus = () => {
                                         <Box mt={1}>
                                             <Typography variant="body2">
                                                 Total Seat: {item.total_seat}
+                                            </Typography>
+                                        </Box>
+                                        <Box mt={1}>
+                                            <Typography variant="body1">
+                                                Bus Registrstion NO:{" "}
+                                                {item.bus_reg_no}
                                             </Typography>
                                         </Box>
                                         <Box mt={2}>

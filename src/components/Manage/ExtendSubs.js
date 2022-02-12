@@ -2,7 +2,7 @@ import { Box, Button, Dialog, DialogContent, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { Grid } from "@mui/material";
-import { useStyles } from "../Contact/styled";
+import { useStyles } from "../SuperAdmin/Contact/styled";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { DatePicker, LocalizationProvider } from "@mui/lab";

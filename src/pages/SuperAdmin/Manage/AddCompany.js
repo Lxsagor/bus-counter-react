@@ -1,31 +1,23 @@
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import {
-    Box,
-    Button,
-    Dialog,
-    DialogContent,
-    Grid,
-    TextField,
-    Typography,
-} from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import "date-fns";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCompany } from "../../../store/actions/companyAction";
-import { useStyles } from "./styled";
-import AddUserDialog from "../../../components/AddUserDialog";
-import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 import { SuperAdminUrl } from "../../../constants/urls";
+import { addCompany } from "../../../store/actions/companyAction";
 import { ERROR } from "./../../../store/types";
+import { useStyles } from "./styled";
 
 const AddCompany = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const { error } = useSelector((state) => state.company);
+    const { authLoading } = useSelector((state) => state.auth);
     const [addUserDialog, setAddUserDialog] = React.useState(false);
     const [formData, setFormData] = useState({
         name: "",
@@ -269,19 +261,20 @@ const AddCompany = () => {
                                 borderRadius: "8px",
                             }}
                             type="submit"
+                            {...(authLoading && {
+                                disabled: true,
+                                startIcon: (
+                                    <BeatLoader
+                                        color="white"
+                                        loading={true}
+                                        size={10}
+                                    />
+                                ),
+                            })}
                         >
                             Add User
                         </Button>
                     </Box>
-                    {/* <Dialog
-                        maxWidth="sm"
-                        open={addUserDialog}
-                        onClose={() => setAddUserDialog(false)}
-                    >
-                        <DialogContent>
-                            <AddUserDialog />
-                        </DialogContent>
-                    </Dialog> */}
                 </form>
             </Box>
 

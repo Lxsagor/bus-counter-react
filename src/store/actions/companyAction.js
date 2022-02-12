@@ -3,12 +3,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { api_routes } from "../../constants/urls";
 import * as types from "../types";
+import { toggleAuthLoading, toggleSiteLoading } from "./authActions";
 
 toast.configure();
 
 const TOKEN = localStorage.getItem("token");
 
 export const fetchCompanies = () => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
+
     fetch(api_routes.companies.index, {
         method: "GET",
         headers: {
@@ -26,8 +29,10 @@ export const fetchCompanies = () => (dispatch) => {
                     payload: response.data,
                 });
             }
+            dispatch(toggleSiteLoading(false));
         })
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
@@ -35,6 +40,9 @@ export const fetchCompanies = () => (dispatch) => {
 export const addCompany =
     (data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleAuthLoading(true));
+        dispatch(toggleSiteLoading(true));
+
         fetch(api_routes.companies.index, {
             method: "POST",
             headers: {
@@ -46,6 +54,8 @@ export const addCompany =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
                 if (response.status === "validate_error") {
                     // Object.keys(response.data).forEach((key) => {
                     //     toast.error(response.data[key][0]);
@@ -62,15 +72,18 @@ export const addCompany =
                     toast.error(response.message);
                 }
 
+                dispatch(toggleSiteLoading(false));
                 console.log(response);
             })
             .catch((err) => {
+                dispatch(toggleSiteLoading(false));
                 console.log(err);
             });
     };
 export const fetchCompany =
     (id, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleSiteLoading(true));
         fetch(api_routes.companies.show.replace(":id", id), {
             method: "GET",
             headers: {
@@ -91,15 +104,18 @@ export const fetchCompany =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
+                dispatch(toggleSiteLoading(false));
             })
 
             .catch((err) => {
+                dispatch(toggleSiteLoading(false));
                 console.log(err);
             });
     };
 export const extendSubs =
     (id, data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleSiteLoading(true));
         fetch(api_routes.companies.show.replace(":id", id), {
             method: "PATCH",
             headers: {
@@ -122,9 +138,11 @@ export const extendSubs =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
+                dispatch(toggleSiteLoading(false));
             })
 
             .catch((err) => {
+                dispatch(toggleSiteLoading(false));
                 console.log(err);
             });
     };
@@ -132,6 +150,9 @@ export const extendSubs =
 export const addAdmin =
     (id, data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleAuthLoading(true));
+
+        dispatch(toggleSiteLoading(true));
         fetch(api_routes.admins.index.replace(":id", id), {
             method: "POST",
             headers: {
@@ -143,6 +164,8 @@ export const addAdmin =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
                 if (response.status === "validate_error") {
                     dispatch({
                         type: types.ERROR,
@@ -156,14 +179,17 @@ export const addAdmin =
                     toast.error(response.message);
                 }
 
+                dispatch(toggleSiteLoading(false));
                 console.log(response);
             })
             .catch((err) => {
+                dispatch(toggleSiteLoading(false));
                 console.log(err);
             });
     };
 
 export const fetchAdmins = (id) => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
     fetch(api_routes.admins.index.replace(":id", id), {
         method: "GET",
         headers: {
@@ -183,14 +209,17 @@ export const fetchAdmins = (id) => (dispatch) => {
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+            dispatch(toggleSiteLoading(false));
         })
 
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
 
 export const fetchAdmin = (companyId, id) => (dispatch) => {
+    dispatch(toggleSiteLoading(false));
     fetch(
         api_routes.admins.show
             .replace(":companyId", companyId)
@@ -215,14 +244,17 @@ export const fetchAdmin = (companyId, id) => (dispatch) => {
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+            dispatch(toggleSiteLoading(false));
         })
 
         .catch((err) => {
+            dispatch(toggleSiteLoading(true));
             console.log(err);
         });
 };
 
 export const suspendAdmin = (companyId, id) => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
     fetch(
         api_routes.admins.suspend
             .replace(":companyId", companyId)
@@ -248,13 +280,16 @@ export const suspendAdmin = (companyId, id) => (dispatch) => {
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+            dispatch(toggleSiteLoading(false));
         })
 
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
 export const searchCompany = (data) => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
     fetch(api_routes.companies.searchCompany, {
         method: "POST",
         headers: {
@@ -275,13 +310,16 @@ export const searchCompany = (data) => (dispatch) => {
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+            dispatch(toggleSiteLoading(false));
         })
 
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
 export const searchAdmin = (id, data) => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
     fetch(api_routes.admins.searchAdmin.replace(":companyId", id), {
         method: "POST",
         headers: {
@@ -302,36 +340,11 @@ export const searchAdmin = (id, data) => (dispatch) => {
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+            dispatch(toggleSiteLoading(false));
         })
 
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
-
-// export const fetchAdmin = (companyId, id) => (dispatch) => {
-//     fetch(api_routes.company.index.replace(":id", id).replace(":id", id), {
-//         method: "GET",
-//         headers: {
-//             "Content-type": "application/json",
-//             Accept: "application/json",
-//             Authorization: TOKEN,
-//         },
-//     })
-//         .then((response) => response.json())
-//         .then((response) => {
-//             console.log(response);
-//             if (response.status === "success") {
-//                 dispatch({
-//                     type: types.FETCH_ADMINS,
-//                     payload: response.data,
-//                 });
-//             } else if (response.status === "error") {
-//                 toast.error(response.message);
-//             }
-//         })
-
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };

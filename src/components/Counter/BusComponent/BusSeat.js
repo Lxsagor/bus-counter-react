@@ -13,10 +13,10 @@ import {
 import { Box } from "@mui/system";
 // import React, { useRef, useState } from "react";
 import { useStyles } from "./styled";
-import Busimage from "../../assets/bus.png";
-import Available from "../../assets/available.png";
-import Booked from "../../assets/booked.png";
-import Selected from "../../assets/selected.png";
+import Busimage from "../../../assets/bus.png";
+import Available from "../../../assets/available.png";
+import Booked from "../../../assets/booked.png";
+import Selected from "../../../assets/selected.png";
 import { Icon } from "@iconify/react";
 import BusTicket from "./BusTicket";
 

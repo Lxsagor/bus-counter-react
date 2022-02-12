@@ -8,7 +8,6 @@ import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { SuperAdminUrl } from "../../constants/urls";
-import SuspendCompany from "./../Suspend/SuspendCompanyDialog";
 import { useStyles } from "./styled";
 
 function createData(compnay, activity, activity_desc, IP, admin, action) {
@@ -123,17 +122,7 @@ const DashboardTable = () => {
                                 >
                                     Suspend
                                 </Button>
-                                <Dialog
-                                    maxWidth="xs"
-                                    open={suspendCompanyDialog}
-                                    onClose={() =>
-                                        setSuspendCompanyDialog(false)
-                                    }
-                                >
-                                    <DialogContent>
-                                        <SuspendCompany />
-                                    </DialogContent>
-                                </Dialog>
+
                                 <Button
                                     variant="contained"
                                     size="large"

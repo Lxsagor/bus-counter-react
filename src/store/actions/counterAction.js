@@ -3,16 +3,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { api_routes } from "../../constants/urls";
 import * as types from "../types";
+import { toggleAuthLoading, toggleSiteLoading } from "./authActions";
 
 toast.configure();
-export const toggleLoading = (status) => ({
-    type: types.TOGGLE_LOADING,
-    payload: status,
-});
 
 const TOKEN = localStorage.getItem("token");
 
 export const fetchDivisions = () => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
     fetch(api_routes.divisions.index, {
         method: "GET",
         headers: {
@@ -31,8 +29,10 @@ export const fetchDivisions = () => (dispatch) => {
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+            dispatch(toggleSiteLoading(false));
         })
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
@@ -64,6 +64,9 @@ export const fetchDistrictsByDivision = (id) => (dispatch) => {
 export const addCounter =
     (data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleAuthLoading(true));
+        dispatch(toggleSiteLoading(true));
+
         fetch(api_routes.counters.index, {
             method: "POST",
             headers: {
@@ -75,6 +78,8 @@ export const addCounter =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
                 if (response.status === "validate_error") {
                     dispatch({
                         type: types.ERROR,
@@ -87,14 +92,16 @@ export const addCounter =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
+                dispatch(toggleSiteLoading(false));
             })
             .catch((err) => {
                 console.log(err);
+                dispatch(toggleSiteLoading(false));
             });
     };
 
 export const fetchCounters = () => (dispatch) => {
-    dispatch(toggleLoading(true));
+    dispatch(toggleSiteLoading(true));
 
     fetch(api_routes.counters.index, {
         method: "GET",
@@ -106,8 +113,6 @@ export const fetchCounters = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            dispatch(toggleLoading(false));
-
             console.log(response);
             if (response.status === "success") {
                 dispatch({
@@ -115,12 +120,44 @@ export const fetchCounters = () => (dispatch) => {
                     payload: response.data,
                 });
             }
+            dispatch(toggleSiteLoading(false));
         })
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
+export const fetchCounter =
+    (id, cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleSiteLoading(true));
+        fetch(api_routes.counters.show.replace(":id", id), {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                if (response.status === "success") {
+                    dispatch({
+                        type: types.FETCH_COUNTER,
+                        payload: response.data,
+                    });
+                }
+                cb();
+                dispatch(toggleSiteLoading(false));
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
 export const fetchCountersGet = () => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
     fetch(api_routes.counters.get, {
         method: "GET",
         headers: {
@@ -138,12 +175,15 @@ export const fetchCountersGet = () => (dispatch) => {
                     payload: response.data,
                 });
             }
+            dispatch(toggleSiteLoading(false));
         })
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
 export const searchCounter = (data) => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
     fetch(api_routes.counters.searchCounter, {
         method: "POST",
         headers: {
@@ -164,9 +204,11 @@ export const searchCounter = (data) => (dispatch) => {
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+            dispatch(toggleSiteLoading(false));
         })
 
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
@@ -174,6 +216,9 @@ export const searchCounter = (data) => (dispatch) => {
 export const addBus =
     (data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleSiteLoading(true));
+        dispatch(toggleAuthLoading(true));
+
         fetch(api_routes.buses.index, {
             method: "POST",
             headers: {
@@ -185,6 +230,8 @@ export const addBus =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
                 if (response.status === "validate_error") {
                     dispatch({
                         type: types.ERROR,
@@ -197,13 +244,15 @@ export const addBus =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
+                dispatch(toggleSiteLoading(false));
             })
             .catch((err) => {
                 console.log(err);
+                dispatch(toggleSiteLoading(false));
             });
     };
 export const fetchBuses = () => (dispatch) => {
-    dispatch(toggleLoading(true));
+    dispatch(toggleSiteLoading(true));
 
     fetch(api_routes.buses.index, {
         method: "GET",
@@ -215,8 +264,6 @@ export const fetchBuses = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            dispatch(toggleLoading(false));
-
             console.log(response);
             if (response.status === "success") {
                 dispatch({
@@ -224,12 +271,16 @@ export const fetchBuses = () => (dispatch) => {
                     payload: response.data,
                 });
             }
+
+            dispatch(toggleSiteLoading(false));
         })
         .catch((err) => {
             console.log(err);
+            dispatch(toggleSiteLoading(false));
         });
 };
 export const fetchBusesGet = () => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
     fetch(api_routes.buses.get, {
         method: "GET",
         headers: {
@@ -247,13 +298,15 @@ export const fetchBusesGet = () => (dispatch) => {
                     payload: response.data,
                 });
             }
+            dispatch(toggleSiteLoading(false));
         })
         .catch((err) => {
             console.log(err);
+            dispatch(toggleSiteLoading(false));
         });
 };
 export const fetchBus = (id) => (dispatch) => {
-    dispatch(toggleLoading(true));
+    dispatch(toggleSiteLoading(true));
 
     fetch(api_routes.buses.show.replace(":id", id), {
         method: "GET",
@@ -265,8 +318,6 @@ export const fetchBus = (id) => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            dispatch(toggleLoading(false));
-
             if (response.status === "success") {
                 dispatch({
                     type: types.FETCH_BUS,
@@ -275,14 +326,19 @@ export const fetchBus = (id) => (dispatch) => {
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+
+            dispatch(toggleSiteLoading(false));
         })
         .catch((err) => {
             console.log(err);
+            dispatch(toggleSiteLoading(false));
         });
 };
 export const updateBus =
     (id, data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleSiteLoading(true));
+        dispatch(toggleAuthLoading(true));
         fetch(api_routes.buses.show.replace(":id", id), {
             method: "PATCH",
             headers: {
@@ -294,6 +350,8 @@ export const updateBus =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
                 console.log(response);
                 if (response.status === "validate_error") {
                     dispatch({
@@ -310,13 +368,16 @@ export const updateBus =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
+                dispatch(toggleSiteLoading(false));
             })
 
             .catch((err) => {
+                dispatch(toggleSiteLoading(false));
                 console.log(err);
             });
     };
 export const deleteBus = (id) => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
     fetch(api_routes.buses.show.replace(":id", id), {
         method: "DELETE",
         headers: {
@@ -336,15 +397,20 @@ export const deleteBus = (id) => (dispatch) => {
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+            dispatch(toggleSiteLoading(false));
         })
 
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };
 export const addSchedule =
     (data, cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleAuthLoading(true));
+
+        dispatch(toggleSiteLoading(true));
         fetch(api_routes.schedules.index, {
             method: "POST",
             headers: {
@@ -356,6 +422,8 @@ export const addSchedule =
         })
             .then((response) => response.json())
             .then((response) => {
+                dispatch(toggleAuthLoading(false));
+
                 if (response.status === "validate_error") {
                     dispatch({
                         type: types.ERROR,
@@ -368,13 +436,15 @@ export const addSchedule =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
+                dispatch(toggleSiteLoading(false));
             })
             .catch((err) => {
+                dispatch(toggleSiteLoading(false));
                 console.log(err);
             });
     };
 export const fetchSchedules = () => (dispatch) => {
-    dispatch(toggleLoading(true));
+    dispatch(toggleSiteLoading(true));
     fetch(api_routes.schedules.index, {
         method: "GET",
         headers: {
@@ -385,7 +455,6 @@ export const fetchSchedules = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            dispatch(toggleLoading(false));
             console.log(response);
             if (response.status === "success") {
                 dispatch({
@@ -393,8 +462,10 @@ export const fetchSchedules = () => (dispatch) => {
                     payload: response.data,
                 });
             }
+            dispatch(toggleSiteLoading(false));
         })
         .catch((err) => {
+            dispatch(toggleSiteLoading(false));
             console.log(err);
         });
 };

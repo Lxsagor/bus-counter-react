@@ -1,7 +1,7 @@
 import { Avatar, Box, Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 import Rating from "@mui/material/Rating";
-import User from "../../assets/landing/user.png";
+import User from "../../../assets/landing/user.png";
 import { useStyles } from "./styled";
 
 const CarouselCom = () => {

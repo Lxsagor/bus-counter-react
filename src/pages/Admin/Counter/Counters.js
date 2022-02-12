@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { ClipLoader, FadeLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 import { AdminUrl } from "../../../constants/urls";
 import {
     fetchCounters,
@@ -33,6 +33,7 @@ const Counters = () => {
         district_id: null,
     });
     const { divisions, districts } = useSelector((state) => state.counter);
+    const { authLoading } = useSelector((state) => state.auth);
 
     const fieldChangeHandler = (field, value) => {
         if (field === "division_id") {
@@ -193,18 +194,23 @@ const Counters = () => {
                 <Box mt={5}>
                     <Grid container spacing={3}>
                         {counters?.data?.map((item, i) => (
-                            <Grid item xs={12} lg={3}>
+                            <Grid item xs={12} lg={3} key={item.id}>
                                 <Card>
                                     <CardContent className={classes.card}>
                                         <Box mt={2}>
                                             <Typography variant="h6">
-                                                {item?.district?.name},
-                                                {item?.division?.name}
+                                                {item?.name}
                                             </Typography>
                                         </Box>
                                         <Box mt={1}>
+                                            <Typography variant="body1">
+                                                {item?.district?.name},{" "}
+                                                {item?.division?.name}
+                                            </Typography>
+                                        </Box>
+                                        <Box mt={1} variant="body2">
                                             <Typography>
-                                                Phone:
+                                                Phone:{" "}
                                                 {item?.counter_managers?.map(
                                                     (item) => item.phone
                                                 )}
@@ -215,6 +221,14 @@ const Counters = () => {
                                                 fullWidth
                                                 variant="contained"
                                                 className={classes.button}
+                                                onClick={() =>
+                                                    history.push(
+                                                        AdminUrl.manageCounter.edit.replace(
+                                                            ":id",
+                                                            item.id
+                                                        )
+                                                    )
+                                                }
                                             >
                                                 Edit Information
                                             </Button>
@@ -223,111 +237,6 @@ const Counters = () => {
                                 </Card>
                             </Grid>
                         ))}
-                        {/* <Grid item lg={3} xs={12}>
-                                                        <BusCard
-                                                            title="Shyamoli, Dhaka"
-                                                            subTitle="Phone: +88 0123456789"
-                                                            button="Edit Information"
-                                                            control={() =>
-                                                                history.push(
-                                                                    AdminUrl.manageCounter.edit.replace(
-                                                                        ":id",
-                                                                        2
-                                                                    )
-                                                                )
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid item lg={3} xs={12}>
-                                                        <BusCard
-                                                            title="Asad Gate, Dhaka"
-                                                            subTitle="Phone: +88 0123456789"
-                                                            button="Edit Information"
-                                                            control={() =>
-                                                                history.push(
-                                                                    AdminUrl.manageCounter.edit.replace(
-                                                                        ":id",
-                                                                        3
-                                                                    )
-                                                                )
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid item lg={3} xs={12}>
-                                                        <BusCard
-                                                            title="Kollyanpur, Dhaka"
-                                                            subTitle="Phone: +88 0123456789"
-                                                            button="Edit Information"
-                                                            control={() =>
-                                                                history.push(
-                                                                    AdminUrl.manageCounter.edit.replace(
-                                                                        ":id",
-                                                                        4
-                                                                    )
-                                                                )
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} lg={3}>
-                                                        <BusCard
-                                                            title="Kollyanpur, Dhaka"
-                                                            subTitle="Phone: +88 0123456789"
-                                                            button="Edit Information"
-                                                            control={() =>
-                                                                history.push(
-                                                                    AdminUrl.manageCounter.edit.replace(
-                                                                        ":id",
-                                                                        5
-                                                                    )
-                                                                )
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid item lg={3} xs={12}>
-                                                        <BusCard
-                                                            title="Kollyanpur, Dhaka"
-                                                            subTitle="Phone: +88 0123456789"
-                                                            button="Edit Information"
-                                                            control={() =>
-                                                                history.push(
-                                                                    AdminUrl.manageCounter.edit.replace(
-                                                                        ":id",
-                                                                        6
-                                                                    )
-                                                                )
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid item lg={3} xs={12}>
-                                                        <BusCard
-                                                            title="Kollyanpur, Dhaka"
-                                                            subTitle="Phone: +88 0123456789"
-                                                            button="Edit Information"
-                                                            control={() =>
-                                                                history.push(
-                                                                    AdminUrl.manageCounter.edit.replace(
-                                                                        ":id",
-                                                                        7
-                                                                    )
-                                                                )
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid item lg={3} xs={12}>
-                                                        <BusCard
-                                                            title="Kollyanpur, Dhaka"
-                                                            subTitle="Phone: +88 0123456789"
-                                                            button="Edit Information"
-                                                            control={() =>
-                                                                history.push(
-                                                                    AdminUrl.manageCounter.edit.replace(
-                                                                        ":id",
-                                                                        8
-                                                                    )
-                                                                )
-                                                            }
-                                                        />
-                                                    </Grid> */}
                     </Grid>
                 </Box>
             </Box>

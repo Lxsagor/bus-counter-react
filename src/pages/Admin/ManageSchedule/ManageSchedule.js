@@ -14,7 +14,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import "date-fns";
 import { useStyles } from "./styled";
-import ManageScheduleTable from "../../../components/ManageSchedule/ManageScheduleTable";
+import ManageScheduleTable from "../../../components/Admin/ManageSchedule/ManageScheduleTable";
 import DataPaginator from "../../../components/shared/DataPaginator";
 import { useHistory } from "react-router-dom";
 import { AdminUrl } from "../../../constants/urls";

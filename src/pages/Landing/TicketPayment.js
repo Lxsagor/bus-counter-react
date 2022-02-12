@@ -5,7 +5,7 @@ import React from "react";
 import RouteTitle from "../../components/Landing/Buses/RouteTitle";
 import { useStyles } from "./styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PaymentCard from "../../components/PaymentCard/PaymentCard";
+import PaymentCard from "../../components/Landing/PaymentCard/PaymentCard";
 import PaymentAccept from "../../components/Landing/Home/PaymentAccept";
 
 const TicketPayment = () => {

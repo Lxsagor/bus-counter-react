@@ -16,7 +16,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import "date-fns";
 import { useStyles } from "./styled";
-import Bus from "../../../components/BusComponent/Bus";
+import Bus from "../../../components/Counter/BusComponent/Bus";
 
 const Dashboard = () => {
     const classes = useStyles();

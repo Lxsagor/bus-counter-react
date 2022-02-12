@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 import { AdminUrl } from "../../../constants/urls";
 import { addBus } from "../../../store/actions/counterAction";
 import { ERROR } from "../../../store/types";
@@ -14,6 +15,7 @@ const AddBus = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { error } = useSelector((state) => state.counter);
+    const { authLoading } = useSelector((state) => state.auth);
     const [formData, setFormData] = useState({
         bus_no: "",
         bus_reg_no: "",
@@ -197,6 +199,16 @@ const AddBus = () => {
                                     variant="contained"
                                     className={classes.button}
                                     type="submit"
+                                    {...(authLoading && {
+                                        disabled: true,
+                                        startIcon: (
+                                            <BeatLoader
+                                                color="white"
+                                                loading={true}
+                                                size={10}
+                                            />
+                                        ),
+                                    })}
                                 >
                                     Add Bus
                                 </Button>

@@ -6,6 +6,7 @@ const initialState = {
     error: null,
     forget: "",
     authLoading: false,
+    siteLoading: false,
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -46,6 +47,11 @@ const AuthReducer = (state = initialState, action) => {
                 token: null,
                 isAuthenticate: false,
                 currentUser: null,
+            };
+        case types.TOGGLE_SITE_LOADING:
+            return {
+                ...state,
+                siteLoading: action.payload,
             };
         default:
             return state;

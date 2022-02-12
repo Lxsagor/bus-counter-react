@@ -12,6 +12,7 @@ import {
     fetchDistrictsByDivision,
     fetchDivisions,
     addCounter,
+    fetchCounter,
 } from "../../../store/actions/counterAction";
 import { useStyles } from "./styled";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,22 +20,26 @@ import { ERROR } from "../../../store/types";
 import { AdminUrl } from "../../../constants/urls";
 import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-const AddCounter = () => {
+const EditCounter = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const { id } = useParams();
     const { divisions, districts, error } = useSelector(
         (state) => state.counter
     );
     const { authLoading } = useSelector((state) => state.auth);
+    const { counter } = useSelector((state) => state.counter);
+    console.log(counter?.counter_managers?.map((item) => item.name));
     const [formData, setFormData] = useState({
         division_id: null,
         district_id: null,
-        name: "",
-        manager_name: "",
-        phone: "",
-        password: "",
+        name: counter.name,
+        manager_name: counter?.counter_managers?.map((item) => item?.name),
+        phone: counter?.counter_managers?.map((item) => item?.phone),
+        password: counter?.counter_managers?.map((item) => item?.password),
     });
     const [errors, setErrors] = useState({
         division_id: { text: "", show: false },
@@ -74,6 +79,11 @@ const AddCounter = () => {
         }
     }, [dispatch, formData.division_id]);
 
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchCounter(id));
+        }
+    }, [dispatch, id]);
     const submitHandler = (e) => {
         e.preventDefault();
         if (
@@ -120,7 +130,7 @@ const AddCounter = () => {
         <>
             <form onSubmit={submitHandler}>
                 <Box m={5}>
-                    <Typography variant="h6">Add Counter</Typography>
+                    <Typography variant="h6">Edit Counter</Typography>
                     <Box
                         mb={3}
                         sx={{
@@ -279,7 +289,7 @@ const AddCounter = () => {
                                         ),
                                     })}
                                 >
-                                    Add Counter
+                                    Save Information
                                 </Button>
                             </Grid>
                         </Grid>
@@ -290,4 +300,4 @@ const AddCounter = () => {
     );
 };
 
-export default AddCounter;
+export default EditCounter;

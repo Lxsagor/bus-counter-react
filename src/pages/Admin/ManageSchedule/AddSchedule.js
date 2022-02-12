@@ -27,12 +27,14 @@ import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import { ERROR } from "../../../store/types";
 import { AdminUrl } from "../../../constants/urls";
 import { useHistory } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 
 const AddSchedule = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const { counters, buses, error } = useSelector((state) => state.counter);
+    const { authLoading } = useSelector((state) => state.auth);
     const [formData, setFormData] = useState({
         bus_id: "",
         bus_no: null,
@@ -508,6 +510,16 @@ const AddSchedule = () => {
                                     variant="contained"
                                     className={classes.button}
                                     type="submit"
+                                    {...(authLoading && {
+                                        disabled: true,
+                                        startIcon: (
+                                            <BeatLoader
+                                                color="white"
+                                                loading={true}
+                                                size={10}
+                                            />
+                                        ),
+                                    })}
                                 >
                                     Assign Bus
                                 </Button>

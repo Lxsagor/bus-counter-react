@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 import { SuperAdminUrl } from "../../../constants/urls";
 import { addAdmin, fetchCompany } from "../../../store/actions/companyAction";
 import { ERROR } from "../../../store/types";
@@ -11,6 +12,7 @@ import { useStyles } from "./styled";
 
 const AddAdmin = () => {
     const { company, error } = useSelector((state) => state.company);
+    const { authLoading } = useSelector((state) => state.auth);
     const history = useHistory();
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
@@ -217,6 +219,16 @@ const AddAdmin = () => {
                                             minHeight: "55px",
                                         }}
                                         type="submit"
+                                        {...(authLoading && {
+                                            disabled: true,
+                                            startIcon: (
+                                                <BeatLoader
+                                                    color="white"
+                                                    loading={true}
+                                                    size={10}
+                                                />
+                                            ),
+                                        })}
                                     >
                                         Add Admin
                                     </Button>

@@ -1,6 +1,6 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
-import PopularCity from "../../PopularCity/PopularCity";
+import PopularCity from "../PopularCity/PopularCity";
 import { useStyles } from "./styled";
 import Sylhet from "../../../assets/landing/Sylhet.png";
 import Ctg from "../../../assets/landing/ctg.png";

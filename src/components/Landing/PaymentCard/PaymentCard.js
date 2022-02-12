@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, Card, CardContent } from "@mui/material";
-import Visa from "../../assets/landing/visa.png";
+import Visa from "../../../assets/landing/visa.png";
 import { useStyles } from "./styled";
 
 const PaymentCard = () => {

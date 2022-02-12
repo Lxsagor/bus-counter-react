@@ -11,10 +11,16 @@ export const toggleAuthLoading = (status) => ({
     payload: status,
 });
 
+export const toggleSiteLoading = (status) => ({
+    type: types.TOGGLE_SITE_LOADING,
+    payload: status,
+});
+
 export const login =
     (data, cb = () => {}) =>
     (dispatch) => {
         dispatch(toggleAuthLoading(true));
+        dispatch(toggleSiteLoading(true));
         fetch(api_routes.auth_login, {
             method: "POST",
             headers: {
@@ -50,11 +56,12 @@ export const login =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
-
+                dispatch(toggleSiteLoading(false));
                 console.log(response);
             })
             .catch((err) => {
                 console.log(err);
+                dispatch(toggleSiteLoading(false));
             });
     };
 
@@ -62,6 +69,7 @@ export const forget =
     (data, cb = () => {}) =>
     (dispatch) => {
         dispatch(toggleAuthLoading(true));
+        dispatch(toggleSiteLoading(true));
 
         fetch(api_routes.auth_forget, {
             method: "post",
@@ -95,10 +103,13 @@ export const forget =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
+                dispatch(toggleSiteLoading(false));
 
                 console.log(response);
             })
             .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+
                 console.log(err);
             });
     };
@@ -106,6 +117,7 @@ export const confirm =
     (data, cb = () => {}) =>
     (dispatch) => {
         dispatch(toggleAuthLoading(true));
+        dispatch(toggleSiteLoading(true));
 
         fetch(api_routes.auth_confirm, {
             method: "post",
@@ -134,10 +146,13 @@ export const confirm =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
+                dispatch(toggleSiteLoading(false));
 
                 console.log(response);
             })
             .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+
                 console.log(err);
             });
     };
@@ -170,6 +185,7 @@ export const changePass =
     (data, cb = () => {}) =>
     (dispatch) => {
         dispatch(toggleAuthLoading(true));
+        dispatch(toggleSiteLoading(true));
 
         fetch(api_routes.auth_changePass, {
             method: "PATCH",
@@ -198,8 +214,11 @@ export const changePass =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
+                dispatch(toggleSiteLoading(false));
             })
             .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+
                 console.log(err);
             });
     };
@@ -210,6 +229,7 @@ export const logout =
     (cb = () => {}) =>
     (dispatch) => {
         dispatch(toggleAuthLoading(true));
+        dispatch(toggleSiteLoading(true));
 
         fetch(api_routes.auth_logout, {
             method: "POST",
@@ -231,9 +251,11 @@ export const logout =
                     dispatch({ type: types.LOGOUT });
                     cb();
                 }
+                dispatch(toggleSiteLoading(false));
             })
             .catch((err) => {
                 console.log(err);
+                dispatch(toggleSiteLoading(false));
                 toast.error(err);
             });
     };

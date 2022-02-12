@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import Bus from "../../../components/BusComponent/Bus";
-import BusTicket from "../../../components/BusComponent/BusTicket";
-import TicketItem from "../../../components/BusComponent/TicketItem";
+import Bus from "../../../components/Counter/BusComponent/Bus";
+import BusTicket from "../../../components/Counter/BusComponent/BusTicket";
+import TicketItem from "../../../components/Counter/BusComponent/TicketItem";
 import SearchBox from "../../../components/SearchBox";
 import { useStyles } from "./styled";
 

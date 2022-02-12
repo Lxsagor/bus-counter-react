@@ -32,7 +32,7 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/Counter/AddCounter"),
+            () => import("../pages/Admin/Counter/EditCounter"),
             suspenseOption
         ),
     },

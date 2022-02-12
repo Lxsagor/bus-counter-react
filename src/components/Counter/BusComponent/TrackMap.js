@@ -1,7 +1,7 @@
 import { Avatar, Button, Divider, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import Track from "../../assets/map.png";
+import Track from "../../../assets/map.png";
 import { useStyles } from "./styled";
 import Bus from "./Bus.js";
 

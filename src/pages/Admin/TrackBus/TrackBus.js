@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useStyles } from "./styled";
-import Track from "../../../components/BusComponent/TrackMap";
 
 const TrackBus = () => {
     const [value, setValue] = React.useState("");
@@ -67,9 +66,6 @@ const TrackBus = () => {
                             </Button>
                         </Grid>
                     </Grid>
-                </Box>
-                <Box mt={5}>
-                    <Track />
                 </Box>
             </Box>
         </>

@@ -10,8 +10,8 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { AdminUrl } from "../../constants/urls";
-import { fetchSchedules } from "../../store/actions/counterAction";
+import { AdminUrl } from "../../../constants/urls";
+import { fetchSchedules } from "../../../store/actions/counterAction";
 import { useStyles } from "./styled";
 
 const ManageScheduleTable = () => {

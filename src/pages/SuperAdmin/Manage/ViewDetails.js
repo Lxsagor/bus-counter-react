@@ -21,7 +21,7 @@ import {
     fetchCompany,
     searchAdmin,
 } from "../../../store/actions/companyAction";
-import AddContactDialog from "../../../components/AddContactDialog";
+import AddContactDialog from "../../../components/SuperAdmin/AddContactDialog";
 import { useParams } from "react-router-dom";
 
 const ViewDetails = () => {

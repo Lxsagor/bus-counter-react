@@ -21,7 +21,7 @@ const Dashboard = () => {
                             title={"Total Counters"}
                             number={7}
                             src={dash1}
-                            text={<Link href="#">See All</Link>}
+                            text={<Link to="#">See All</Link>}
                         />
                     </Grid>
                     <Grid item xs={12} lg={3}>
@@ -29,7 +29,7 @@ const Dashboard = () => {
                             title={"Ticket Sold today"}
                             number={1410}
                             src={dash2}
-                            text={<Link href="#">See All</Link>}
+                            text={<Link to="#">See All</Link>}
                         />
                     </Grid>
                     <Grid item xs={12} lg={3}>
@@ -37,7 +37,7 @@ const Dashboard = () => {
                             title={"Bus On The Trip"}
                             number={15}
                             src={dash3}
-                            text={<Link href="#">See All</Link>}
+                            text={<Link to="#">See All</Link>}
                         />
                     </Grid>
                 </Grid>
