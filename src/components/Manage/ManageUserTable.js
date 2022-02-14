@@ -25,9 +25,6 @@ const DashboardTable = () => {
     const companies = useSelector((state) => state.company.companies);
     const [extend, setExtend] = React.useState(false);
 
-    useEffect(() => {
-        dispatch(fetchCompanies());
-    }, [dispatch]);
     // const submitHandler = (e) => {
     //     e.preventDefault();
 

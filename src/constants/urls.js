@@ -9,6 +9,9 @@ export const api_routes = {
     auth_changePass: API_URL + "auth/changePass",
     auth_me: API_URL + "auth/me",
 
+    //file
+    file: API_URL + "file-uploader",
+
     // SuperAdmin
     companies: {
         index: API_URL + "companies",
@@ -22,6 +25,7 @@ export const api_routes = {
     districts: {
         index: API_URL + "divisions/:divisionId/districts",
         show: API_URL + "divisions/:divisionId/districts/:id",
+        get: API_URL + "districts",
     },
     admins: {
         index: API_URL + "company/:id/users",
@@ -47,6 +51,10 @@ export const api_routes = {
     schedules: {
         index: API_URL + "schedulesbuses",
         show: API_URL + "schedulesbuses/:id",
+    },
+    fares: {
+        index: API_URL + "fares",
+        show: API_URL + "fares/:id",
     },
 };
 
@@ -95,7 +103,12 @@ export const AdminUrl = {
     manageSchedule: {
         index: "/admin/manageSchedule",
         addSchedule: "/admin/manageSchedule/addSchedule",
-        editSchedule: "/admin/manageSchedule/editSchedule",
+        editSchedule: "/admin/manageSchedule/:id/editSchedule",
+    },
+    manageFare: {
+        index: "/admin/manage-fare",
+        addFare: "/admin/manage-fare/add-fare",
+        editFare: "/admin/manage-fare/:id/edit-fare",
     },
     trackBus: {
         index: "/admin/trackBus",

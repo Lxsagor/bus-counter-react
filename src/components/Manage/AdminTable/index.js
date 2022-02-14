@@ -116,30 +116,6 @@ const CounterLogTable = () => {
                                                     }
                                                 });
                                             }}
-                                            // onClick={() => {
-                                            //     Swal.fire({
-                                            //         title: "Do you want to suspend the admin?",
-                                            //         showCancelButton: true,
-                                            //         confirmButtonColor:
-                                            //             " #c62828",
-                                            //         confirmButtonText:
-                                            //             "Suspend",
-                                            //     }).then((result) => {
-                                            //         if (result.isConfirmed) {
-                                            //             dispatch(
-                                            //                 suspendAdmin(
-                                            //                     id,
-                                            //                     item.id
-                                            //                 )
-                                            //             );
-                                            //             Swal.fire(
-                                            //                 "Suspended!",
-                                            //                 "",
-                                            //                 "success"
-                                            //             );
-                                            //         }
-                                            //     });
-                                            // }}
                                         >
                                             Suspend User
                                         </Button>

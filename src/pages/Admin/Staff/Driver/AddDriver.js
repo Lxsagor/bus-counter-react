@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { useStyles } from "../styled";
 import { Icon } from "@iconify/react";
+import FileUploader from "../../../../components/shared/FileUpload/FileUploader";
+import { useDispatch } from "react-redux";
+import { uploadDriverImage } from "../../../../store/actions/counterAction";
 
 const AddDriver = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const [formData, setFormData] = useState({
+        image: "",
+        name: "",
+        address: "",
+        phone: "",
+        details: "",
+        docs: [],
+    });
+    const imageChangeHandler = (file) => {
+        dispatch(
+            uploadDriverImage(file, (url) =>
+                formData((prevState) => ({
+                    ...prevState,
+                    image: url,
+                }))
+            )
+        );
+        // }
+    };
     return (
         <>
             <Box m={5}>
@@ -26,8 +49,11 @@ const AddDriver = () => {
                                 width="25"
                             />
                         </Box>
-                        <strong>Upload Image</strong>
-                        <input type="file" hidden />
+                        <FileUploader
+                            label="Upload Image"
+                            value={formData.avatar}
+                            onChange={imageChangeHandler}
+                        />
                     </Button>
                 </Box>
                 <Grid container spacing={4}>

@@ -1,40 +1,50 @@
+import { DateTimePicker } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import {
     Autocomplete,
     Box,
     Button,
     Grid,
     IconButton,
-    TextareaAutosize,
     TextField,
     Typography,
 } from "@mui/material";
 import Chip from "@mui/material/Chip";
-import React, { useState } from "react";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
 import "date-fns";
-import { useStyles } from "./styled";
-import { DateTimePicker, TimePicker } from "@mui/lab";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
+import { AdminUrl } from "../../../constants/urls";
 import {
     addSchedule,
     fetchBusesGet,
     fetchCountersGet,
+    fetchSchedule,
+    updateSchedule,
 } from "../../../store/actions/counterAction";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import { ERROR } from "../../../store/types";
-import { AdminUrl } from "../../../constants/urls";
-import { useHistory } from "react-router-dom";
-import { BeatLoader } from "react-spinners";
+import { ERROR, FETCH_SCHEDULE } from "../../../store/types";
+import { useStyles } from "./styled";
 
 const AddSchedule = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { counters, buses, error } = useSelector((state) => state.counter);
+    const { counters, buses, error, schedule } = useSelector(
+        (state) => state.counter
+    );
     const { authLoading } = useSelector((state) => state.auth);
+    const { id } = useParams();
+
+    // console.log("Shedule", schedule);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchSchedule(id));
+        }
+    }, [dispatch, id]);
+
     const [formData, setFormData] = useState({
         bus_id: "",
         bus_no: null,
@@ -42,8 +52,30 @@ const AddSchedule = () => {
         end_counter_id: null,
         mid_counters_id: [],
         date_time: null,
-        fares: [],
     });
+
+    console.log(formData);
+
+    useEffect(() => {
+        if (schedule && Object.keys(schedule).length > 0) {
+            let data = {
+                ...schedule,
+                start_counter_id: schedule.start_counter,
+                end_counter_id: schedule.end_counter,
+                bus_no: schedule.bus,
+            };
+
+            if (schedule.hasOwnProperty("mid_counters")) {
+                // data["mid_counters_id"] = schedule.mid_counters;
+                setMidCounters(schedule.mid_counters);
+            }
+
+            setFormData((prevState) => ({
+                ...prevState,
+                ...data,
+            }));
+        }
+    }, [schedule]);
 
     const [errors, setErrors] = useState({
         bus_no: { text: "", show: false },
@@ -62,6 +94,7 @@ const AddSchedule = () => {
             });
         }
     }, [error]);
+
     const fieldChangeHandler = (field, value) => {
         setErrors((prevState) => ({
             ...prevState,
@@ -88,6 +121,14 @@ const AddSchedule = () => {
             });
         };
     }, [dispatch]);
+    useEffect(() => {
+        return () => {
+            dispatch({
+                type: FETCH_SCHEDULE,
+                payload: {},
+            });
+        };
+    }, [dispatch]);
 
     const [midCounters, setMidCounters] = useState([]);
     const [selectedMidCounter, setSelecteMidCounter] = useState(null);
@@ -96,44 +137,6 @@ const AddSchedule = () => {
         let counters = [...midCounters, value];
         setMidCounters(counters);
         setSelecteMidCounter(null);
-    };
-
-    const [newFareItemStatus, setNewFareItemStatus] = useState(false);
-    const [fareItem, setFareItem] = useState({
-        starting_counter_id: null,
-        destination_counter_id: null,
-        fare: "",
-    });
-    const [fareItemError, setFareItemError] = useState({
-        starting_counter_id: { text: "", show: false },
-        destination_counter_id: { text: "", show: false },
-        fare: { text: "", show: false },
-    });
-
-    const addFareOptions = () => {
-        let fares = [...formData.fares, fareItem];
-        setFormData((prevState) => ({
-            ...prevState,
-            fares: fares,
-        }));
-        setNewFareItemStatus(false);
-        setFareItem({
-            starting_counter_id: null,
-            destination_counter_id: null,
-            fare: "",
-        });
-    };
-
-    const fareFieldChangeHandler = (field, value) => {
-        setFareItemError((prevState) => ({
-            ...prevState,
-            [field]: { text: "", show: false },
-        }));
-
-        setFareItem((prevState) => ({
-            ...prevState,
-            [field]: value,
-        }));
     };
 
     const submitHandler = (e) => {
@@ -157,29 +160,46 @@ const AddSchedule = () => {
         ) {
             form["end_counter_id"] = formData.end_counter_id.id;
         }
-        if (formData.fares.length > 0) {
-            formData.fares.forEach((item, i) => {
-                form["fares"][i]["starting_counter_id"] =
-                    item.starting_counter_id.id;
-                form["fares"][i]["destination_counter_id"] =
-                    item.destination_counter_id.id;
-            });
-        }
-        // if (formData.mid_counters_id.length > 0) {
-        //     formData.mid_counters_id.forEach((item, i) => {
-        //         form["mid_counters_id"] = [i][item.id];
-        //         console.log(item.id);
+        // if (formData.fares.length > 0) {
+        //     formData.fares.forEach((item, i) => {
+        //         form["fares"][i]["starting_counter_id"] =
+        //             item.starting_counter_id.id;
+        //         form["fares"][i]["destination_counter_id"] =
+        //             item.destination_counter_id.id;
         //     });
         // }
+
         if (midCounters.length > 0) {
+            console.log("mid", form.mid_counters_id);
+            let mid_counters_id = [];
+
             midCounters.forEach((item) => {
-                form["mid_counters_id"].push(item.id);
+                mid_counters_id.push(item.id);
+                // form["mid_counters_id"].push(item.id);
             });
+
+            form["mid_counters_id"] = mid_counters_id;
         }
         console.log(form);
-        dispatch(
-            addSchedule(form, () => history.push(AdminUrl.manageSchedule.index))
-        );
+
+        if (form.hasOwnProperty("id")) {
+            dispatch(
+                updateSchedule(form, () =>
+                    history.push(AdminUrl.manageSchedule.index)
+                )
+            );
+        } else {
+            dispatch(
+                addSchedule(form, () =>
+                    history.push(AdminUrl.manageSchedule.index)
+                )
+            );
+        }
+    };
+
+    const midCounterDelete = (counter) => {
+        let counters = midCounters.filter((item) => item !== counter);
+        setMidCounters(counters);
     };
 
     return (
@@ -309,10 +329,14 @@ const AddSchedule = () => {
                                 <Box my={1}>
                                     {midCounters.map((item, i) => (
                                         <Chip
+                                            key={i}
                                             label={item.name}
                                             variant="outlined"
                                             color="primary"
                                             sx={{ margin: "2px" }}
+                                            onDelete={() =>
+                                                midCounterDelete(item)
+                                            }
                                         />
                                     ))}
                                 </Box>
@@ -351,123 +375,8 @@ const AddSchedule = () => {
                             </Grid>
                         </Grid>
                     </Box>
-                    <Box mt={4} className={classes.fareBox}>
-                        <Typography variant="h6" mr={1}>
-                            Set Fare
-                        </Typography>
-                        <IconButton onClick={() => setNewFareItemStatus(true)}>
-                            <AddCircleRoundedIcon />
-                        </IconButton>
-                    </Box>
 
-                    {newFareItemStatus && (
-                        <>
-                            <Box my={3}>
-                                <Grid container spacing={3}>
-                                    <Grid item lg={4} xs={12}>
-                                        <Typography>
-                                            Select Starting Counter
-                                        </Typography>
-
-                                        <Autocomplete
-                                            options={counters}
-                                            optionLabel="name"
-                                            getOptionLabel={(option) =>
-                                                option.name
-                                            }
-                                            value={fareItem.starting_counter_id}
-                                            onChange={(e, data) =>
-                                                fareFieldChangeHandler(
-                                                    "starting_counter_id",
-                                                    data
-                                                )
-                                            }
-                                            error={
-                                                fareItemError
-                                                    .starting_counter_id.show
-                                            }
-                                            helperText={
-                                                fareItemError
-                                                    .starting_counter_id.text
-                                            }
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    fullWidth
-                                                    className={classes.field}
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
-                                    <Grid item lg={4} xs={12}>
-                                        <Typography>
-                                            Select Destination Counter
-                                        </Typography>
-                                        <Autocomplete
-                                            options={counters}
-                                            optionLabel="name"
-                                            getOptionLabel={(option) =>
-                                                option.name
-                                            }
-                                            value={
-                                                fareItem.destination_counter_id
-                                            }
-                                            onChange={(e, data) =>
-                                                fareFieldChangeHandler(
-                                                    "destination_counter_id",
-                                                    data
-                                                )
-                                            }
-                                            error={
-                                                fareItemError
-                                                    .destination_counter_id.show
-                                            }
-                                            helperText={
-                                                fareItemError
-                                                    .destination_counter_id.text
-                                            }
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    fullWidth
-                                                    className={classes.field}
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
-                                    <Grid item lg={4} xs={12}>
-                                        <Typography>Fare</Typography>
-                                        <TextField
-                                            fullWidth
-                                            className={classes.field}
-                                            value={fareItem.fare}
-                                            onChange={(e) =>
-                                                fareFieldChangeHandler(
-                                                    "fare",
-                                                    e.target.value
-                                                )
-                                            }
-                                            error={fareItemError.fare.show}
-                                            helperText={fareItemError.fare.text}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                            <Grid container justifyContent="flex-end">
-                                <Grid item>
-                                    <Button
-                                        variant="contained"
-                                        fullWidth
-                                        onClick={addFareOptions}
-                                    >
-                                        Add Fare
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </>
-                    )}
-
-                    {formData.fares.map((item, i) => (
+                    {/* {formData.fares.map((item, i) => (
                         <>
                             <Grid container alignItems="center">
                                 <Grid item lg={3}>
@@ -500,7 +409,7 @@ const AddSchedule = () => {
                                 </Grid>
                             </Grid>
                         </>
-                    ))}
+                    ))} */}
 
                     <Box mt={5}>
                         <Grid container spacing={3}>
@@ -521,7 +430,9 @@ const AddSchedule = () => {
                                         ),
                                     })}
                                 >
-                                    Assign Bus
+                                    {formData.hasOwnProperty("id")
+                                        ? "Update Assign Bus"
+                                        : "Assign Bus"}
                                 </Button>
                             </Grid>
                         </Grid>

@@ -9,33 +9,34 @@ toast.configure();
 
 const TOKEN = localStorage.getItem("token");
 
-export const fetchCompanies = () => (dispatch) => {
-    dispatch(toggleSiteLoading(true));
+export const fetchCompanies =
+    (pageNum = 1) =>
+    (dispatch) => {
+        dispatch(toggleSiteLoading(true));
 
-    fetch(api_routes.companies.index, {
-        method: "GET",
-        headers: {
-            "Content-type": "application/json",
-            Accept: "application/json",
-            Authorization: TOKEN,
-        },
-    })
-        .then((response) => response.json())
-        .then((response) => {
-            console.log(response);
-            if (response.status === "success") {
-                dispatch({
-                    type: types.FETCH_COMPANIES,
-                    payload: response.data,
-                });
-            }
-            dispatch(toggleSiteLoading(false));
+        fetch(api_routes.companies.index + "?page=" + pageNum, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
         })
-        .catch((err) => {
-            dispatch(toggleSiteLoading(false));
-            console.log(err);
-        });
-};
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                if (response.status === "success") {
+                    dispatch({
+                        type: types.FETCH_COMPANIES,
+                        payload: response.data,
+                    });
+                }
+                dispatch(toggleSiteLoading(false));
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
 
 export const addCompany =
     (data, cb = () => {}) =>

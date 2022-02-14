@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -27,6 +27,17 @@ const Manage = () => {
         dispatch(searchCompany(data));
     };
 
+    useEffect(() => {
+        dispatch(fetchCompanies());
+    }, [dispatch]);
+
+    const [page, setPage] = useState(1);
+
+    const handleChange = (event, value) => {
+        setPage(value);
+        dispatch(fetchCompanies(value));
+    };
+
     return (
         <>
             <Box m={5}>
@@ -49,9 +60,15 @@ const Manage = () => {
                 <Box mt={3}>
                     <ManageUserTable />
                 </Box>
-                {/* <Box m={3}>
-                    <DataPaginator />
-                </Box> */}
+                <Box m={3}>
+                    <DataPaginator
+                        count={Math.floor(
+                            companies?.meta?.total / companies?.meta?.per_page
+                        )}
+                        page={page}
+                        onChange={handleChange}
+                    />
+                </Box>
             </Box>
         </>
     );

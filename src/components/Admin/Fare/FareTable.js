@@ -10,15 +10,17 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AdminUrl } from "../../../constants/urls";
 import { fetchSchedules } from "../../../store/actions/counterAction";
+import { deleteFare } from "../../../store/actions/fareActions";
 import { useStyles } from "./styled";
 
-const ManageScheduleTable = () => {
+const FareTable = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { schedules } = useSelector((state) => state.counter);
+    const { fares } = useSelector((state) => state.fare);
 
     return (
         <>
@@ -26,48 +28,29 @@ const ManageScheduleTable = () => {
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">Boarding From</TableCell>
+                            <TableCell align="center">Starting From</TableCell>
                             <TableCell align="center">Destination</TableCell>
-                            <TableCell align="center">Dep. Time</TableCell>
-                            <TableCell align="center">Bus No</TableCell>
+                            <TableCell align="center">Fare</TableCell>
 
-                            <TableCell align="center">Mid Counters</TableCell>
                             <TableCell align="center">Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {schedules?.data?.map((item, i) => (
+                        {fares?.data?.map((item, i) => (
                             <TableRow key={i}>
                                 <TableCell
                                     component="th"
                                     scope="row"
                                     align="center"
                                 >
-                                    {item?.start_counter?.name}
+                                    {item?.start_point?.name}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {" "}
-                                    {item?.end_counter?.name}
+                                    {item?.destination_point?.name}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {moment(item.date_time).format("HH:mm:ss")}
+                                    {item?.fare}
                                 </TableCell>
-                                <TableCell align="center">
-                                    {" "}
-                                    {item.bus_no}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {item.mid_counters.map((counter, j) => (
-                                        <Chip
-                                            key={j}
-                                            label={counter.name}
-                                            variant="outlined"
-                                            color="primary"
-                                            sx={{ margin: "2px" }}
-                                        />
-                                    ))}
-                                </TableCell>
-
                                 <TableCell
                                     align="center"
                                     className={classes.actionCell}
@@ -78,21 +61,43 @@ const ManageScheduleTable = () => {
                                         className={classes.editBtn}
                                         onClick={() =>
                                             history.push(
-                                                AdminUrl.manageSchedule.editSchedule.replace(
+                                                AdminUrl.manageFare.editFare.replace(
                                                     ":id",
                                                     item.id
                                                 )
                                             )
                                         }
                                     >
-                                        Edit Info
+                                        Edit Fare
                                     </Button>
                                     <Button
                                         variant="contained"
-                                        color="primary"
+                                        color="error"
                                         fullWidth
+                                        onClick={() => {
+                                            Swal.fire({
+                                                title: "Are you sure?",
+                                                text: "You want to delete the fire!",
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Confirm",
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    dispatch(
+                                                        deleteFare(item.id)
+                                                    );
+                                                    Swal.fire(
+                                                        "Success!",
+                                                        "The Fare is deleted.",
+                                                        "success"
+                                                    );
+                                                }
+                                            });
+                                        }}
                                     >
-                                        Assign Bus
+                                        Delete Fare
                                     </Button>
                                 </TableCell>
                             </TableRow>
@@ -103,4 +108,4 @@ const ManageScheduleTable = () => {
         </>
     );
 };
-export default ManageScheduleTable;
+export default FareTable;

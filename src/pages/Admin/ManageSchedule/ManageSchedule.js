@@ -25,7 +25,7 @@ import { fetchSchedules } from "../../../store/actions/counterAction";
 const ManageSchedule = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { loading } = useSelector((state) => state.counter);
+    const { schedules } = useSelector((state) => state.counter);
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
@@ -36,6 +36,16 @@ const ManageSchedule = () => {
             ...prevState,
             [field]: value,
         }));
+    };
+    useEffect(() => {
+        dispatch(fetchSchedules());
+    }, [dispatch]);
+
+    const [page, setPage] = useState(1);
+
+    const handleChange = (event, value) => {
+        setPage(value);
+        dispatch(fetchSchedules(value));
     };
 
     return (
@@ -136,7 +146,13 @@ const ManageSchedule = () => {
                 </Box>
                 <ManageScheduleTable />
                 <Box m={3}>
-                    <DataPaginator />
+                    <DataPaginator
+                        count={Math.floor(
+                            schedules?.meta?.total / schedules?.meta?.per_page
+                        )}
+                        page={page}
+                        onChange={handleChange}
+                    />
                 </Box>
             </Box>
         </>

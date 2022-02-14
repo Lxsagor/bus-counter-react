@@ -10,6 +10,7 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import HistoryIcon from "@mui/icons-material/History";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { Icon } from "@iconify/react";
 const AdminSideNav = () => {
     const classes = useStyles();
@@ -46,6 +47,14 @@ const AdminSideNav = () => {
                             <EventNoteIcon />
                         </ListItemIcon>
                         <ListItemText>Manage Schedule</ListItemText>
+                    </ListItem>
+                </NavLink>
+                <NavLink to={AdminUrl.manageFare.index}>
+                    <ListItem>
+                        <ListItemIcon>
+                            <AttachMoneyIcon />
+                        </ListItemIcon>
+                        <ListItemText>Manage Fare</ListItemText>
                     </ListItem>
                 </NavLink>
                 <NavLink to={AdminUrl.trackBus.index}>

@@ -95,7 +95,34 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/ManageSchedule/EditSchedule"),
+            () => import("../pages/Admin/ManageSchedule/AddSchedule"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageFare.index,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Fare/Fare"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageFare.addFare,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Fare/AddFare"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageFare.editFare,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Fare/AddFare"),
             suspenseOption
         ),
     },

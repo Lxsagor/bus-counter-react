@@ -8,6 +8,7 @@ const initialState = {
     buses: [],
     bus: "",
     schedules: [],
+    schedule: {},
 };
 const counterReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -40,6 +41,11 @@ const counterReducer = (state = initialState, action) => {
             return {
                 ...state,
                 schedules: action.payload,
+            };
+        case types.FETCH_SCHEDULE:
+            return {
+                ...state,
+                schedule: action.payload,
             };
         case types.FETCH_BUS:
             return {

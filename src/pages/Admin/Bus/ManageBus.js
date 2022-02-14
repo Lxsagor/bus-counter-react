@@ -75,12 +75,16 @@ const ManageBus = () => {
                                                 cursor="pointer"
                                                 onClick={() => {
                                                     Swal.fire({
-                                                        title: "Do you want to delete the bus?",
+                                                        title: "Are you sure?",
+                                                        text: "You want to delete the bus!",
+                                                        icon: "warning",
                                                         showCancelButton: true,
                                                         confirmButtonColor:
-                                                            " #c62828",
+                                                            "#3085d6",
+                                                        cancelButtonColor:
+                                                            "#d33",
                                                         confirmButtonText:
-                                                            "Delete",
+                                                            "Confirm",
                                                     }).then((result) => {
                                                         if (
                                                             result.isConfirmed
@@ -91,8 +95,8 @@ const ManageBus = () => {
                                                                 )
                                                             );
                                                             Swal.fire(
-                                                                "Deleted!",
-                                                                "",
+                                                                "Success!",
+                                                                "The Bus is deleted.",
                                                                 "success"
                                                             );
                                                         }

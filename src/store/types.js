@@ -25,3 +25,10 @@ export const FETCH_BUSES = "FETCH_BUSES";
 export const FETCH_BUS = "FETCH_BUS";
 export const DELETE_BUS = "DELETE_BUS";
 export const FETCH_SCHEDULES = "FETCH_SCHEDULES";
+export const FETCH_SCHEDULE = "FETCH_SCHEDULE";
+
+//fare
+export const FETCH_FARES = "FETCH_FARES";
+export const FETCH_FARE = "FETCH_FARE";
+export const DELETE_FARE = "DELETE_FARE";
+export const TOGGLE_FARE_VALIDATION_ERROR = "TOGGLE_FARE_VALIDATION_ERROR";
