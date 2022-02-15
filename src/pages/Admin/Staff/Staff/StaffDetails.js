@@ -14,21 +14,23 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
     deleteDriver,
+    deleteStaff,
     fetchDriver,
+    fetchStaff,
 } from "../../../../store/actions/counterAction";
-import { ERROR, FETCH_DRIVER } from "../../../../store/types";
+import { ERROR, FETCH_DRIVER, FETCH_STAFF } from "../../../../store/types";
 import Swal from "sweetalert2";
 import { AdminUrl } from "../../../../constants/urls";
 
-const DriverDetails = () => {
+const StaffDetails = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { driver } = useSelector((state) => state.counter);
+    const { staff } = useSelector((state) => state.counter);
     const { id } = useParams();
     useEffect(() => {
         if (id) {
-            dispatch(fetchDriver(id));
+            dispatch(fetchStaff(id));
         }
     }, [dispatch, id]);
 
@@ -40,7 +42,7 @@ const DriverDetails = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: FETCH_DRIVER,
+                type: FETCH_STAFF,
                 payload: {},
             });
         };
@@ -48,7 +50,7 @@ const DriverDetails = () => {
     return (
         <>
             <Box m={5}>
-                <Typography variant="h6">Driver Details</Typography>
+                <Typography variant="h6">Staff Details</Typography>
                 <Box
                     mb={3}
                     sx={{
@@ -60,7 +62,7 @@ const DriverDetails = () => {
                 <Box my={5}>
                     <Box my={5}>
                         <Avatar
-                            src={driver.image}
+                            src={staff.image}
                             style={{
                                 width: "10%",
                                 height: "10%",
@@ -70,11 +72,11 @@ const DriverDetails = () => {
                     </Box>
                     <Grid container spacing={5}>
                         <Grid item lg={2}>
-                            <Typography>Driver's Name :</Typography>
+                            <Typography>Staff's Name :</Typography>
                         </Grid>
                         <Grid item lg={6}>
                             <Typography className={classes.driverDText}>
-                                {driver.name}
+                                {staff.name}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -85,7 +87,7 @@ const DriverDetails = () => {
                             </Grid>
                             <Grid item lg={6}>
                                 <Typography className={classes.driverDText}>
-                                    {driver.address}
+                                    {staff.address}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -97,19 +99,19 @@ const DriverDetails = () => {
                             </Grid>
                             <Grid item lg={6}>
                                 <Typography className={classes.driverDText}>
-                                    {driver.phone}
+                                    {staff.phone}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Box>
                     <Box my={3}>
                         <Typography className={classes.driverDText}>
-                            {driver.details}
+                            {staff.details}
                         </Typography>
                     </Box>
                     <Box my={3}>
                         <Stack direction="row" spacing={3} mb={3}>
-                            {driver?.docs?.map((item, i) => (
+                            {staff?.docs?.map((item, i) => (
                                 <Chip key={i} label={renderName(item)} />
                             ))}
                         </Stack>
@@ -122,9 +124,9 @@ const DriverDetails = () => {
                             className={classes.editDBtn}
                             onClick={() =>
                                 history.push(
-                                    AdminUrl.staff.editDriver.replace(
+                                    AdminUrl.staff.editStaff.replace(
                                         ":id",
-                                        driver.id
+                                        staff.id
                                     )
                                 )
                             }
@@ -139,7 +141,7 @@ const DriverDetails = () => {
                             onClick={() => {
                                 Swal.fire({
                                     title: "Are you sure?",
-                                    text: "You want to delete the driver!",
+                                    text: "You want to delete the staff!",
                                     icon: "warning",
                                     showCancelButton: true,
                                     confirmButtonColor: "#3085d6",
@@ -148,7 +150,7 @@ const DriverDetails = () => {
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         dispatch(
-                                            deleteDriver(driver.id, () =>
+                                            deleteStaff(staff.id, () =>
                                                 history.push(
                                                     AdminUrl.staff.index
                                                 )
@@ -156,14 +158,14 @@ const DriverDetails = () => {
                                         );
                                         Swal.fire(
                                             "Success!",
-                                            "The Driver is deleted.",
+                                            "The Staff is deleted.",
                                             "success"
                                         );
                                     }
                                 });
                             }}
                         >
-                            Delete Driver
+                            Delete Staff
                         </Button>
                     </Grid>
                 </Grid>
@@ -172,4 +174,4 @@ const DriverDetails = () => {
     );
 };
 
-export default DriverDetails;
+export default StaffDetails;

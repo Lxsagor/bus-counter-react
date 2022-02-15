@@ -14,22 +14,25 @@ import { Icon } from "@iconify/react";
 import FileUploader from "../../../../components/shared/FileUpload/FileUploader";
 import {
     addDriver,
+    addStaff,
+    fetchStaff,
     updateDriver,
+    updateStaff,
     uploadFile,
 } from "../../../../store/actions/counterAction";
 import { useDispatch, useSelector } from "react-redux";
 import { AdminUrl } from "../../../../constants/urls";
 import { useHistory, useParams } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
-import { ERROR, FETCH_DRIVER } from "../../../../store/types";
+import { ERROR, FETCH_DRIVER, FETCH_STAFF } from "../../../../store/types";
 import { fetchDriver } from "../../../../store/actions/counterAction";
 import { toast } from "react-toastify";
 
-const AddDriver = () => {
+const AddStaff = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { error, driver } = useSelector((state) => state.counter);
+    const { error, staff } = useSelector((state) => state.counter);
     const { authLoading } = useSelector((state) => state.auth);
     const { id } = useParams();
     const [formData, setFormData] = useState({
@@ -87,22 +90,22 @@ const AddDriver = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(fetchDriver(id));
+            dispatch(fetchStaff(id));
         }
     }, [dispatch, id]);
 
     useEffect(() => {
-        if (driver && Object.keys(driver).length > 0) {
+        if (staff && Object.keys(staff).length > 0) {
             let data = {
-                ...driver,
-                image: driver.image,
-                name: driver.name,
-                address: driver.address,
-                phone: driver.phone,
-                details: driver.details,
+                ...staff,
+                image: staff.image,
+                name: staff.name,
+                address: staff.address,
+                phone: staff.phone,
+                details: staff.details,
             };
-            if (driver.hasOwnProperty("docs")) {
-                data["docs"] = driver.docs;
+            if (staff.hasOwnProperty("docs")) {
+                data["docs"] = staff.docs;
             }
 
             setFormData((prevState) => ({
@@ -110,17 +113,17 @@ const AddDriver = () => {
                 ...data,
             }));
         }
-    }, [driver]);
+    }, [staff]);
 
     const submitHandler = (e) => {
         e.preventDefault();
         if (formData.hasOwnProperty("id")) {
             dispatch(
-                updateDriver(formData, () => history.push(AdminUrl.staff.index))
+                updateStaff(formData, () => history.push(AdminUrl.staff.index))
             );
         } else {
             dispatch(
-                addDriver(formData, () => history.push(AdminUrl.staff.index))
+                addStaff(formData, () => history.push(AdminUrl.staff.index))
             );
         }
     };
@@ -152,7 +155,7 @@ const AddDriver = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: FETCH_DRIVER,
+                type: FETCH_STAFF,
                 payload: {},
             });
         };
@@ -170,7 +173,7 @@ const AddDriver = () => {
         <>
             <form onSubmit={submitHandler}>
                 <Box m={5}>
-                    <Typography variant="h6">Add Driver</Typography>
+                    <Typography variant="h6">Add Staff</Typography>
                     <Box
                         mb={3}
                         sx={{
@@ -311,7 +314,7 @@ const AddDriver = () => {
                             >
                                 {formData.hasOwnProperty("id")
                                     ? "Update details"
-                                    : "Add Driver"}
+                                    : "Add Staff"}
                             </Button>
                         </Grid>
                     </Grid>
@@ -321,4 +324,4 @@ const AddDriver = () => {
     );
 };
 
-export default AddDriver;
+export default AddStaff;

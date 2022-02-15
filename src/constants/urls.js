@@ -56,6 +56,14 @@ export const api_routes = {
         index: API_URL + "fares",
         show: API_URL + "fares/:id",
     },
+    drivers: {
+        index: API_URL + "drivers",
+        show: API_URL + "drivers/:id",
+    },
+    staffs: {
+        index: API_URL + "staffs",
+        show: API_URL + "staffs/:id",
+    },
 };
 
 export const SuperAdminUrl = {
@@ -115,11 +123,13 @@ export const AdminUrl = {
     },
     staff: {
         index: "/admin/staff",
-        addAdmin: "/admin/staff/addAdmin",
-        addDriver: "/admin/staff/addDriver",
-        driverDetails: "/admin/staff/driver-details",
-        addHelper: "/admin/staff/addHelper",
-        helperDetails: "/admin/staff/helper-details",
+        addAdmin: "/admin/staff/add-admin",
+        addDriver: "/admin/staff/add-driver",
+        editDriver: "/admin/staff/:id/edit-driver",
+        driverDetails: "/admin/staff/:id/driver-details",
+        addStaff: "/admin/staff/add-staff",
+        staffDetails: "/admin/staff/:id/staff-details",
+        editStaff: "/admin/staff/:id/edit-staff",
     },
     accountHistory: {
         index: "/admin/accountHistory",

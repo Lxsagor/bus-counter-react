@@ -32,3 +32,15 @@ export const FETCH_FARES = "FETCH_FARES";
 export const FETCH_FARE = "FETCH_FARE";
 export const DELETE_FARE = "DELETE_FARE";
 export const TOGGLE_FARE_VALIDATION_ERROR = "TOGGLE_FARE_VALIDATION_ERROR";
+
+//file
+export const UPLOAD_FILE = "UPLOAD_FILE";
+
+//driver and staff
+export const FETCH_DRIVERS = "FETCH_DRIVERS";
+export const FETCH_DRIVER = "FETCH_DRIVER";
+export const DELETE_DRIVER = "DELETE_DRIVER";
+
+export const FETCH_STAFFS = "FETCH_STAFFS";
+export const FETCH_STAFF = "FETCH_STAFF";
+export const DELETE_STAFF = "DELETE_STAFF";

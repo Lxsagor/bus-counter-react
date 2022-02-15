@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import admin from "../../../assets/admin_dashboard_image/admin.png";
@@ -13,11 +13,18 @@ import DriverTable from "../../../components/Admin/Staff/DriverTable";
 import HelperTable from "../../../components/Admin/Staff/HelperTable";
 import { useHistory } from "react-router-dom";
 import { AdminUrl } from "../../../constants/urls";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    fetchDrivers,
+    fetchStaffs,
+} from "../../../store/actions/counterAction";
 
 const Staff = () => {
     const classes = useStyles();
     const history = useHistory();
-    const [field, setField] = useState("admin");
+    const dispatch = useDispatch();
+    const { drivers, staffs } = useSelector((state) => state.counter);
+    const [field, setField] = useState("driver");
     const handleAdmin = () => {
         setField("admin");
     };
@@ -35,9 +42,15 @@ const Staff = () => {
             history.push(AdminUrl.staff.addDriver);
         }
         if (field === "staff") {
-            history.push(AdminUrl.staff.addHelper);
+            history.push(AdminUrl.staff.addStaff);
         }
     };
+    useEffect(() => {
+        dispatch(fetchDrivers());
+    }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchStaffs());
+    }, [dispatch]);
 
     return (
         <>
@@ -54,14 +67,14 @@ const Staff = () => {
                         <Grid item xs={12} lg={3}>
                             <Card
                                 title={"Total Drivers"}
-                                number={14}
+                                number={drivers?.meta?.total}
                                 src={driver}
                             />
                         </Grid>
                         <Grid item xs={12} lg={3}>
                             <Card
                                 title={"Total Staffs"}
-                                number={15}
+                                number={staffs?.meta?.total}
                                 src={staff}
                             />
                         </Grid>

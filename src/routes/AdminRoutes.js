@@ -165,6 +165,15 @@ const AdminRoutes = [
         ),
     },
     {
+        path: AdminUrl.staff.editDriver,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Driver/AddDriver"),
+            suspenseOption
+        ),
+    },
+    {
         path: AdminUrl.staff.driverDetails,
         layout: AdminLayout,
         meta: { requiresAuth: false },
@@ -175,20 +184,29 @@ const AdminRoutes = [
     },
 
     {
-        path: AdminUrl.staff.addHelper,
+        path: AdminUrl.staff.addStaff,
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/Staff/Helper/AddHelper"),
+            () => import("../pages/Admin/Staff/Staff/AddStaff"),
             suspenseOption
         ),
     },
     {
-        path: AdminUrl.staff.helperDetails,
+        path: AdminUrl.staff.editStaff,
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/Staff/Helper/HelperDetails"),
+            () => import("../pages/Admin/Staff/Staff/AddStaff"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.staff.staffDetails,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Staff/StaffDetails"),
             suspenseOption
         ),
     },

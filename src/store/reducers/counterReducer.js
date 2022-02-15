@@ -9,6 +9,10 @@ const initialState = {
     bus: "",
     schedules: [],
     schedule: {},
+    drivers: [],
+    driver: {},
+    staffs: [],
+    staff: {},
 };
 const counterReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -47,6 +51,26 @@ const counterReducer = (state = initialState, action) => {
                 ...state,
                 schedule: action.payload,
             };
+        case types.FETCH_DRIVERS:
+            return {
+                ...state,
+                drivers: action.payload,
+            };
+        case types.FETCH_DRIVER:
+            return {
+                ...state,
+                driver: action.payload,
+            };
+        case types.FETCH_STAFFS:
+            return {
+                ...state,
+                staffs: action.payload,
+            };
+        case types.FETCH_STAFF:
+            return {
+                ...state,
+                staff: action.payload,
+            };
         case types.FETCH_BUS:
             return {
                 ...state,
@@ -64,6 +88,26 @@ const counterReducer = (state = initialState, action) => {
                 buses: {
                     ...state.buses,
                     data: state.buses.data.filter(
+                        (item) => item.id !== action.payload
+                    ),
+                },
+            };
+        case types.DELETE_DRIVER:
+            return {
+                ...state,
+                drivers: {
+                    ...state.drivers,
+                    data: state.drivers.data.filter(
+                        (item) => item.id !== action.payload
+                    ),
+                },
+            };
+        case types.DELETE_STAFF:
+            return {
+                ...state,
+                staffs: {
+                    ...state.staffs,
+                    data: state.staffs.data.filter(
                         (item) => item.id !== action.payload
                     ),
                 },

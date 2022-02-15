@@ -6,65 +6,39 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AdminUrl } from "../../../constants/urls";
 import { useStyles } from "./styled";
 
-function createData(
-    bus_no,
-    boarding_time,
-    destination,
-    dep_time,
-    total_fare,
-    action
-) {
-    return { bus_no, boarding_time, destination, dep_time, total_fare, action };
-}
-
-const rows = [
-    createData("DTR- 0000001", "KP- Ac Counter", "Cumilla", "9.35 AM", "200"),
-    createData("DTR- 0000001", "KP- Ac Counter", "Cumilla", "9.35 AM", "200"),
-    createData("DTR- 0000001", "KP- Ac Counter", "Cumilla", "9.35 AM", "200"),
-    createData("DTR- 0000001", "KP- Ac Counter", "Cumilla", "9.35 AM", "200"),
-];
-
 const DriverTable = () => {
     const classes = useStyles();
     const history = useHistory();
+    const { drivers } = useSelector((state) => state.counter);
 
     return (
         <TableContainer>
             <Table className={classes.table}>
-                {/* <TableRow>
-                    <TableCell align="center">Admin</TableCell>
-                    <TableCell align="center">Driver</TableCell>
-                    <TableCell align="center">Staff</TableCell>
-                </TableRow> */}
                 <TableHead>
                     <TableRow>
                         <TableCell align="center">Name</TableCell>
                         <TableCell align="center">Address</TableCell>
                         <TableCell align="center">Phone</TableCell>
-
                         <TableCell align="center">Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row, i) => (
+                    {drivers?.data?.map((item, i) => (
                         <TableRow key={i}>
                             <TableCell
                                 component="th"
                                 scope="row"
                                 align="center"
                             >
-                                {row.bus_no}
+                                {item.name}
                             </TableCell>
-                            <TableCell align="center">
-                                {row.boarding_time}
-                            </TableCell>
-                            <TableCell align="center">
-                                {row.destination}
-                            </TableCell>
+                            <TableCell align="center">{item.address}</TableCell>
+                            <TableCell align="center">{item.phone}</TableCell>
 
                             <TableCell
                                 align="center"
@@ -77,7 +51,7 @@ const DriverTable = () => {
                                         history.push(
                                             AdminUrl.staff.driverDetails.replace(
                                                 ":id",
-                                                1
+                                                item.id
                                             )
                                         )
                                     }

@@ -9,6 +9,7 @@ const FileUploader = ({
     label = "Add Banner Image",
     value = null,
     onChange,
+    accept,
 }) => {
     const classes = useStyles();
     const imageRef = useRef(null);
@@ -42,6 +43,10 @@ const FileUploader = ({
                 type="file"
                 style={{ display: "none" }}
                 onChange={(e) => changeHandler(e)}
+                {...(accept && {
+                    accept: accept,
+                })}
+                // accept={accept}
             />
         </>
     );

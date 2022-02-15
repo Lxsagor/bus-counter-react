@@ -164,7 +164,7 @@ const Fare = () => {
                                         )
                                     }
                                     error={errors.starting_district_id.show}
-                                    helpertext={
+                                    helperText={
                                         errors.starting_district_id.text
                                     }
                                     renderInput={(params) => (
@@ -194,7 +194,7 @@ const Fare = () => {
                                         )
                                     }
                                     error={errors.destination_district_id.show}
-                                    helpertext={
+                                    helperText={
                                         errors.destination_district_id.text
                                     }
                                     renderInput={(params) => (
@@ -223,7 +223,7 @@ const Fare = () => {
                                         )
                                     }
                                     error={errors.fare.show}
-                                    helpertext={errors.fare.text}
+                                    helperText={errors.fare.text}
                                 />
                             </Grid>
                         </Grid>
