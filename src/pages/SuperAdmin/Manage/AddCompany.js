@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { SuperAdminUrl } from "../../../constants/urls";
-import { addCompany } from "../../../store/actions/companyAction";
-import { ERROR } from "./../../../store/types";
+import { addCompany } from "../../../store/actions/SuperAdmin/companyAction";
+import { COMPANY_VALIDATE_ERROR, ERROR } from "./../../../store/types";
 import { useStyles } from "./styled";
 
 const AddCompany = () => {
@@ -17,7 +17,7 @@ const AddCompany = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { error } = useSelector((state) => state.company);
-    const { authLoading } = useSelector((state) => state.auth);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const [addUserDialog, setAddUserDialog] = React.useState(false);
     const [formData, setFormData] = useState({
         name: "",
@@ -72,7 +72,7 @@ const AddCompany = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: COMPANY_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -261,7 +261,7 @@ const AddCompany = () => {
                                 borderRadius: "8px",
                             }}
                             type="submit"
-                            {...(authLoading && {
+                            {...(buttonLoading && {
                                 disabled: true,
                                 startIcon: (
                                     <BeatLoader

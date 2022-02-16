@@ -17,13 +17,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     fetchDrivers,
     fetchStaffs,
-} from "../../../store/actions/counterAction";
+} from "../../../store/actions/Admin/staffAction";
 
 const Staff = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { drivers, staffs } = useSelector((state) => state.counter);
+    const { drivers, staffs } = useSelector((state) => state.staff);
     const [field, setField] = useState("driver");
     const handleAdmin = () => {
         setField("admin");

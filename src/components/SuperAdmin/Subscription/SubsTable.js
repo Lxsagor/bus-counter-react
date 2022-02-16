@@ -13,7 +13,7 @@ import { useStyles } from "./styled";
 import { useDispatch, useSelector } from "react-redux";
 // import { SuperAdminUrl } from "../../constants/urls";
 // import SuspendCompany from "./../Suspend/SuspendCompanyDialog";
-import { fetchCompanies } from "../../../store/actions/companyAction";
+import { fetchCompanies } from "../../../store/actions/SuperAdmin/companyAction";
 const SubsTable = () => {
     const classes = useStyles();
     const history = useHistory();

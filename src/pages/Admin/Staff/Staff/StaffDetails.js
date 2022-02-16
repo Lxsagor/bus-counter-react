@@ -17,8 +17,12 @@ import {
     deleteStaff,
     fetchDriver,
     fetchStaff,
-} from "../../../../store/actions/counterAction";
-import { ERROR, FETCH_DRIVER, FETCH_STAFF } from "../../../../store/types";
+} from "../../../../store/actions/Admin/staffAction";
+import {
+    STAFF_VALIDATE_ERROR,
+    FETCH_DRIVER,
+    FETCH_STAFF,
+} from "../../../../store/types";
 import Swal from "sweetalert2";
 import { AdminUrl } from "../../../../constants/urls";
 
@@ -26,7 +30,7 @@ const StaffDetails = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { staff } = useSelector((state) => state.counter);
+    const { staff } = useSelector((state) => state.staff);
     const { id } = useParams();
     useEffect(() => {
         if (id) {

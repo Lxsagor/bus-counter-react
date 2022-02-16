@@ -14,12 +14,14 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useStyles } from "../../../components/dashboard/styled";
 import ExtendSubs from "../../../components/Manage/ExtendSubs";
-import { fetchAdmin, fetchCompany } from "../../../store/actions/companyAction";
+import { fetchCompany } from "../../../store/actions/SuperAdmin/companyAction";
+import { fetchAdmin } from "../../../store/actions/SuperAdmin/adminAction";
 
 const ViewProfile = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { company, admin } = useSelector((state) => state.company);
+    const { company } = useSelector((state) => state.company);
+    const { admin } = useSelector((state) => state.admin);
     const [extend, setExtend] = React.useState(false);
 
     const { id, companyId } = useParams();

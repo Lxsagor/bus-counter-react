@@ -15,11 +15,13 @@ import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { AdminUrl } from "../../../constants/urls";
 import {
+    searchCounter,
     fetchCounters,
+} from "../../../store/actions/Admin/counterAction";
+import {
     fetchDistrictsByDivision,
     fetchDivisions,
-    searchCounter,
-} from "../../../store/actions/counterAction";
+} from "../../../store/actions/sharedAction.js";
 import { FETCH_DISTRICTS, FETCH_DIVISIONS } from "../../../store/types";
 import { useStyles } from "./styled";
 
@@ -27,13 +29,13 @@ const Counters = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { counters, loading } = useSelector((state) => state.counter);
+    const { counters } = useSelector((state) => state.counter);
     const [formData, setFormData] = useState({
         division_id: null,
         district_id: null,
     });
     const { divisions, districts } = useSelector((state) => state.counter);
-    const { authLoading } = useSelector((state) => state.auth);
+    const { buttonLoading } = useSelector((state) => state.shared);
 
     const fieldChangeHandler = (field, value) => {
         if (field === "division_id") {

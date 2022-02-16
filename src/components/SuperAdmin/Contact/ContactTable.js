@@ -17,7 +17,7 @@ import moment from "moment";
 
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { fetchCompanies } from "../../../store/actions/companyAction";
+import { fetchCompanies } from "../../../store/actions/SuperAdmin/companyAction";
 
 const ContactTable = () => {
     const classes = useStyles();

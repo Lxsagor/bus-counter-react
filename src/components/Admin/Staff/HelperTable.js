@@ -14,7 +14,7 @@ import { useStyles } from "./styled";
 const StaffTable = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { staffs } = useSelector((state) => state.counter);
+    const { staffs } = useSelector((state) => state.staff);
 
     return (
         <TableContainer>

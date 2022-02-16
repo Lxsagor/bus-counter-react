@@ -15,22 +15,21 @@ import FileUploader from "../../../../components/shared/FileUpload/FileUploader"
 import {
     addDriver,
     updateDriver,
-    uploadFile,
-} from "../../../../store/actions/counterAction";
+} from "../../../../store/actions/Admin/staffAction.js";
+import { uploadFile } from "../../../../store/actions/sharedAction.js";
 import { useDispatch, useSelector } from "react-redux";
 import { AdminUrl } from "../../../../constants/urls";
 import { useHistory, useParams } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
-import { ERROR, FETCH_DRIVER } from "../../../../store/types";
-import { fetchDriver } from "../../../../store/actions/counterAction";
-import { toast } from "react-toastify";
+import { STAFF_VALIDATE_ERROR, FETCH_DRIVER } from "../../../../store/types";
+import { fetchDriver } from "../../../../store/actions/Admin/staffAction";
 
 const AddDriver = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { error, driver } = useSelector((state) => state.counter);
-    const { authLoading } = useSelector((state) => state.auth);
+    const { error, driver } = useSelector((state) => state.staff);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const { id } = useParams();
     const [formData, setFormData] = useState({
         image: null,
@@ -144,7 +143,7 @@ const AddDriver = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: STAFF_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -298,7 +297,7 @@ const AddDriver = () => {
                                 variant="contained"
                                 className={classes.addDriverBtn}
                                 type="submit"
-                                {...(authLoading && {
+                                {...(buttonLoading && {
                                     disabled: true,
                                     startIcon: (
                                         <BeatLoader

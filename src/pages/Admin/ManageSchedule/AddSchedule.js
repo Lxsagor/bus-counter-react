@@ -19,22 +19,22 @@ import { BeatLoader } from "react-spinners";
 import { AdminUrl } from "../../../constants/urls";
 import {
     addSchedule,
-    fetchBusesGet,
-    fetchCountersGet,
     fetchSchedule,
     updateSchedule,
-} from "../../../store/actions/counterAction";
-import { ERROR, FETCH_SCHEDULE } from "../../../store/types";
+} from "../../../store/actions/Admin/scheduleAction.js";
+import { fetchBusesGet } from "../../../store/actions/Admin/busAction";
+import { fetchCountersGet } from "../../../store/actions/Admin/counterAction";
+import { SCHEDULE_VALIDATE_ERROR, FETCH_SCHEDULE } from "../../../store/types";
 import { useStyles } from "./styled";
 
 const AddSchedule = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { counters, buses, error, schedule } = useSelector(
-        (state) => state.counter
-    );
-    const { authLoading } = useSelector((state) => state.auth);
+    const { counters } = useSelector((state) => state.counter);
+    const { buses } = useSelector((state) => state.bus);
+    const { error, schedule } = useSelector((state) => state.schedule);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const { id } = useParams();
 
     // console.log("Shedule", schedule);
@@ -116,7 +116,7 @@ const AddSchedule = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: SCHEDULE_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -419,7 +419,7 @@ const AddSchedule = () => {
                                     variant="contained"
                                     className={classes.button}
                                     type="submit"
-                                    {...(authLoading && {
+                                    {...(buttonLoading && {
                                         disabled: true,
                                         startIcon: (
                                             <BeatLoader

@@ -10,13 +10,13 @@ import { useDispatch } from "react-redux";
 import { AdminUrl } from "../../../constants/urls";
 import { Delete } from "@mui/icons-material";
 import Swal from "sweetalert2";
-import { fetchFares } from "../../../store/actions/fareActions";
+import { fetchFares } from "../../../store/actions/Admin/fareActions";
 import FareTable from "../../../components/Admin/Fare/FareTable";
 
 const Fare = () => {
     const history = useHistory();
     const classes = useStyles();
-    const { fares } = useSelector((state) => state.counter);
+    const { fares } = useSelector((state) => state.fare);
     const dispatch = useDispatch();
 
     useEffect(() => {

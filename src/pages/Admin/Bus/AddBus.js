@@ -6,16 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { AdminUrl } from "../../../constants/urls";
-import { addBus } from "../../../store/actions/counterAction";
-import { ERROR } from "../../../store/types";
+import { addBus } from "../../../store/actions/Admin/busAction";
+import { BUS_VALIDATE_ERROR, ERROR } from "../../../store/types";
 import { useStyles } from "./styled";
 
 const AddBus = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { error } = useSelector((state) => state.counter);
-    const { authLoading } = useSelector((state) => state.auth);
+    const { error } = useSelector((state) => state.bus);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const [formData, setFormData] = useState({
         bus_no: "",
         bus_reg_no: "",
@@ -86,7 +86,7 @@ const AddBus = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: BUS_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -199,7 +199,7 @@ const AddBus = () => {
                                     variant="contained"
                                     className={classes.button}
                                     type="submit"
-                                    {...(authLoading && {
+                                    {...(buttonLoading && {
                                         disabled: true,
                                         startIcon: (
                                             <BeatLoader

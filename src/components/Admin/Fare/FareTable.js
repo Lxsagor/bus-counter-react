@@ -12,8 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AdminUrl } from "../../../constants/urls";
-import { fetchSchedules } from "../../../store/actions/counterAction";
-import { deleteFare } from "../../../store/actions/fareActions";
+import { fetchSchedules } from "../../../store/actions/Admin/scheduleAction";
+import { deleteFare } from "../../../store/actions/Admin/fareActions";
 import { useStyles } from "./styled";
 
 const FareTable = () => {

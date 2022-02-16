@@ -14,7 +14,7 @@ import { useStyles } from "./styled";
 const DriverTable = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { drivers } = useSelector((state) => state.counter);
+    const { drivers } = useSelector((state) => state.staff);
 
     return (
         <TableContainer>

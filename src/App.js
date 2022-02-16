@@ -6,10 +6,10 @@ import LoadingPage from "./components/shared/LoadingPage";
 import PublicRoute from "./components/shared/Router/PublicRoute";
 import { LandingUrl } from "./constants/urls";
 import routes from "./routes";
-import { fetchMe } from "./store/actions/authActions";
+import { fetchMe } from "./store/actions/Auth/authActions";
 
 const App = () => {
-    const { siteLoading } = useSelector((state) => state.auth);
+    const { siteLoading } = useSelector((state) => state.shared);
     const dispatch = useDispatch();
     const theme = useMemo(() => {
         return createTheme({

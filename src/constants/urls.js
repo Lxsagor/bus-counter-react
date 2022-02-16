@@ -99,19 +99,19 @@ export const AdminUrl = {
         index: "/admin/dashboard",
     },
     manageCounter: {
-        index: "/admin/manageCounter",
-        add: "/admin/manageCounter/add",
-        edit: "/admin/manageCounter/edit/:id",
+        index: "/admin/manage-counter",
+        add: "/admin/manage-counter/add",
+        edit: "/admin/manage-counter/edit/:id",
     },
     manageBus: {
-        index: "/admin/manageBus",
-        editbusinfo: "/admin/manageBus/editbusinfo/:id",
-        addbus: "/admin/manageBus/addbus",
+        index: "/admin/manage-bus",
+        editbusinfo: "/admin/manage-bus/edit-bus-info/:id",
+        addbus: "/admin/manage-bus/add-bus",
     },
     manageSchedule: {
-        index: "/admin/manageSchedule",
-        addSchedule: "/admin/manageSchedule/addSchedule",
-        editSchedule: "/admin/manageSchedule/:id/editSchedule",
+        index: "/admin/manage-schedule",
+        addSchedule: "/admin/manage-schedule/add-schedule",
+        editSchedule: "/admin/manage-schedule/:id/edit-schedule",
     },
     manageFare: {
         index: "/admin/manage-fare",

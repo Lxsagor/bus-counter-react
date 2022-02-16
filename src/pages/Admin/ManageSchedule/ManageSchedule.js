@@ -20,12 +20,12 @@ import { useHistory } from "react-router-dom";
 import { AdminUrl } from "../../../constants/urls";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchSchedules } from "../../../store/actions/counterAction";
+import { fetchSchedules } from "../../../store/actions/Admin/scheduleAction";
 
 const ManageSchedule = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { schedules } = useSelector((state) => state.counter);
+    const { schedules } = useSelector((state) => state.schedule);
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({

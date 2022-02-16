@@ -11,14 +11,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AdminUrl } from "../../../constants/urls";
-import { fetchSchedules } from "../../../store/actions/counterAction";
+import { fetchSchedules } from "../../../store/actions/Admin/counterAction";
 import { useStyles } from "./styled";
 
 const ManageScheduleTable = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { schedules } = useSelector((state) => state.counter);
+    const { schedules } = useSelector((state) => state.schedule);
 
     return (
         <>

@@ -8,14 +8,14 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
+import { addCounter } from "../../../store/actions/Admin/counterAction";
 import {
     fetchDistrictsByDivision,
     fetchDivisions,
-    addCounter,
-} from "../../../store/actions/counterAction";
+} from "../../../store/actions/sharedAction.js";
 import { useStyles } from "./styled";
 import { useDispatch, useSelector } from "react-redux";
-import { ERROR } from "../../../store/types";
+import { COUNTER_VALIDATE_ERROR, ERROR } from "../../../store/types";
 import { AdminUrl } from "../../../constants/urls";
 import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
@@ -24,10 +24,9 @@ const AddCounter = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { divisions, districts, error } = useSelector(
-        (state) => state.counter
-    );
-    const { authLoading } = useSelector((state) => state.auth);
+    const { error } = useSelector((state) => state.counter);
+    const { divisions, districts } = useSelector((state) => state.shared);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const [formData, setFormData] = useState({
         division_id: null,
         district_id: null,
@@ -111,7 +110,7 @@ const AddCounter = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: COUNTER_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -268,7 +267,7 @@ const AddCounter = () => {
                                     size="large"
                                     className={classes.editButton}
                                     type="submit"
-                                    {...(authLoading && {
+                                    {...(buttonLoading && {
                                         disabled: true,
                                         startIcon: (
                                             <BeatLoader

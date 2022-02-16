@@ -13,7 +13,7 @@ import { SuperAdminUrl } from "../../../constants/urls";
 import {
     fetchAdmins,
     suspendAdmin,
-} from "../../../store/actions/companyAction";
+} from "../../../store/actions/SuperAdmin/adminAction";
 import { useStyles } from "./styled";
 
 const CounterLogTable = () => {
@@ -21,7 +21,7 @@ const CounterLogTable = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [suspendCompanyDialog, setSuspendCompanyDialog] = useState(false);
-    const { admins } = useSelector((state) => state.company);
+    const { admins } = useSelector((state) => state.admin);
     const { id } = useParams();
 
     useEffect(() => {

@@ -18,22 +18,26 @@ import {
     fetchStaff,
     updateDriver,
     updateStaff,
-    uploadFile,
-} from "../../../../store/actions/counterAction";
+} from "../../../../store/actions/Admin/staffAction";
+import { uploadFile } from "../../../../store/actions/sharedAction.js";
 import { useDispatch, useSelector } from "react-redux";
 import { AdminUrl } from "../../../../constants/urls";
 import { useHistory, useParams } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
-import { ERROR, FETCH_DRIVER, FETCH_STAFF } from "../../../../store/types";
-import { fetchDriver } from "../../../../store/actions/counterAction";
+import {
+    STAFF_VALIDATE_ERROR,
+    FETCH_DRIVER,
+    FETCH_STAFF,
+} from "../../../../store/types";
+import { fetchDriver } from "../../../../store/actions/Admin/staffAction";
 import { toast } from "react-toastify";
 
 const AddStaff = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { error, staff } = useSelector((state) => state.counter);
-    const { authLoading } = useSelector((state) => state.auth);
+    const { error, staff } = useSelector((state) => state.staff);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const { id } = useParams();
     const [formData, setFormData] = useState({
         image: null,
@@ -147,7 +151,7 @@ const AddStaff = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: STAFF_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -301,7 +305,7 @@ const AddStaff = () => {
                                 variant="contained"
                                 className={classes.addDriverBtn}
                                 type="submit"
-                                {...(authLoading && {
+                                {...(buttonLoading && {
                                     disabled: true,
                                     startIcon: (
                                         <BeatLoader

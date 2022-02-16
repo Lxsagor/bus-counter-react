@@ -1,38 +1,40 @@
-import * as types from "../types";
+import * as types from "../../types";
 const initialState = {
-    fares: [],
-    fare: {},
     error: null,
+    buses: [],
+    bus: {},
 };
-const fareReducer = (state = initialState, action) => {
+const busReducer = (state = initialState, action) => {
     switch (action.type) {
-        case types.FETCH_FARES:
+        case types.FETCH_BUSES:
             return {
                 ...state,
-                fares: action.payload,
+                buses: action.payload,
             };
-        case types.FETCH_FARE:
+        case types.FETCH_BUS:
             return {
                 ...state,
-                fare: action.payload,
+                bus: action.payload,
             };
-        case types.TOGGLE_FARE_VALIDATION_ERROR:
+        case types.BUS_VALIDATE_ERROR:
             return {
                 ...state,
                 error: action.payload,
             };
-        case types.DELETE_FARE:
+
+        case types.DELETE_BUS:
             return {
                 ...state,
-                fares: {
-                    ...state.fares,
-                    data: state.fares.data.filter(
+                buses: {
+                    ...state.buses,
+                    data: state.buses.data.filter(
                         (item) => item.id !== action.payload
                     ),
                 },
             };
+
         default:
             return state;
     }
 };
-export default fareReducer;
+export default busReducer;

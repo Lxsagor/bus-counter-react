@@ -11,21 +11,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { AdminUrl } from "../../../constants/urls";
-import { fetchDistricts } from "../../../store/actions/counterAction";
+import { fetchDistricts } from "../../../store/actions/sharedAction";
 import {
     addFare,
     fetchFare,
     updateFare,
-} from "../../../store/actions/fareActions";
-import { FETCH_FARE, TOGGLE_FARE_VALIDATION_ERROR } from "../../../store/types";
+} from "../../../store/actions/Admin/fareActions";
+import { FETCH_FARE, FARE_VALIDATE_ERROR } from "../../../store/types";
 import { useStyles } from "./styled";
 
 const Fare = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { districts } = useSelector((state) => state.counter);
+    const { districts } = useSelector((state) => state.shared);
     const { fare } = useSelector((state) => state.fare);
-    const { error } = useSelector((state) => state.counter);
+    const { error } = useSelector((state) => state.fare);
     const classes = useStyles();
     const [formData, setFormData] = useState({
         starting_district_id: null,
@@ -40,7 +40,7 @@ const Fare = () => {
         fare: { text: "", show: false },
     });
     const { id } = useParams();
-    const { authLoading } = useSelector((state) => state.auth);
+    const { buttonLoading } = useSelector((state) => state.shared);
 
     const fieldChangeHandler = (field, value) => {
         setErrors((prevState) => ({
@@ -91,7 +91,7 @@ const Fare = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: TOGGLE_FARE_VALIDATION_ERROR,
+                type: FARE_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -235,7 +235,7 @@ const Fare = () => {
                                         variant="contained"
                                         type="submit"
                                         className={classes.btn}
-                                        {...(authLoading && {
+                                        {...(buttonLoading && {
                                             disabled: true,
                                             startIcon: (
                                                 <BeatLoader

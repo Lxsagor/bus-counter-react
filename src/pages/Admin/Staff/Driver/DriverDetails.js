@@ -15,8 +15,8 @@ import { useDispatch } from "react-redux";
 import {
     deleteDriver,
     fetchDriver,
-} from "../../../../store/actions/counterAction";
-import { ERROR, FETCH_DRIVER } from "../../../../store/types";
+} from "../../../../store/actions/Admin/staffAction";
+import { STAFF_VALIDATE_ERROR, FETCH_DRIVER } from "../../../../store/types";
 import Swal from "sweetalert2";
 import { AdminUrl } from "../../../../constants/urls";
 
@@ -24,7 +24,7 @@ const DriverDetails = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { driver } = useSelector((state) => state.counter);
+    const { driver } = useSelector((state) => state.staff);
     const { id } = useParams();
     useEffect(() => {
         if (id) {

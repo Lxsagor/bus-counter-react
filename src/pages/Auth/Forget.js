@@ -5,15 +5,16 @@ import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { AuthUrl } from "../../constants/urls";
-import { forget } from "../../store/actions/authActions";
-import { ERROR, TOGGLE_AUTH_LOADING } from "../../store/types";
+import { forget } from "../../store/actions/Auth/authActions";
+import { AUTH_VALIDATE_ERROR, TOGGLE_BUTTON_LOADING } from "../../store/types";
 import { useStyles } from "./styled";
 
 const Forget = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { error, authLoading } = useSelector((state) => state.auth);
+    const { error } = useSelector((state) => state.auth);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const [formData, setFormData] = useState({
         phone: "",
     });
@@ -60,7 +61,7 @@ const Forget = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: AUTH_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -91,7 +92,7 @@ const Forget = () => {
                                 fullWidth
                                 variant="contained"
                                 type="submit"
-                                {...(authLoading && {
+                                {...(buttonLoading && {
                                     disabled: true,
                                     startIcon: (
                                         <BeatLoader

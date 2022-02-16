@@ -1,12 +1,10 @@
-import * as types from "../types";
+import * as types from "../../types";
 const initialState = {
     token: null,
     isAuthenticate: false,
     currentUser: null,
     error: null,
     forget: "",
-    authLoading: false,
-    siteLoading: false,
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -26,7 +24,7 @@ const AuthReducer = (state = initialState, action) => {
                 currentUser: action.payload.currentUser,
             };
 
-        case types.ERROR:
+        case types.AUTH_VALIDATE_ERROR:
             return {
                 ...state,
                 error: action.payload,
@@ -36,11 +34,7 @@ const AuthReducer = (state = initialState, action) => {
                 ...state,
                 forget: action.payload,
             };
-        case types.TOGGLE_AUTH_LOADING:
-            return {
-                ...state,
-                authLoading: action.payload,
-            };
+
         case types.LOGOUT:
             return {
                 ...state,
@@ -48,11 +42,7 @@ const AuthReducer = (state = initialState, action) => {
                 isAuthenticate: false,
                 currentUser: null,
             };
-        case types.TOGGLE_SITE_LOADING:
-            return {
-                ...state,
-                siteLoading: action.payload,
-            };
+
         default:
             return state;
     }

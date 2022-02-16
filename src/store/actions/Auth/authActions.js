@@ -1,25 +1,16 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { api_routes } from "../../constants/urls";
-import * as types from "../types";
+import { api_routes } from "../../../constants/urls";
+import { toggleButtonLoading, toggleSiteLoading } from "../sharedAction";
+import * as types from "../../types";
 
 toast.configure();
-
-export const toggleAuthLoading = (status) => ({
-    type: types.TOGGLE_AUTH_LOADING,
-    payload: status,
-});
-
-export const toggleSiteLoading = (status) => ({
-    type: types.TOGGLE_SITE_LOADING,
-    payload: status,
-});
 
 export const login =
     (data, cb = () => {}) =>
     (dispatch) => {
-        dispatch(toggleAuthLoading(true));
+        dispatch(toggleButtonLoading(true));
         dispatch(toggleSiteLoading(true));
         fetch(api_routes.auth_login, {
             method: "POST",
@@ -31,13 +22,13 @@ export const login =
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch(toggleAuthLoading(false));
+                dispatch(toggleButtonLoading(false));
                 if (response.status === "validate_error") {
                     Object.keys(response.data).forEach((key) => {
                         toast.error(response.data[key][0]);
                     });
                     dispatch({
-                        type: types.ERROR,
+                        type: types.AUTH_VALIDATE_ERROR,
                         payload: response.data,
                     });
                 } else if (response.status === "success") {
@@ -68,7 +59,7 @@ export const login =
 export const forget =
     (data, cb = () => {}) =>
     (dispatch) => {
-        dispatch(toggleAuthLoading(true));
+        dispatch(toggleButtonLoading(true));
         dispatch(toggleSiteLoading(true));
 
         fetch(api_routes.auth_forget, {
@@ -81,14 +72,14 @@ export const forget =
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch(toggleAuthLoading(false));
+                dispatch(toggleButtonLoading(false));
 
                 if (response.status === "validate_error") {
                     Object.keys(response.data).forEach((key) => {
                         toast.error(response.data[key][0]);
                     });
                     dispatch({
-                        type: types.ERROR,
+                        type: types.AUTH_VALIDATE_ERROR,
                         payload: response.data,
                     });
                 } else if (response.status === "success") {
@@ -116,7 +107,7 @@ export const forget =
 export const confirm =
     (data, cb = () => {}) =>
     (dispatch) => {
-        dispatch(toggleAuthLoading(true));
+        dispatch(toggleButtonLoading(true));
         dispatch(toggleSiteLoading(true));
 
         fetch(api_routes.auth_confirm, {
@@ -129,14 +120,14 @@ export const confirm =
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch(toggleAuthLoading(false));
+                dispatch(toggleButtonLoading(false));
 
                 if (response.status === "validate_error") {
                     Object.keys(response.data).forEach((key) => {
                         toast.error(response.data[key][0]);
                     });
                     dispatch({
-                        type: types.ERROR,
+                        type: types.AUTH_VALIDATE_ERROR,
                         payload: response.data,
                     });
                 } else if (response.status === "success") {
@@ -184,7 +175,7 @@ export const resend =
 export const changePass =
     (data, cb = () => {}) =>
     (dispatch) => {
-        dispatch(toggleAuthLoading(true));
+        dispatch(toggleButtonLoading(true));
         dispatch(toggleSiteLoading(true));
 
         fetch(api_routes.auth_changePass, {
@@ -197,14 +188,14 @@ export const changePass =
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch(toggleAuthLoading(false));
+                dispatch(toggleButtonLoading(false));
 
                 if (response.status === "validate_error") {
                     Object.keys(response.data).forEach((key) => {
                         toast.error(response.data[key][0]);
                     });
                     dispatch({
-                        type: types.ERROR,
+                        type: types.AUTH_VALIDATE_ERROR,
                         payload: response.data,
                     });
                 } else if (response.status === "success") {
@@ -228,7 +219,7 @@ const TOKEN = localStorage.getItem("token");
 export const logout =
     (cb = () => {}) =>
     (dispatch) => {
-        dispatch(toggleAuthLoading(true));
+        dispatch(toggleButtonLoading(true));
         dispatch(toggleSiteLoading(true));
 
         fetch(api_routes.auth_logout, {
@@ -241,7 +232,7 @@ export const logout =
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch(toggleAuthLoading(false));
+                dispatch(toggleButtonLoading(false));
 
                 console.log(response);
 

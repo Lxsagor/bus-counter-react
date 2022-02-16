@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { suspendAdmin } from "../../../store/actions/companyAction";
+import { suspendAdmin } from "../../../store/actions/SuperAdmin/adminAction";
 
 const SuspendCompanyDialog = () => {
     const { company } = useSelector((state) => state.company);

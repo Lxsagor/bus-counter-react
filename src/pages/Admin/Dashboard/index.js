@@ -1,6 +1,6 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import dash1 from "../../../assets/admin_dashboard_image/dash1.png";
 import dash2 from "../../../assets/admin_dashboard_image/dash2.png";
 import dash3 from "../../../assets/admin_dashboard_image/dash3.png";
@@ -9,9 +9,17 @@ import { useStyles } from "./styled";
 import AdminDashboardTable from "../../../components/dashboard/AdminDashboardTable";
 import { Link } from "react-router-dom";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCounters } from "../../../store/actions/Admin/counterAction";
 
 const Dashboard = () => {
+    const dispatch = useDispatch();
     const classes = useStyles();
+    const { counters } = useSelector((state) => state.counter);
+
+    useEffect(() => {
+        dispatch(fetchCounters());
+    }, [dispatch]);
     return (
         <>
             <Box m={5}>
@@ -19,7 +27,7 @@ const Dashboard = () => {
                     <Grid item xs={12} lg={3}>
                         <Card
                             title={"Total Counters"}
-                            number={7}
+                            number={counters?.meta?.total}
                             src={dash1}
                             text={<Link to="#">See All</Link>}
                         />

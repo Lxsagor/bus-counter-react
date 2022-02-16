@@ -1,49 +1,21 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { api_routes } from "../../constants/urls";
-import * as types from "../types";
-import { toggleAuthLoading, toggleSiteLoading } from "./authActions";
+import { api_routes } from "../../../constants/urls";
+import * as types from "../../types";
+import { toggleButtonLoading, toggleSiteLoading } from "../sharedAction";
 
 toast.configure();
 
 const TOKEN = localStorage.getItem("token");
 
-export const fetchFares =
-    (pageNum = 1) =>
-    (dispatch) => {
-        dispatch(toggleSiteLoading(true));
-
-        fetch(api_routes.fares.index + "?page=" + pageNum, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                Authorization: TOKEN,
-            },
-        })
-            .then((response) => response.json())
-            .then((response) => {
-                console.log(response);
-                if (response.status === "success") {
-                    dispatch({
-                        type: types.FETCH_FARES,
-                        payload: response.data,
-                    });
-                }
-                dispatch(toggleSiteLoading(false));
-            })
-            .catch((err) => {
-                dispatch(toggleSiteLoading(false));
-                console.log(err);
-            });
-    };
-
-export const addFare =
+export const addSchedule =
     (data, cb = () => {}) =>
     (dispatch) => {
-        dispatch(toggleAuthLoading(true));
+        dispatch(toggleButtonLoading(true));
+
         dispatch(toggleSiteLoading(true));
-        fetch(api_routes.fares.index, {
+        fetch(api_routes.schedules.index, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
@@ -54,10 +26,11 @@ export const addFare =
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch(toggleAuthLoading(false));
+                dispatch(toggleButtonLoading(false));
+
                 if (response.status === "validate_error") {
                     dispatch({
-                        type: types.TOGGLE_FARE_VALIDATION_ERROR,
+                        type: types.SCHEDULE_VALIDATE_ERROR,
                         payload: response.data,
                     });
                 } else if (response.status === "success") {
@@ -67,20 +40,18 @@ export const addFare =
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
-
                 dispatch(toggleSiteLoading(false));
-                console.log(response);
             })
             .catch((err) => {
                 dispatch(toggleSiteLoading(false));
                 console.log(err);
             });
     };
-export const fetchFare =
-    (id, cb = () => {}) =>
+export const fetchSchedules =
+    (pageNum = 1, cb = () => {}) =>
     (dispatch) => {
         dispatch(toggleSiteLoading(true));
-        fetch(api_routes.fares.show.replace(":id", id), {
+        fetch(api_routes.schedules.index + "?page=" + pageNum, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
@@ -93,28 +64,54 @@ export const fetchFare =
                 console.log(response);
                 if (response.status === "success") {
                     dispatch({
-                        type: types.FETCH_FARE,
+                        type: types.FETCH_SCHEDULES,
                         payload: response.data,
                     });
-                    cb();
-                } else if (response.status === "error") {
-                    toast.error(response.message);
                 }
+                cb();
                 dispatch(toggleSiteLoading(false));
             })
-
             .catch((err) => {
                 dispatch(toggleSiteLoading(false));
                 console.log(err);
             });
     };
 
-export const updateFare =
-    (data, cb = () => {}) =>
+export const fetchSchedule =
+    (id, cb = () => {}) =>
     (dispatch) => {
         dispatch(toggleSiteLoading(true));
-        dispatch(toggleAuthLoading(true));
-        fetch(api_routes.fares.show.replace(":id", data.id), {
+        fetch(api_routes.schedules.show.replace(":id", id), {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                if (response.status === "success") {
+                    dispatch({
+                        type: types.FETCH_SCHEDULE,
+                        payload: response.data,
+                    });
+                    cb();
+                }
+                dispatch(toggleSiteLoading(false));
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
+
+export const updateSchedule =
+    (data, cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleButtonLoading(true));
+        dispatch(toggleSiteLoading(true));
+        fetch(api_routes.schedules.show.replace(":id", data.id), {
             method: "PATCH",
             headers: {
                 "Content-type": "application/json",
@@ -125,58 +122,23 @@ export const updateFare =
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch(toggleAuthLoading(false));
+                dispatch(toggleButtonLoading(false));
 
-                console.log(response);
                 if (response.status === "validate_error") {
                     dispatch({
-                        type: types.ERROR,
+                        type: types.SCHEDULE_VALIDATE_ERROR,
                         payload: response.data,
                     });
                 } else if (response.status === "success") {
                     toast.success(response.message);
-                    dispatch({
-                        type: types.FETCH_FARE,
-                        payload: response.data,
-                    });
                     cb();
                 } else if (response.status === "error") {
                     toast.error(response.message);
                 }
                 dispatch(toggleSiteLoading(false));
             })
-
             .catch((err) => {
                 dispatch(toggleSiteLoading(false));
                 console.log(err);
             });
     };
-export const deleteFare = (id) => (dispatch) => {
-    dispatch(toggleSiteLoading(true));
-    fetch(api_routes.fares.show.replace(":id", id), {
-        method: "DELETE",
-        headers: {
-            "Content-type": "application/json",
-            Accept: "application/json",
-            Authorization: TOKEN,
-        },
-    })
-        .then((response) => response.json())
-        .then((response) => {
-            if (response.status === "success") {
-                toast.success(response.message);
-                dispatch({
-                    type: types.DELETE_FARE,
-                    payload: id,
-                });
-            } else if (response.status === "error") {
-                toast.error(response.message);
-            }
-            dispatch(toggleSiteLoading(false));
-        })
-
-        .catch((err) => {
-            dispatch(toggleSiteLoading(false));
-            console.log(err);
-        });
-};

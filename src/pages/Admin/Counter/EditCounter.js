@@ -11,12 +11,14 @@ import React, { useEffect, useState } from "react";
 import {
     fetchDistrictsByDivision,
     fetchDivisions,
+} from "../../../store/actions/sharedAction.js";
+import {
     addCounter,
     fetchCounter,
-} from "../../../store/actions/counterAction";
+} from "../../../store/actions/Admin/counterAction";
 import { useStyles } from "./styled";
 import { useDispatch, useSelector } from "react-redux";
-import { ERROR } from "../../../store/types";
+import { COUNTER_VALIDATE_ERROR, ERROR } from "../../../store/types";
 import { AdminUrl } from "../../../constants/urls";
 import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
@@ -30,7 +32,7 @@ const EditCounter = () => {
     const { divisions, districts, error } = useSelector(
         (state) => state.counter
     );
-    const { authLoading } = useSelector((state) => state.auth);
+    const { buttonLoading } = useSelector((state) => state.auth);
     const { counter } = useSelector((state) => state.counter);
     console.log(counter?.counter_managers?.map((item) => item.name));
     const [formData, setFormData] = useState({
@@ -121,7 +123,7 @@ const EditCounter = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: COUNTER_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -278,7 +280,7 @@ const EditCounter = () => {
                                     size="large"
                                     className={classes.editButton}
                                     type="submit"
-                                    {...(authLoading && {
+                                    {...(buttonLoading && {
                                         disabled: true,
                                         startIcon: (
                                             <BeatLoader

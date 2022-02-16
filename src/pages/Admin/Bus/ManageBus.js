@@ -13,13 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AdminUrl } from "../../../constants/urls";
-import { deleteBus, fetchBuses } from "../../../store/actions/counterAction";
+import { deleteBus, fetchBuses } from "../../../store/actions/Admin/busAction";
 import { useStyles } from "./styled";
 
 const ManageBus = () => {
     const history = useHistory();
     const classes = useStyles();
-    const { buses, loading } = useSelector((state) => state.counter);
+    const { buses } = useSelector((state) => state.bus);
     const dispatch = useDispatch();
 
     useEffect(() => {

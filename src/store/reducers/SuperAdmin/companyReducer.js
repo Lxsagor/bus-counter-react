@@ -1,10 +1,8 @@
-import * as types from "../types";
+import * as types from "../../types";
 const initialState = {
     companies: "",
     company: "",
     error: null,
-    admins: "",
-    admin: "",
 };
 const companyReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -18,35 +16,12 @@ const companyReducer = (state = initialState, action) => {
                 ...state,
                 company: action.payload,
             };
-        case types.ERROR:
+        case types.COMPANY_VALIDATE_ERROR:
             return {
                 ...state,
                 error: action.payload,
             };
-        case types.FETCH_ADMINS:
-            return {
-                ...state,
-                admins: action.payload,
-            };
-        case types.FETCH_ADMIN:
-            return {
-                ...state,
-                admin: action.payload,
-            };
 
-        case types.TOGGLE_ADMIN_SUSPEND_STATUS:
-            return {
-                ...state,
-                admins: {
-                    ...state.admins,
-                    data: [
-                        ...state.admins.data.filter(
-                            (item) => item.id !== action.payload.id
-                        ),
-                        action.payload,
-                    ],
-                },
-            };
         case types.TOGGLE_EXTEND_SUBS_STATUS:
             return {
                 ...state,

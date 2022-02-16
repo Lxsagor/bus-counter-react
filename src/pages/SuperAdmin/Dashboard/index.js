@@ -9,7 +9,7 @@ import dash3 from "../../../assets/super_admin_dashboard_images/dash3.png";
 import dash4 from "../../../assets/super_admin_dashboard_images/dash4.png";
 import Card from "../../../components/dashboard/DashboardCard";
 import TableData from "../../../components/dashboard/DashboardTable";
-import { fetchCompanies } from "../../../store/actions/companyAction";
+import { fetchCompanies } from "../../../store/actions/SuperAdmin/companyAction";
 
 const Dashbaord = () => {
     const dispatch = useDispatch();

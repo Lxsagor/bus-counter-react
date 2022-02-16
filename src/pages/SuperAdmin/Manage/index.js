@@ -10,7 +10,7 @@ import DataPaginator from "../../../components/shared/DataPaginator";
 import {
     fetchCompanies,
     searchCompany,
-} from "../../../store/actions/companyAction";
+} from "../../../store/actions/SuperAdmin/companyAction";
 import { SuperAdminUrl } from "./../../../constants/urls";
 
 const Manage = () => {

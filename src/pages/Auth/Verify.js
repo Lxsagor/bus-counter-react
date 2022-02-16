@@ -5,14 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { AuthUrl } from "../../constants/urls";
-import { changePass } from "../../store/actions/authActions";
-import { ERROR } from "../../store/types";
+import { changePass } from "../../store/actions/Auth/authActions";
+import { AUTH_VALIDATE_ERROR } from "../../store/types";
 import { useStyles } from "./styled";
 
 const Verify = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const { error, forget, authLoading } = useSelector((state) => state.auth);
+    const { error, forget } = useSelector((state) => state.auth);
+    const { buttonLoading } = useSelector((state) => state.shared);
 
     const [formData, setFormData] = useState({
         phone: forget,
@@ -79,7 +80,7 @@ const Verify = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: AUTH_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -131,7 +132,7 @@ const Verify = () => {
                                 fullWidth
                                 variant="contained"
                                 type="submit"
-                                {...(authLoading && {
+                                {...(buttonLoading && {
                                     disabled: true,
                                     startIcon: (
                                         <BeatLoader
