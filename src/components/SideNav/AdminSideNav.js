@@ -49,6 +49,14 @@ const AdminSideNav = () => {
                         <ListItemText>Manage Schedule</ListItemText>
                     </ListItem>
                 </NavLink>
+                <NavLink to={AdminUrl.manageTrack.index}>
+                    <ListItem>
+                        <ListItemIcon>
+                            <LocationOnIcon />
+                        </ListItemIcon>
+                        <ListItemText>Manage Track</ListItemText>
+                    </ListItem>
+                </NavLink>
                 <NavLink to={AdminUrl.manageFare.index}>
                     <ListItem>
                         <ListItemIcon>

@@ -59,3 +59,9 @@ export const STAFF_VALIDATE_ERROR = "STAFF_VALIDATE_ERROR";
 export const FETCH_STAFFS = "FETCH_STAFFS";
 export const FETCH_STAFF = "FETCH_STAFF";
 export const DELETE_STAFF = "DELETE_STAFF";
+
+//Track
+export const FETCH_TRACKS = "FETCH_TRACKS";
+export const FETCH_TRACK = "FETCH_TRACK";
+export const DELETE_TRACK = "DELETE_TRACK";
+export const TRACK_VALIDATE_ERROR = "TRACK_VALIDATE_ERROR";

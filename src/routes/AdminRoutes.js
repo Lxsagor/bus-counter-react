@@ -100,6 +100,33 @@ const AdminRoutes = [
         ),
     },
     {
+        path: AdminUrl.manageTrack.index,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Track/Track"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageTrack.addTrack,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Track/AddTrack"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageTrack.editTrack,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Track/AddTrack"),
+            suspenseOption
+        ),
+    },
+    {
         path: AdminUrl.manageFare.index,
         layout: AdminLayout,
         meta: { requiresAuth: false },

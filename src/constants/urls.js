@@ -56,6 +56,10 @@ export const api_routes = {
         index: API_URL + "fares",
         show: API_URL + "fares/:id",
     },
+    tracks: {
+        index: API_URL + "tracks",
+        show: API_URL + "tracks/:id",
+    },
     drivers: {
         index: API_URL + "drivers",
         show: API_URL + "drivers/:id",
@@ -112,6 +116,11 @@ export const AdminUrl = {
         index: "/admin/manage-schedule",
         addSchedule: "/admin/manage-schedule/add-schedule",
         editSchedule: "/admin/manage-schedule/:id/edit-schedule",
+    },
+    manageTrack: {
+        index: "/admin/manage-track",
+        addTrack: "/admin/manage-track/add-track",
+        editTrack: "/admin/manage-track/:id/edit-track",
     },
     manageFare: {
         index: "/admin/manage-fare",

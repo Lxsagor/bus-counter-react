@@ -8,6 +8,7 @@ import adminReducer from "./SuperAdmin/adminReducer";
 import scheduleReducer from "./Admin/scheduleReducer";
 import staffReducer from "./Admin/staffReducer";
 import sharedReducer from "./sharedReducer";
+import trackReducer from "./Admin/trackReducer";
 
 const allReducers = combineReducers({
     auth: AuthReducer,
@@ -19,6 +20,7 @@ const allReducers = combineReducers({
     schedule: scheduleReducer,
     staff: staffReducer,
     shared: sharedReducer,
+    track: trackReducer,
 });
 
 export default allReducers;
