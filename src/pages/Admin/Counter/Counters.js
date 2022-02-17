@@ -34,7 +34,7 @@ const Counters = () => {
         division_id: null,
         district_id: null,
     });
-    const { divisions, districts } = useSelector((state) => state.counter);
+    const { divisions, districts } = useSelector((state) => state.shared);
     const { buttonLoading } = useSelector((state) => state.shared);
 
     const fieldChangeHandler = (field, value) => {

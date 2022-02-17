@@ -14,4 +14,8 @@ export const useStyles = makeStyles((theme) => ({
         minHeight: "55px !important",
         textTransform: "capitalize !important ",
     },
+    timeBox: {
+        display: "flex",
+        alignItems: "center",
+    },
 }));
