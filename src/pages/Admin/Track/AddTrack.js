@@ -22,12 +22,25 @@ import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 import "date-fns";
+import moment from "moment";
+import {
+    addTrack,
+    fetchTrack,
+    updateTrack,
+} from "../../../store/actions/Admin/trackActions";
+import { useHistory, useParams } from "react-router-dom";
+import { AdminUrl } from "../../../constants/urls";
+import { FETCH_TRACK, TRACK_VALIDATE_ERROR } from "../../../store/types";
 
 const AddTrack = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
     const { districts } = useSelector((state) => state.shared);
+    const { track } = useSelector((state) => state.track);
     const { error } = useSelector((state) => state.track);
+    const { id } = useParams();
+
     const [formData, setFormData] = useState({
         route: [],
         bus_type: "",
@@ -43,11 +56,34 @@ const AddTrack = () => {
             [field]: value,
         }));
     };
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchTrack(id));
+        }
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        if (track && Object.keys(track).length > 0) {
+            let data = {
+                ...track,
+                bus_type: track.bus_type,
+                day_time: track.day_time,
+            };
+
+            if (track.hasOwnProperty("districts")) {
+                // data["mid_counters_id"] = schedule.mid_counters;
+                setLocations(track.districts);
+            }
+
+            setFormData((prevState) => ({
+                ...prevState,
+                ...data,
+            }));
+        }
+    }, [track]);
 
     const [errors, setErrors] = useState({
-        route: { text: "", show: false },
         bus_type: { text: "", show: false },
-        day_time: { text: "", show: false },
     });
     const [locations, setLocations] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState(null);
@@ -77,10 +113,10 @@ const AddTrack = () => {
     });
 
     const addTimeOptions = () => {
-        let dayTimes = [...formData.day_time, dayTime];
+        let day_time = [...formData.day_time, dayTime];
         setFormData((prevState) => ({
             ...prevState,
-            day_time: dayTimes,
+            day_time: day_time,
         }));
         setDayTimeStatus(false);
         setDayTime({
@@ -100,16 +136,56 @@ const AddTrack = () => {
             [field]: value,
         }));
     };
+
     const submitHandler = (e) => {
         e.preventDefault();
         let form = { ...formData };
+
+        if (locations.length > 0) {
+            let districts = [];
+
+            locations.forEach((item) => {
+                districts.push(item.id);
+            });
+
+            form["route"] = districts;
+        }
+        if (form.hasOwnProperty("id")) {
+            dispatch(
+                updateTrack(form, () =>
+                    history.push(AdminUrl.manageTrack.index)
+                )
+            );
+        } else {
+            dispatch(
+                addTrack(form, () => history.push(AdminUrl.manageTrack.index))
+            );
+        }
     };
-    console.log(formData);
-    console.log(locations);
+    useEffect(() => {
+        return () => {
+            dispatch({
+                type: TRACK_VALIDATE_ERROR,
+                payload: null,
+            });
+        };
+    }, [dispatch]);
+    useEffect(() => {
+        return () => {
+            dispatch({
+                type: FETCH_TRACK,
+                payload: {},
+            });
+        };
+    }, [dispatch]);
     return (
         <>
             <Box m={5}>
-                <Typography variant="h6">Add Track</Typography>
+                <Typography variant="h6">
+                    {formData.hasOwnProperty("id")
+                        ? "Update Track"
+                        : "Add Track"}
+                </Typography>
                 <Box
                     mb={3}
                     sx={{
@@ -211,6 +287,7 @@ const AddTrack = () => {
                                             <Select
                                                 value={dayTime.day}
                                                 label="Select Day"
+                                                class={classes.field}
                                                 onChange={(e) =>
                                                     dayTimeFieldChangeHandler(
                                                         "day",
@@ -268,12 +345,13 @@ const AddTrack = () => {
                                         </LocalizationProvider>
                                     </Grid>
                                 </Grid>
-                                <Grid container justifyContent="flex-end">
+                                <Grid container justifyContent="flex-start">
                                     <Grid item>
                                         <Button
                                             variant="contained"
                                             fullWidth
                                             onClick={addTimeOptions}
+                                            sx={{ marginTop: "10px" }}
                                         >
                                             Add Time
                                         </Button>
@@ -282,9 +360,9 @@ const AddTrack = () => {
                             </Box>
                         </>
                     )}
-                    {formData.day_time.map((item, i) => (
+                    {formData?.day_time?.map((item, i) => (
                         <>
-                            <Grid container alignItems="center">
+                            <Grid container alignItems="center" key={i}>
                                 <Grid item lg={3}>
                                     <Box display="flex">
                                         <Typography
@@ -293,25 +371,13 @@ const AddTrack = () => {
                                             mb={1}
                                         >
                                             <strong>
-                                                {item?.starting_counter_id.name}{" "}
-                                                To{" "}
-                                                {
-                                                    item?.destination_counter_id
-                                                        .name
-                                                }
+                                                {item?.day},
+                                                {moment(item.time).format(
+                                                    "h:mm a"
+                                                )}
                                             </strong>
                                         </Typography>
                                     </Box>
-                                </Grid>
-                                <Grid item lg={1}>
-                                    <Typography
-                                        variant="body1"
-                                        color="black"
-                                        mb={1}
-                                        ml={8}
-                                    >
-                                        {item?.fare}.00BDT
-                                    </Typography>
                                 </Grid>
                             </Grid>
                         </>
@@ -326,7 +392,9 @@ const AddTrack = () => {
                                     className={classes.button}
                                     type="submit"
                                 >
-                                    Assign Bus
+                                    {formData.hasOwnProperty("id")
+                                        ? "Update Track"
+                                        : "Add Track"}
                                 </Button>
                             </Grid>
                         </Grid>

@@ -180,3 +180,34 @@ export const deleteTrack = (id) => (dispatch) => {
             console.log(err);
         });
 };
+
+export const searchTrack = (data) => (dispatch) => {
+    dispatch(toggleSiteLoading(true));
+    fetch(api_routes.tracks.searchTrack, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+            Accept: "application/json",
+            Authorization: TOKEN,
+        },
+        body: JSON.stringify(data),
+    })
+        .then((response) => response.json())
+        .then((response) => {
+            console.log(response);
+            if (response.status === "success") {
+                dispatch({
+                    type: types.FETCH_TRACKS,
+                    payload: response.data,
+                });
+            } else if (response.status === "error") {
+                toast.error(response.message);
+            }
+            dispatch(toggleSiteLoading(false));
+        })
+
+        .catch((err) => {
+            dispatch(toggleSiteLoading(false));
+            console.log(err);
+        });
+};

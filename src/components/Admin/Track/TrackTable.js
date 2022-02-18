@@ -43,13 +43,23 @@ const TrackTable = () => {
                                     scope="row"
                                     align="center"
                                 >
-                                    {item?.start_point?.name}
+                                    {item?.districts?.map((district, j) => (
+                                        <Chip
+                                            key={j}
+                                            label={district.name}
+                                            variant="outlined"
+                                            color="primary"
+                                            sx={{ margin: "2px" }}
+                                        />
+                                    ))}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {item?.destination_point?.name}
+                                    {item?.day_time?.map((day, k) => day.day)}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {item?.fare}
+                                    {item?.day_time?.map((day) =>
+                                        moment(day.time).format("h:mm a")
+                                    )}
                                 </TableCell>
                                 <TableCell
                                     align="center"
@@ -77,7 +87,7 @@ const TrackTable = () => {
                                         onClick={() => {
                                             Swal.fire({
                                                 title: "Are you sure?",
-                                                text: "You want to delete the fire!",
+                                                text: "You want to delete the track!",
                                                 icon: "warning",
                                                 showCancelButton: true,
                                                 confirmButtonColor: "#3085d6",
@@ -90,7 +100,7 @@ const TrackTable = () => {
                                                     );
                                                     Swal.fire(
                                                         "Success!",
-                                                        "The Fare is deleted.",
+                                                        "The Track is deleted.",
                                                         "success"
                                                     );
                                                 }

@@ -49,6 +49,8 @@ export const fetchDivisions = () => (dispatch) => {
 export const fetchDistricts =
     (cb = () => {}) =>
     (dispatch) => {
+        dispatch(toggleSiteLoading(true));
+
         fetch(api_routes.districts.get, {
             method: "GET",
             headers: {
@@ -68,9 +70,11 @@ export const fetchDistricts =
                     toast.error(response.message);
                 }
                 cb();
+                dispatch(toggleSiteLoading(false));
             })
             .catch((err) => {
                 console.log(err);
+                dispatch(toggleSiteLoading(false));
             });
     };
 export const fetchDistrictsByDivision = (id) => (dispatch) => {

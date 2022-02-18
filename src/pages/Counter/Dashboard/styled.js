@@ -35,4 +35,8 @@ export const useStyles = makeStyles((theme) => ({
     //     backgroundColor: "#FFFFFF",
     //     borderRadius: "10px",
     // },
+    searchBtn: {
+        borderRadius: "8px !important",
+        minHeight: "50px !important",
+    },
 }));

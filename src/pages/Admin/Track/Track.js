@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useHistory } from "react-router-dom";
@@ -6,10 +6,18 @@ import { useStyles } from "./styled";
 import { AdminUrl } from "../../../constants/urls";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import TrackTable from "../../../components/Admin/Track/TrackTable";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchTracks } from "../../../store/actions/Admin/trackActions";
 
 const Track = () => {
     const history = useHistory();
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const { tracks } = useSelector((state) => state.track);
+
+    useEffect(() => {
+        dispatch(fetchTracks());
+    }, [dispatch]);
     return (
         <>
             <Box m={5}>

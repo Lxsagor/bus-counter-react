@@ -2,6 +2,9 @@ import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles((theme) => ({
     field: {
+        "& .MuiSelect-outlined": {
+            backgroundColor: "#FFFFFF",
+        },
         "& .MuiOutlinedInput-input": {
             borderRadius: "8px",
             backgroundColor: "#FFFFFF",

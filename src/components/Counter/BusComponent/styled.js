@@ -133,4 +133,9 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         color: " rgba(51, 165, 81, 0.35) !important",
     },
+    assignBusBtn: {
+        borderRadius: "5px !important",
+        minHeight: "40px !important",
+        textTransform: "capitalize !important",
+    },
 }));

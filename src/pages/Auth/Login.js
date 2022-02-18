@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoginStepper from "../../components/Landing/Auth/Stepper/LoginStepper";
-import { AdminUrl, SuperAdminUrl } from "../../constants/urls";
+import { AdminUrl, CounterUrl, SuperAdminUrl } from "../../constants/urls";
 import {
     login,
     togglebuttonLoading,
@@ -61,7 +61,7 @@ const Login = () => {
             }));
         } else {
             dispatch(
-                login(formData, () => history.push(AdminUrl.dashboard.index))
+                login(formData, () => history.push(CounterUrl.dashboard.index))
             );
         }
     };

@@ -64,4 +64,8 @@ export const DELETE_STAFF = "DELETE_STAFF";
 export const FETCH_TRACKS = "FETCH_TRACKS";
 export const FETCH_TRACK = "FETCH_TRACK";
 export const DELETE_TRACK = "DELETE_TRACK";
+export const SEARCH_TRACK = "SEARCH_TRACK";
 export const TRACK_VALIDATE_ERROR = "TRACK_VALIDATE_ERROR";
+
+//counter
+export const SEARCH_ROUTE = "SEARCH_ROUTE";
