@@ -64,8 +64,11 @@ export const DELETE_STAFF = "DELETE_STAFF";
 export const FETCH_TRACKS = "FETCH_TRACKS";
 export const FETCH_TRACK = "FETCH_TRACK";
 export const DELETE_TRACK = "DELETE_TRACK";
-export const SEARCH_TRACK = "SEARCH_TRACK";
 export const TRACK_VALIDATE_ERROR = "TRACK_VALIDATE_ERROR";
 
 //counter
+export const FETCH_ROUTES = "FETCH_ROUTES";
 export const SEARCH_ROUTE = "SEARCH_ROUTE";
+export const ROUTE_ID = "ROUTE_ID";
+export const ASSIGN_BUS_VALIDATE_ERROR = "ASSIGN_BUS_VALIDATE_ERROR";
+export const ASSIGN_BUS_DIALOG = "ASSIGN_BUS_DIALOG";

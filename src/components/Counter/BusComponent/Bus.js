@@ -12,7 +12,7 @@ import {
     Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useStyles } from "./styled";
 import Busimage from "../../../assets/bus.png";
 import Available from "../../../assets/available.png";
@@ -23,19 +23,31 @@ import BusSeat from "./BusSeat";
 import BusTicket from "./BusTicket";
 import AssignBus from "../AssignBus/AssignBus";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import {
+    assignBusdialog,
+    routeid,
+} from "../../../store/actions/Counter/bookingActions";
+import { useSelector } from "react-redux";
 
 const Bus = ({ item }) => {
     const classes = useStyles();
-
+    const dispatch = useDispatch();
     const [collapseStatus, setCollapseStatus] = useState(false);
     const [assignBus, setAssignBus] = useState(false);
+    const { assignBusdialog } = useSelector((state) => state.booking);
+
+    const assignHandler = () => {
+        dispatch(routeid(item.id));
+        setAssignBus(true);
+    };
 
     return (
         <>
             <Grid container justifyContent="space-between">
                 <Grid item lg={2} xs={2}>
                     <Box mt={2} ml={2}>
-                        <Typography>Bus No: Ka-5613</Typography>
+                        <Typography>Bus No: </Typography>
                     </Box>
                 </Grid>
                 <Grid item lg={2} xs={2}>
@@ -43,7 +55,7 @@ const Bus = ({ item }) => {
                         fullWidth
                         variant="contained"
                         className={classes.assignBusBtn}
-                        onClick={() => setAssignBus(true)}
+                        onClick={() => assignHandler()}
                     >
                         + Assign Bus
                     </Button>
@@ -61,7 +73,7 @@ const Bus = ({ item }) => {
                     </Grid>
                     <Grid item>
                         <Box mt={2} mr={2}>
-                            <Typography>Seat Avalability 12</Typography>
+                            <Typography>Seat Avalability</Typography>
                         </Box>
                     </Grid>
                 </Grid>
@@ -81,7 +93,11 @@ const Bus = ({ item }) => {
                             alignItems="center"
                         >
                             <Grid item>
-                                <Typography variant="h5">Dhaka</Typography>
+                                {item?.districts?.length > 0 && (
+                                    <Typography variant="h5">
+                                        {item?.districts[0]?.name}
+                                    </Typography>
+                                )}
                             </Grid>
                             <Grid item lg={6}>
                                 <Divider>
@@ -97,7 +113,15 @@ const Bus = ({ item }) => {
                                 </Divider>
                             </Grid>
                             <Grid item lg={2}>
-                                <Typography variant="h5">Jessore</Typography>
+                                {item?.districts?.length > 0 && (
+                                    <Typography variant="h5">
+                                        {
+                                            item?.districts[
+                                                item.districts.length - 1
+                                            ]?.name
+                                        }
+                                    </Typography>
+                                )}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -114,18 +138,14 @@ const Bus = ({ item }) => {
                 </Grid>
                 <Box mt={3} mb={2}>
                     <Box mb={2} mt={2} ml={2}>
-                        <Typography variant="h6">
-                            Departure:{" "}
-                            {item.day_time.map((time, j) =>
-                                moment(time.time).format("h:mm a")
-                            )}
-                        </Typography>
+                        <Typography variant="h6">Departure:</Typography>
                     </Box>
                     <Box mb={2} pb={2} ml={2}>
-                        <Typography variant="h6">Arrival: 06:00 PM</Typography>
+                        <Typography variant="h6">Arrival:</Typography>
                     </Box>
                 </Box>
             </Box>
+
             <Dialog
                 maxWidth="lg"
                 fullWidth
@@ -133,7 +153,7 @@ const Bus = ({ item }) => {
                 onClose={() => setAssignBus(false)}
             >
                 <DialogContent>
-                    <AssignBus />
+                    <AssignBus controlHandler={() => setAssignBus(false)} />
                 </DialogContent>
             </Dialog>
 

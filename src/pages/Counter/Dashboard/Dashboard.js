@@ -22,13 +22,16 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchDistricts } from "../../../store/actions/sharedAction";
 import { useSelector } from "react-redux";
-import { fetchTracks } from "../../../store/actions/Admin/trackActions";
+import {
+    fetchRoutes,
+    searchRoute,
+} from "../../../store/actions/Counter/bookingActions";
 
 const Dashboard = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { districts } = useSelector((state) => state.shared);
-    const { tracks } = useSelector((state) => state.track);
+    const { routes } = useSelector((state) => state.booking);
     const [location, setLocation] = useState({
         start_location: null,
         end_location: null,
@@ -38,18 +41,33 @@ const Dashboard = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(fetchTracks());
+        dispatch(fetchRoutes());
     }, [dispatch]);
 
-    const searchHandler = () => {
+    const fieldChangeHandler = (field, value) => {
+        setLocation((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+    };
+
+    const searchHandler = (e) => {
+        e.preventDefault();
         let formData = { ...location };
         if (
-            formData.division_id &&
-            Object.keys(formData.division_id).length > 0
+            formData.start_location &&
+            Object.keys(formData.start_location).length > 0
         ) {
-            formData["division_id"] = formData.division_id.id;
+            formData["start_location"] = formData.start_location.id;
         }
-        dispatch(searchTrack(formData));
+        if (
+            formData.end_location &&
+            Object.keys(formData.end_location).length > 0
+        ) {
+            formData["end_location"] = formData.end_location.id;
+        }
+
+        dispatch(searchRoute(formData));
     };
     return (
         <>
@@ -60,7 +78,6 @@ const Dashboard = () => {
                             title={"Total Tickets Booked"}
                             number={125}
                             src={dash1}
-                            text={<Link href="#">See details</Link>}
                         />
                     </Grid>
                     <Grid item xs={12} lg={3}>
@@ -89,6 +106,10 @@ const Dashboard = () => {
                                 options={districts}
                                 optionLabel="name"
                                 getOptionLabel={(option) => option.name}
+                                value={location.start_location}
+                                onChange={(e, data) =>
+                                    fieldChangeHandler("start_location", data)
+                                }
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -104,6 +125,10 @@ const Dashboard = () => {
                                 options={districts}
                                 optionLabel="name"
                                 getOptionLabel={(option) => option.name}
+                                value={location.end_location}
+                                onChange={(e, data) =>
+                                    fieldChangeHandler("end_location", data)
+                                }
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -116,7 +141,7 @@ const Dashboard = () => {
                     </Grid>
                 </Box>
                 <Box mb={5}>
-                    <Grid container spacing={5}>
+                    {/* <Grid container spacing={5}>
                         <Grid item lg={3} xs={12}>
                             <Typography>Pick Jurney Date</Typography>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -131,26 +156,7 @@ const Dashboard = () => {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                        <Grid item lg={3} xs={12}>
-                            <Typography>Pick Return Date (Optional)</Typography>
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DatePicker
-                                    // label="Subscription End Date"
-
-                                    // onChange={(newValue) => {
-                                    //     setValue(newValue);
-                                    // }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            fullWidth
-                                            className={classes.field}
-                                        />
-                                    )}
-                                />
-                            </LocalizationProvider>
-                        </Grid>
-                    </Grid>
+                    </Grid> */}
                     <Grid container>
                         <Grid item lg={2}>
                             <Box my={4}>
@@ -158,7 +164,7 @@ const Dashboard = () => {
                                     fullWidth
                                     variant="contained"
                                     className={classes.searchBtn}
-                                    onClick={() => searchHandler}
+                                    onClick={searchHandler}
                                 >
                                     Search
                                 </Button>
@@ -202,8 +208,8 @@ const Dashboard = () => {
                                     />
                                 </Grid> */}
                             </Grid>
-                            {tracks?.data?.map((item, i) => (
-                                <Box mb={3} className={classes.bus}>
+                            {routes?.map((item, i) => (
+                                <Box mb={3} className={classes.bus} key={i}>
                                     <Bus item={item} />
                                 </Box>
                             ))}

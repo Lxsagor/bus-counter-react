@@ -63,10 +63,19 @@ export const api_routes = {
     drivers: {
         index: API_URL + "drivers",
         show: API_URL + "drivers/:id",
+        get: API_URL + "drivers-get",
     },
     staffs: {
         index: API_URL + "staffs",
         show: API_URL + "staffs/:id",
+        get: API_URL + "staffs-get",
+    },
+
+    //counter
+    booking: {
+        routes: API_URL + "counter/routes",
+        searchRoute: API_URL + "counter/route-search",
+        assignBus: API_URL + "counter/assignBus",
     },
 };
 

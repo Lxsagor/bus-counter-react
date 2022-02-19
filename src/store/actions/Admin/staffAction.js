@@ -75,6 +75,35 @@ export const fetchDrivers =
                 console.log(err);
             });
     };
+export const fetchDriversByget =
+    (cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleSiteLoading(true));
+        fetch(api_routes.drivers.get, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                if (response.status === "success") {
+                    dispatch({
+                        type: types.FETCH_DRIVERS,
+                        payload: response.data,
+                    });
+                }
+                cb();
+                dispatch(toggleSiteLoading(false));
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
 
 export const fetchDriver =
     (id, cb = () => {}) =>
@@ -214,6 +243,35 @@ export const fetchStaffs =
     (dispatch) => {
         dispatch(toggleSiteLoading(true));
         fetch(api_routes.staffs.index, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                if (response.status === "success") {
+                    dispatch({
+                        type: types.FETCH_STAFFS,
+                        payload: response.data,
+                    });
+                }
+                cb();
+                dispatch(toggleSiteLoading(false));
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
+export const fetchStaffsByGet =
+    (cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleSiteLoading(true));
+        fetch(api_routes.staffs.get, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
