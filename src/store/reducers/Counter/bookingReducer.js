@@ -4,6 +4,7 @@ const initialState = {
     id: "",
     error: null,
     assignBusdialog: false,
+    assignBus: {},
 };
 
 const bookingReducer = (state = initialState, action) => {
@@ -27,6 +28,11 @@ const bookingReducer = (state = initialState, action) => {
             return {
                 ...state,
                 assignBusdialog: action.payload,
+            };
+        case types.ASSIGN_BUS:
+            return {
+                ...state,
+                assignBus: action.payload,
             };
 
         default:

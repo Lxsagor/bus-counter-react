@@ -44,7 +44,7 @@ const AssignBus = ({ controlHandler = () => {} }) => {
     const { drivers, staffs } = useSelector((state) => state.staff);
     const { id, error } = useSelector((state) => state.booking);
     const [formData, setFormData] = useState({
-        route_id: id,
+        track_id: id,
         bus_no: null,
         bus_type: "",
         driver_id: null,
@@ -66,7 +66,7 @@ const AssignBus = ({ controlHandler = () => {} }) => {
     };
 
     const [errors, setErrors] = useState({
-        route_id: { text: "", show: false },
+        track_id: { text: "", show: false },
         bus_no: { text: "", show: false },
         bus_type: { text: "", show: false },
         driver_id: { text: "", show: false },
@@ -115,19 +115,19 @@ const AssignBus = ({ controlHandler = () => {} }) => {
         if (form.staff_id && Object.keys(form.staff_id).length > 0) {
             form["staff_id"] = form.staff_id.id;
         }
-        if (
-            form.journey_start_id &&
-            Object.keys(form.journey_start_id).length > 0
-        ) {
-            form["journey_start_id"] = form.journey_start_id.id;
-        }
-        if (
-            form.journey_end_id &&
-            Object.keys(form.journey_end_id).length > 0
-        ) {
-            form["journey_end_id"] = form.journey_end_id.id;
-        }
-        console.log(form);
+        // if (
+        //     form.journey_start_id &&
+        //     Object.keys(form.journey_start_id).length > 0
+        // ) {
+        //     form["journey_start_id"] = form.journey_start_id.id;
+        // }
+        // if (
+        //     form.journey_end_id &&
+        //     Object.keys(form.journey_end_id).length > 0
+        // ) {
+        //     form["journey_end_id"] = form.journey_end_id.id;
+        // }
+        // console.log(form);
         dispatch(
             assignBus(form, () => {
                 controlHandler();
@@ -153,7 +153,7 @@ const AssignBus = ({ controlHandler = () => {} }) => {
     return (
         <>
             <Box m={3}>
-                <Typography variant="h6">Assign Bus</Typography>
+                <Typography variant="h6">Assign Coach</Typography>
                 <Box
                     mb={3}
                     sx={{
@@ -269,7 +269,7 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                             </FormControl>
                         </Grid>
                     </Grid>
-                    <Box my={2}>
+                    {/* <Box my={2}>
                         <Typography variant="h6">Location</Typography>
                     </Box>
                     <Grid container spacing={3}>
@@ -340,7 +340,7 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                     <Grid container>
                         <Grid item lg={2}>
                             <Box my={3}>

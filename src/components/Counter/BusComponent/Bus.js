@@ -57,7 +57,7 @@ const Bus = ({ item }) => {
                         className={classes.assignBusBtn}
                         onClick={() => assignHandler()}
                     >
-                        + Assign Bus
+                        + Assign Coach
                     </Button>
                 </Grid>
             </Grid>
