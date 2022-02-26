@@ -102,10 +102,10 @@ export const assignBus =
                     });
                 } else if (response.status === "success") {
                     toast.success(response.message);
-                    dispatch({
-                        type: types.ASSIGN_BUS,
-                        payload: response.data,
-                    });
+                    // dispatch({
+                    //     type: types.ASSIGN_BUS,
+                    //     payload: response.data,
+                    // });
                     cb();
                 } else if (response.status === "error") {
                     toast.error(response.message);

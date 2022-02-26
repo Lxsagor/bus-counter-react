@@ -45,9 +45,14 @@ const Bus = ({ item }) => {
     return (
         <>
             <Grid container justifyContent="space-between">
-                <Grid item lg={2} xs={2}>
+                <Grid item lg={3} xs={3}>
                     <Box mt={2} ml={2}>
-                        <Typography>Bus No: </Typography>
+                        <Typography>
+                            Bus No:
+                            {item?.assign_buses?.map(
+                                (assignItem, i) => assignItem?.bus?.bus_reg_no
+                            )}
+                        </Typography>
                     </Box>
                 </Grid>
                 <Grid item lg={2} xs={2}>

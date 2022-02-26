@@ -10,6 +10,11 @@ export const useStyles = makeStyles((theme) => ({
             backgroundColor: "#FFFFFF",
         },
     },
+    selectBox: {
+        "& .MuiSelect-select": {
+            backgroundColor: "#FFFFFF",
+        },
+    },
     button: {
         minHeight: "55px",
         borderRadius: "8px !important",
@@ -54,5 +59,18 @@ export const useStyles = makeStyles((theme) => ({
     fareBox: {
         display: "flex",
         alignItems: "center",
+    },
+    btn: {
+        textTransform: "capitalize !important",
+        borderRadius: "5px !important",
+    },
+    timeBox: {
+        display: "flex",
+        // border: "1px solid black",
+        // justifyContent: "center",
+        alignItems: "center",
+    },
+    dltIcon: {
+        cursor: "pointer",
     },
 }));
