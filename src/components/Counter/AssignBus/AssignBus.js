@@ -1,4 +1,4 @@
-import { DateTimePicker, LocalizationProvider } from "@mui/lab";
+import { DateTimePicker, LocalizationProvider, TimePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import "date-fns";
 import {
@@ -30,6 +30,7 @@ import { useHistory } from "react-router-dom";
 import {
     assignBus,
     assignBusdialog,
+    fetchBusByType,
 } from "../../../store/actions/Counter/bookingActions";
 import { ASSIGN_BUS_VALIDATE_ERROR, ROUTE_ID } from "../../../store/types";
 import { toast } from "react-toastify";
@@ -42,16 +43,14 @@ const AssignBus = ({ controlHandler = () => {} }) => {
     const { districts, buttonLoading } = useSelector((state) => state.shared);
     const { buses } = useSelector((state) => state.bus);
     const { drivers, staffs } = useSelector((state) => state.staff);
-    const { id, error } = useSelector((state) => state.booking);
+    const { id, error, busByType } = useSelector((state) => state.booking);
     const [formData, setFormData] = useState({
-        track_id: id,
+        route_id: id.id,
         bus_no: null,
-        bus_type: "",
+        bus_type: id.bus_type,
         driver_id: null,
         staff_id: null,
-        journey_start_id: null,
-        journey_end_id: null,
-        date_time: null,
+        time: new Date(),
     });
 
     const fieldChangeHandler = (field, value) => {
@@ -97,9 +96,12 @@ const AssignBus = ({ controlHandler = () => {} }) => {
         dispatch(fetchStaffsByGet());
     }, [dispatch]);
 
+    // useEffect(() => {
+    //     dispatch(fetchBusesGet());
+    // }, [dispatch]);
     useEffect(() => {
-        dispatch(fetchBusesGet());
-    }, [dispatch]);
+        dispatch(fetchBusByType(id.bus_type));
+    }, [dispatch, id.bus_type]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -167,7 +169,7 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                         <Grid item lg={4} xs={12}>
                             <Typography mb={2}>Select Bus No.</Typography>
                             <Autocomplete
-                                options={buses}
+                                options={busByType}
                                 optionLabel="bus_no"
                                 getOptionLabel={(option) => option.bus_no}
                                 value={formData.bus_no}
@@ -206,12 +208,11 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                                 )}
                             />
                         </Grid>
-                        <Grid item lg={4} xs={12}>
+                        {/* <Grid item lg={4} xs={12}>
                             <Typography mb={2}>
                                 Select Bus SupperVisor
                             </Typography>
-                            {/* <Autocomplete
-                                renderInput={(params) => ( */}
+
                             <TextField
                                 fullWidth
                                 className={classes.field}
@@ -219,9 +220,7 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                                     readOnly: true,
                                 }}
                             />
-                            {/* )} */}
-                            {/* /> */}
-                        </Grid>{" "}
+                        </Grid> */}
                         <Grid item lg={4} xs={12}>
                             <Typography mb={2}>Select Bus Staff</Typography>
                             <Autocomplete
@@ -244,29 +243,34 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                             />
                         </Grid>
                         <Grid item lg={4} xs={12}>
-                            <Typography mb={2}>Select Bus Type</Typography>
-                            <FormControl fullWidth>
-                                <Select
-                                    value={formData.bus_type}
-                                    class={classes.field}
-                                    onChange={(e) =>
-                                        fieldChangeHandler(
-                                            "bus_type",
-                                            e.target.value
-                                        )
+                            <Typography mb={2}> Bus Type</Typography>
+                            <TextField
+                                value={formData.bus_type}
+                                fullWidth
+                                className={classes.field}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item lg={4} xs={12}>
+                            <Typography mb={2}>Departure Time</Typography>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <TimePicker
+                                    value={formData.time}
+                                    onChange={(newValue) =>
+                                        fieldChangeHandler("time", newValue)
                                     }
-                                >
-                                    <MenuItem value="ac">Ac</MenuItem>
-                                    <MenuItem value="non_ac">Non Ac</MenuItem>
-                                    <MenuItem value="business">
-                                        Business
-                                    </MenuItem>
-                                    <MenuItem value="classic">Classic</MenuItem>
-                                    <MenuItem value="double_decker">
-                                        Double Decker
-                                    </MenuItem>
-                                </Select>
-                            </FormControl>
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            fullWidth
+                                            label="Time"
+                                            className={classes.field}
+                                        />
+                                    )}
+                                />
+                            </LocalizationProvider>
                         </Grid>
                     </Grid>
                     {/* <Box my={2}>

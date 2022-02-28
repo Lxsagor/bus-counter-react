@@ -26,12 +26,11 @@ const ManageScheduleTable = () => {
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">Boarding From</TableCell>
-                            <TableCell align="center">Destination</TableCell>
-                            <TableCell align="center">Dep. Time</TableCell>
-                            <TableCell align="center">Bus No</TableCell>
-
-                            <TableCell align="center">Mid Counters</TableCell>
+                            <TableCell align="center">Bus Type</TableCell>
+                            <TableCell align="center">Seat Pattern</TableCell>
+                            <TableCell align="center">Day</TableCell>
+                            <TableCell align="center">Time</TableCell>
+                            <TableCell align="center">Route</TableCell>
                             <TableCell align="center">Action</TableCell>
                         </TableRow>
                     </TableHead>
@@ -43,24 +42,29 @@ const ManageScheduleTable = () => {
                                     scope="row"
                                     align="center"
                                 >
-                                    {item?.start_counter?.name}
+                                    {item?.bus_type}
                                 </TableCell>
                                 <TableCell align="center">
                                     {" "}
-                                    {item?.end_counter?.name}
+                                    {item?.bus_seat_type}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {moment(item.date_time).format("HH:mm:ss")}
+                                    {item?.day_time.map(
+                                        (day, k) => day?.day + ", "
+                                    )}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {" "}
-                                    {item.bus_no}
+                                    {item?.day_time.map(
+                                        (time, l) =>
+                                            moment(time?.time).format("LT") +
+                                            ", "
+                                    )}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {item.mid_counters.map((counter, j) => (
+                                    {item?.routes.map((route, j) => (
                                         <Chip
                                             key={j}
-                                            label={counter.name}
+                                            label={route.name}
                                             variant="outlined"
                                             color="primary"
                                             sx={{ margin: "2px" }}
@@ -72,7 +76,7 @@ const ManageScheduleTable = () => {
                                     align="center"
                                     className={classes.actionCell}
                                 >
-                                    <Button
+                                    {/* <Button
                                         variant="contained"
                                         fullWidth
                                         className={classes.editBtn}
@@ -86,7 +90,7 @@ const ManageScheduleTable = () => {
                                         }
                                     >
                                         Edit Info
-                                    </Button>
+                                    </Button> */}
                                     <Button
                                         variant="contained"
                                         color="primary"

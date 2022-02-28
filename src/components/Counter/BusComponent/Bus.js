@@ -19,7 +19,7 @@ import Available from "../../../assets/available.png";
 import Booked from "../../../assets/booked.png";
 import Selected from "../../../assets/selected.png";
 import { Icon } from "@iconify/react";
-import BusSeat from "./BusSeat";
+import BusSeat from "./BusSeatDouble";
 import BusTicket from "./BusTicket";
 import AssignBus from "../AssignBus/AssignBus";
 import moment from "moment";
@@ -29,16 +29,17 @@ import {
     routeid,
 } from "../../../store/actions/Counter/bookingActions";
 import { useSelector } from "react-redux";
+import BusSeatSingle from "./BusSeatSingle";
+import BusSeatDouble from "./BusSeatDouble";
 
 const Bus = ({ item }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [collapseStatus, setCollapseStatus] = useState(false);
     const [assignBus, setAssignBus] = useState(false);
-    const { assignBusdialog } = useSelector((state) => state.booking);
 
     const assignHandler = () => {
-        dispatch(routeid(item.id));
+        dispatch(routeid(item.id, item.bus_type));
         setAssignBus(true);
     };
 
@@ -47,12 +48,7 @@ const Bus = ({ item }) => {
             <Grid container justifyContent="space-between">
                 <Grid item lg={3} xs={3}>
                     <Box mt={2} ml={2}>
-                        <Typography>
-                            Bus No:
-                            {item?.assign_buses?.map(
-                                (assignItem, i) => assignItem?.bus?.bus_reg_no
-                            )}
-                        </Typography>
+                        <Typography>Bus No:</Typography>
                     </Box>
                 </Grid>
                 <Grid item lg={2} xs={2}>
@@ -98,9 +94,9 @@ const Bus = ({ item }) => {
                             alignItems="center"
                         >
                             <Grid item>
-                                {item?.districts?.length > 0 && (
+                                {item?.routes?.length > 0 && (
                                     <Typography variant="h5">
-                                        {item?.districts[0]?.name}
+                                        {item?.routes[0]?.name}
                                     </Typography>
                                 )}
                             </Grid>
@@ -118,12 +114,11 @@ const Bus = ({ item }) => {
                                 </Divider>
                             </Grid>
                             <Grid item lg={2}>
-                                {item?.districts?.length > 0 && (
+                                {item?.routes?.length > 0 && (
                                     <Typography variant="h5">
                                         {
-                                            item?.districts[
-                                                item.districts.length - 1
-                                            ]?.name
+                                            item?.routes[item.routes.length - 1]
+                                                ?.name
                                         }
                                     </Typography>
                                 )}
@@ -162,7 +157,11 @@ const Bus = ({ item }) => {
                 </DialogContent>
             </Dialog>
 
-            {collapseStatus && <BusSeat />}
+            {collapseStatus && item?.bus_seat_type === "double" ? (
+                <BusSeatDouble />
+            ) : (
+                <BusSeatSingle />
+            )}
         </>
     );
 };

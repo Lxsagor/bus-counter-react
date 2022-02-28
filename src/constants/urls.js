@@ -46,6 +46,7 @@ export const api_routes = {
         index: API_URL + "buses",
         get: API_URL + "buses-get",
         show: API_URL + "buses/:id",
+        busgetByType: API_URL + "buses-by-type/:type",
     },
 
     schedules: {

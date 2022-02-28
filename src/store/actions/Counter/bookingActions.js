@@ -37,6 +37,35 @@ export const fetchRoutes =
                 console.log(err);
             });
     };
+export const fetchBusByType =
+    (type, cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleSiteLoading(true));
+
+        fetch(api_routes.buses.busgetByType.replace(":type", type), {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                if (response.status === "success") {
+                    dispatch({
+                        type: types.FETCH_BUS_BY_TYPE,
+                        payload: response.data,
+                    });
+                }
+                dispatch(toggleSiteLoading(false));
+                cb();
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
 
 export const searchRoute = (data) => (dispatch) => {
     dispatch(toggleSiteLoading(true));
@@ -68,9 +97,12 @@ export const searchRoute = (data) => (dispatch) => {
             console.log(err);
         });
 };
-export const routeid = (id) => ({
+export const routeid = (id, bus_type) => ({
     type: types.ROUTE_ID,
-    payload: id,
+    payload: {
+        id,
+        bus_type,
+    },
 });
 export const assignBusdialog = (status) => ({
     type: types.ASSIGN_BUS_DIALOG,

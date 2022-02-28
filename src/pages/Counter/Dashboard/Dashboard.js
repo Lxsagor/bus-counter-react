@@ -141,7 +141,7 @@ const Dashboard = () => {
                     </Grid>
                 </Box>
                 <Box mb={5}>
-                    {/* <Grid container spacing={5}>
+                    <Grid container spacing={5}>
                         <Grid item lg={3} xs={12}>
                             <Typography>Pick Jurney Date</Typography>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -156,7 +156,7 @@ const Dashboard = () => {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                    </Grid> */}
+                    </Grid>
                     <Grid container>
                         <Grid item lg={2}>
                             <Box my={4}>
@@ -208,11 +208,13 @@ const Dashboard = () => {
                                     />
                                 </Grid> */}
                             </Grid>
-                            {routes?.map((item, i) => (
-                                <Box mb={3} className={classes.bus} key={i}>
-                                    <Bus item={item} />
-                                </Box>
-                            ))}
+                            {routes?.map((item, i) =>
+                                item?.assignBuses?.map((route, j) => (
+                                    <Box mb={3} className={classes.bus} key={j}>
+                                        <Bus item={route} />
+                                    </Box>
+                                ))
+                            )}
                         </Box>
                     </Grid>
                 </Grid>

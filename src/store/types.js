@@ -35,6 +35,7 @@ export const FETCH_BUS = "FETCH_BUS";
 export const DELETE_BUS = "DELETE_BUS";
 export const UPDATE_BUS = "UPDATE_BUS";
 export const BUS_VALIDATE_ERROR = "BUS_VALIDATE_ERROR";
+export const FETCH_BUS_BY_TYPE = "FETCH_BUS_BY_TYPE";
 
 //Schedule
 export const FETCH_SCHEDULES = "FETCH_SCHEDULES";

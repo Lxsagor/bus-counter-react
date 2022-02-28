@@ -20,7 +20,7 @@ import Selected from "../../../assets/selected.png";
 import { Icon } from "@iconify/react";
 import BusTicket from "./BusTicket";
 
-const BusSeat = () => {
+const BusSeatDouble = () => {
     const classes = useStyles();
 
     const [confirm, setConfirm] = useState(false);
@@ -140,7 +140,7 @@ const BusSeat = () => {
                                         <Grid item>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A1
+                                                    B1
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -149,7 +149,7 @@ const BusSeat = () => {
                                             </Button>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A2
+                                                    B2
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -162,7 +162,7 @@ const BusSeat = () => {
                                                 className={`${classes.seatBtn} ${classes.bookSeatBtn}`}
                                             >
                                                 <Typography variant="body2">
-                                                    A3
+                                                    B3
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -171,27 +171,7 @@ const BusSeat = () => {
                                             </Button>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A4
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                        </Grid>
-                                        <Grid item>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A1
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A2
+                                                    B4
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -202,7 +182,7 @@ const BusSeat = () => {
                                         <Grid item>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A3
+                                                    C1
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -211,27 +191,7 @@ const BusSeat = () => {
                                             </Button>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A4
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                        </Grid>
-                                        <Grid item>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A1
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A2
+                                                    C2
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -242,7 +202,7 @@ const BusSeat = () => {
                                         <Grid item>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A3
+                                                    C3
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -251,27 +211,7 @@ const BusSeat = () => {
                                             </Button>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A4
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                        </Grid>
-                                        <Grid item>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A1
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A2
+                                                    C4
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -282,7 +222,7 @@ const BusSeat = () => {
                                         <Grid item>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A3
+                                                    D1
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -291,27 +231,7 @@ const BusSeat = () => {
                                             </Button>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A4
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                        </Grid>
-                                        <Grid item>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A1
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A2
+                                                    D2
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -322,7 +242,7 @@ const BusSeat = () => {
                                         <Grid item>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A3
+                                                    D3
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -331,27 +251,7 @@ const BusSeat = () => {
                                             </Button>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A4
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                        </Grid>
-                                        <Grid item>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A1
-                                                </Typography>
-                                                <Icon
-                                                    icon="emojione-monotone:seat"
-                                                    width="35px"
-                                                />
-                                            </Button>
-                                            <Button className={classes.seatBtn}>
-                                                <Typography variant="body2">
-                                                    A2
+                                                    D4
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -362,7 +262,7 @@ const BusSeat = () => {
                                         <Grid item>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A3
+                                                    E1
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -371,7 +271,107 @@ const BusSeat = () => {
                                             </Button>
                                             <Button className={classes.seatBtn}>
                                                 <Typography variant="body2">
-                                                    A4
+                                                    E2
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    E3
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    E4
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    F1
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    F2
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    F3
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    F4
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    G1
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    G2
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    G3
+                                                </Typography>
+                                                <Icon
+                                                    icon="emojione-monotone:seat"
+                                                    width="35px"
+                                                />
+                                            </Button>
+                                            <Button className={classes.seatBtn}>
+                                                <Typography variant="body2">
+                                                    G4
                                                 </Typography>
                                                 <Icon
                                                     icon="emojione-monotone:seat"
@@ -436,4 +436,4 @@ const BusSeat = () => {
     );
 };
 
-export default BusSeat;
+export default BusSeatDouble;

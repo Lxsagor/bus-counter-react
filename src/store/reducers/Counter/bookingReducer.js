@@ -1,10 +1,11 @@
 import * as types from "../../types";
 const initialState = {
     routes: [],
-    id: "",
+    id: {},
     error: null,
     assignBusdialog: false,
     assignBus: {},
+    busByType: [],
 };
 
 const bookingReducer = (state = initialState, action) => {
@@ -33,6 +34,11 @@ const bookingReducer = (state = initialState, action) => {
             return {
                 ...state,
                 assignBus: action.payload,
+            };
+        case types.FETCH_BUS_BY_TYPE:
+            return {
+                ...state,
+                busByType: action.payload,
             };
 
         default:

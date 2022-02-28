@@ -61,7 +61,7 @@ const ManageSchedule = () => {
                     }}
                 ></Box>
                 <Box mt={3}>
-                    <Grid container>
+                    {/* <Grid container>
                         <Grid item lg={2}>
                             <FormControlLabel
                                 control={<Checkbox defaultChecked />}
@@ -74,7 +74,7 @@ const ManageSchedule = () => {
                                 label="Search By Counter"
                             />
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                     <Box mt={3}>
                         <Grid container spacing={4}>
                             <Grid item lg={4} md={4} xs={12}>
@@ -117,7 +117,7 @@ const ManageSchedule = () => {
                 <Box mt={5} mb={3}>
                     <Grid container justifyContent="space-between">
                         <Grid item lg={2}>
-                            <Typography variant="h6">Showing Result</Typography>
+                            <Typography variant="h6">Schedules</Typography>
                         </Grid>
                         <Grid item lg={3}>
                             <Box display="flex">

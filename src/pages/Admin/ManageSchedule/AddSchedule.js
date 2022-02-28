@@ -59,26 +59,27 @@ const AddSchedule = () => {
 
     console.log(formData);
 
-    // useEffect(() => {
-    //     if (schedule && Object.keys(schedule).length > 0) {
-    //         let data = {
-    //             ...schedule,
-    //             start_counter_id: schedule.start_counter,
-    //             end_counter_id: schedule.end_counter,
-    //             bus_no: schedule.bus,
-    //         };
+    useEffect(() => {
+        if (schedule && Object.keys(schedule).length > 0) {
+            let data = {
+                ...schedule,
+            };
 
-    //         if (schedule.hasOwnProperty("mid_counters")) {
-    //             // data["mid_counters_id"] = schedule.mid_counters;
-    //             setMidCounters(schedule.mid_counters);
-    //         }
+            if (schedule.hasOwnProperty("routes")) {
+                // data["mid_counters_id"] = schedule.mid_counters;
+                setMidCounters(schedule.routes);
+            }
+            // if (schedule.hasOwnProperty("day_time")) {
+            //     // data["mid_counters_id"] = schedule.mid_counters;
+            //     setMidCounters(schedule.routes);
+            // }
 
-    //         setFormData((prevState) => ({
-    //             ...prevState,
-    //             ...data,
-    //         }));
-    //     }
-    // }, [schedule]);
+            setFormData((prevState) => ({
+                ...prevState,
+                ...data,
+            }));
+        }
+    }, [schedule]);
 
     const [errors, setErrors] = useState({
         bus_type: { text: "", show: false },
@@ -229,7 +230,9 @@ const AddSchedule = () => {
             form["routes_id"] = mid_counters_id;
         }
         console.log(form);
-        dispatch(addSchedule(form));
+        dispatch(
+            addSchedule(form, () => history.push(AdminUrl.manageSchedule.index))
+        );
 
         // if (form.hasOwnProperty("id")) {
         //     dispatch(
@@ -264,7 +267,11 @@ const AddSchedule = () => {
     return (
         <>
             <Box m={5}>
-                <Typography variant="h6">Add Schedule</Typography>
+                <Typography variant="h6">
+                    {formData.hasOwnProperty("id")
+                        ? "Update Schedule"
+                        : "Add Schedule"}
+                </Typography>
                 <Box
                     mb={3}
                     sx={{
