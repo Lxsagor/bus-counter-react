@@ -208,13 +208,11 @@ const Dashboard = () => {
                                     />
                                 </Grid> */}
                             </Grid>
-                            {routes?.map((item, i) =>
-                                item?.assignBuses?.map((route, j) => (
-                                    <Box mb={3} className={classes.bus} key={j}>
-                                        <Bus item={route} />
-                                    </Box>
-                                ))
-                            )}
+                            {routes?.map((item, i) => (
+                                <Box mb={3} className={classes.bus} key={i}>
+                                    <Bus item={item} />
+                                </Box>
+                            ))}
                         </Box>
                     </Grid>
                 </Grid>
