@@ -4,8 +4,11 @@ const initialState = {
     id: {},
     error: null,
     assignBusdialog: false,
-    assignBus: {},
+    // assignBus: {},
     busByType: [],
+
+    confirmTicket: {},
+    searchHistory: {},
 };
 
 const bookingReducer = (state = initialState, action) => {
@@ -30,15 +33,44 @@ const bookingReducer = (state = initialState, action) => {
                 ...state,
                 assignBusdialog: action.payload,
             };
-        case types.ASSIGN_BUS:
+        case types.SEARCH_HISTORY:
             return {
                 ...state,
-                assignBus: action.payload,
+                searchHistory: action.payload,
             };
         case types.FETCH_BUS_BY_TYPE:
             return {
                 ...state,
                 busByType: action.payload,
+            };
+        case types.CONFIRM_TICKET:
+            return {
+                ...state,
+                confirmTicket: action.payload,
+            };
+
+        case types.UPDATE_COACH_BY_CONFIRM_TICKET:
+            let exitstsRoutes = [...state.routes];
+
+            exitstsRoutes.forEach((item) => {
+                if (item.id === action.payload.route_id) {
+                    item.assignBuses.forEach((assignItem) => {
+                        if (assignItem.id === action.payload.coach_id) {
+                            // assignItem.ticket_books.push(
+                            //     action.payload.data
+                            // );
+                            assignItem.ticket_books = [
+                                ...assignItem.ticket_books,
+                                action.payload.data,
+                            ];
+                        }
+                    });
+                }
+            });
+
+            return {
+                ...state,
+                routes: exitstsRoutes,
             };
 
         default:

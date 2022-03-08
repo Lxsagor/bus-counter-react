@@ -26,23 +26,26 @@ import {
     fetchRoutes,
     searchRoute,
 } from "../../../store/actions/Counter/bookingActions";
+import { BeatLoader } from "react-spinners";
 
 const Dashboard = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { districts } = useSelector((state) => state.shared);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const { routes } = useSelector((state) => state.booking);
     const [location, setLocation] = useState({
         start_location: null,
         end_location: null,
+        journey_date: null,
     });
     useEffect(() => {
         dispatch(fetchDistricts());
     }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(fetchRoutes());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(fetchRoutes());
+    // }, [dispatch]);
 
     const fieldChangeHandler = (field, value) => {
         setLocation((prevState) => ({
@@ -146,6 +149,13 @@ const Dashboard = () => {
                             <Typography>Pick Jurney Date</Typography>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
+                                    onChange={(newValue) =>
+                                        fieldChangeHandler(
+                                            "journey_date",
+                                            newValue
+                                        )
+                                    }
+                                    value={location.journey_date}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -165,6 +175,16 @@ const Dashboard = () => {
                                     variant="contained"
                                     className={classes.searchBtn}
                                     onClick={searchHandler}
+                                    {...(buttonLoading && {
+                                        disabled: true,
+                                        startIcon: (
+                                            <BeatLoader
+                                                color="white"
+                                                loading={true}
+                                                size={10}
+                                            />
+                                        ),
+                                    })}
                                 >
                                     Search
                                 </Button>
@@ -172,46 +192,57 @@ const Dashboard = () => {
                         </Grid>
                     </Grid>
                 </Box>
-                <Box mt={5} mb={3}>
-                    <Typography variant="h6">Available Bus List</Typography>
-                    <Box
-                        sx={{
-                            width: "42px",
-                            height: "4px",
-                            backgroundColor: "#33A551",
-                        }}
-                    ></Box>
-                </Box>
+                {routes && routes.length > 0 && (
+                    <>
+                        <Box mt={5} mb={3}>
+                            <Typography variant="h6">
+                                Available Bus List
+                            </Typography>
+                            <Box
+                                sx={{
+                                    width: "42px",
+                                    height: "4px",
+                                    backgroundColor: "#33A551",
+                                }}
+                            ></Box>
+                        </Box>
+                    </>
+                )}
+
                 <Grid container>
                     <Grid item lg={12} xl={10}>
                         <Box className={classes.root}>
-                            <Grid
-                                container
-                                justifyContent="space-between"
-                                alignItems="center"
-                            >
-                                {/* <Grid item lg={2} xs={3}>
-                                    <Box className={classes.bookingBox}>
-                                        <Typography>Bookings</Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid itemlg={2} xs={2}>
-                                    <Autocomplete
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label="Today"
-                                                variant="standard"
-                                                fullWidth
-                                            />
-                                        )}
-                                    />
-                                </Grid> */}
-                            </Grid>
                             {routes?.map((item, i) => (
-                                <Box mb={3} className={classes.bus} key={i}>
-                                    <Bus item={item} />
-                                </Box>
+                                <>
+                                    <Box mb={3} className={classes.bus} key={i}>
+                                        <Typography variant="h6">
+                                            Routes
+                                        </Typography>
+                                        <Bus item={item} />
+                                    </Box>
+
+                                    {item.assignBuses.length > 0 && (
+                                        <>
+                                            <Typography variant="h6" pl={3}>
+                                                Coaches
+                                            </Typography>
+                                            {item.assignBuses.map(
+                                                (busItem, j) => (
+                                                    <Box
+                                                        mb={3}
+                                                        className={classes.bus}
+                                                        key={j}
+                                                    >
+                                                        <Bus
+                                                            item={item}
+                                                            bus={busItem}
+                                                        />
+                                                    </Box>
+                                                )
+                                            )}
+                                        </>
+                                    )}
+                                </>
                             ))}
                         </Box>
                     </Grid>

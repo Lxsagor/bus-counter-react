@@ -345,7 +345,7 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                             </LocalizationProvider>
                         </Grid>
                     </Grid> */}
-                    <Grid container>
+                    <Grid container spacing={5}>
                         <Grid item lg={2}>
                             <Box my={3}>
                                 <Button
@@ -364,7 +364,19 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                                         ),
                                     })}
                                 >
-                                    Assign Bus
+                                    Assign
+                                </Button>
+                            </Box>
+                        </Grid>
+                        <Grid item lg={2}>
+                            <Box my={3}>
+                                <Button
+                                    fullWidth
+                                    variant="outlined"
+                                    className={classes.submitBtn}
+                                    onClick={() => controlHandler()}
+                                >
+                                    Cancel
                                 </Button>
                             </Box>
                         </Grid>

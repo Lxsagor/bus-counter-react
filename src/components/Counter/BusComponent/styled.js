@@ -55,7 +55,9 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-
+        width: 50,
+        minWidth: "35px !important",
+        maxWidth: "50px !important",
         color: "#000 !important",
     },
 

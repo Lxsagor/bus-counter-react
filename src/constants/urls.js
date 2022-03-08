@@ -77,6 +77,7 @@ export const api_routes = {
         routes: API_URL + "counter/routes",
         searchRoute: API_URL + "counter/route-search",
         assignBus: API_URL + "counter/assignBus",
+        ticketBooking: API_URL + "counter/ticketBooking",
     },
 };
 

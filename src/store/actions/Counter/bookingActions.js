@@ -68,6 +68,7 @@ export const fetchBusByType =
     };
 
 export const searchRoute = (data) => (dispatch) => {
+    dispatch(toggleButtonLoading(true));
     dispatch(toggleSiteLoading(true));
     fetch(api_routes.booking.searchRoute, {
         method: "POST",
@@ -86,13 +87,19 @@ export const searchRoute = (data) => (dispatch) => {
                     type: types.FETCH_ROUTES,
                     payload: response.data,
                 });
+                dispatch({
+                    type: types.SEARCH_HISTORY,
+                    payload: data,
+                });
             } else if (response.status === "error") {
                 toast.error(response.message);
             }
+            dispatch(toggleButtonLoading(false));
             dispatch(toggleSiteLoading(false));
         })
 
         .catch((err) => {
+            dispatch(toggleButtonLoading(false));
             dispatch(toggleSiteLoading(false));
             console.log(err);
         });
@@ -111,7 +118,9 @@ export const assignBusdialog = (status) => ({
 
 export const assignBus =
     (data, cb = () => {}) =>
-    (dispatch) => {
+    (dispatch, getStore) => {
+        const searchHistory = getStore().booking.searchHistory;
+
         dispatch(toggleButtonLoading(true));
         dispatch(toggleSiteLoading(true));
         fetch(api_routes.booking.assignBus, {
@@ -134,10 +143,59 @@ export const assignBus =
                     });
                 } else if (response.status === "success") {
                     toast.success(response.message);
+                    dispatch(searchRoute(searchHistory));
                     // dispatch({
                     //     type: types.ASSIGN_BUS,
                     //     payload: response.data,
                     // });
+                    cb();
+                } else if (response.status === "error") {
+                    toast.error(response.message);
+                }
+                dispatch(toggleSiteLoading(false));
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
+export const ticketBooking =
+    (data, cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleButtonLoading(true));
+        dispatch(toggleSiteLoading(true));
+        fetch(api_routes.booking.ticketBooking, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                dispatch(toggleButtonLoading(false));
+
+                if (response.status === "validate_error") {
+                    dispatch({
+                        type: types.ASSIGN_BUS_VALIDATE_ERROR,
+                        payload: response.data,
+                    });
+                } else if (response.status === "success") {
+                    toast.success(response.message);
+                    dispatch({
+                        type: types.CONFIRM_TICKET,
+                        payload: response.data,
+                    });
+                    dispatch({
+                        type: types.UPDATE_COACH_BY_CONFIRM_TICKET,
+                        payload: {
+                            route_id: data.route_id,
+                            coach_id: data.coach_id,
+                            data: response.data,
+                        },
+                    });
                     cb();
                 } else if (response.status === "error") {
                     toast.error(response.message);
