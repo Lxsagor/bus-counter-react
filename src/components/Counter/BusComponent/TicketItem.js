@@ -2,9 +2,12 @@ import { Box, Divider, Grid, Typography, Button } from "@mui/material";
 import React from "react";
 import { useStyles } from "./styled";
 import { Icon } from "@iconify/react";
+import { useSelector } from "react-redux";
 
 const TicketItem = () => {
     const classes = useStyles();
+    const { ticket } = useSelector((state) => state.booking);
+
     return (
         <>
             <Grid container alignItems="center">
@@ -29,17 +32,16 @@ const TicketItem = () => {
                             <Grid item lg={7}>
                                 <Typography
                                     variant="body2"
-                                    mb={1}
                                     className={classes.pnrFont1}
                                 >
-                                    PNR Number: DTR-125411234
+                                    PNR Number: {ticket.PNR}
                                 </Typography>
-                                <Typography
+                                {/* <Typography
                                     variant="body2"
                                     className={classes.pnrFont2}
                                 >
                                     Ticket Printed Few Moments Ago
-                                </Typography>
+                                </Typography> */}
                             </Grid>
                             <Grid item lg={2}>
                                 <Box mr={2}>

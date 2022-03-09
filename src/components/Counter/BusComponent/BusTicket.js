@@ -1,9 +1,14 @@
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useStyles } from "./styled";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 const BusTicket = () => {
     const classes = useStyles();
+    const { confirmTicket } = useSelector((state) => state.booking);
+
+    console.log(confirmTicket.name);
     return (
         <>
             <Divider />
@@ -29,17 +34,17 @@ const BusTicket = () => {
                             </Grid>
                             <Grid item lg={5} xs={4}>
                                 <Typography variant="body2" mb={3}>
-                                    John Doe
+                                    {confirmTicket?.name}
                                 </Typography>
                                 <Typography variant="body2" mb={3}>
-                                    +8017-95929461
+                                    {confirmTicket.phone}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item lg={2} xs={12}>
                         <Typography className={classes.pnrFont}>
-                            DTR- 125411234
+                            {confirmTicket.PNR}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -92,20 +97,34 @@ const BusTicket = () => {
                                 </Typography>
                             </Grid>
                             <Grid item lg={6} xs={4}>
+                                {confirmTicket?.route?.routes?.length > 0 && (
+                                    <Typography variant="body2" mb={3}>
+                                        {confirmTicket?.route?.routes[0]?.name}
+                                    </Typography>
+                                )}
+
+                                {confirmTicket?.route?.routes?.length > 0 && (
+                                    <Typography variant="body2" mb={3}>
+                                        {
+                                            confirmTicket?.route?.routes[
+                                                confirmTicket?.route?.routes
+                                                    .length - 1
+                                            ]?.name
+                                        }
+                                    </Typography>
+                                )}
                                 <Typography variant="body2" mb={3}>
-                                    Gabtoli Counter-1
-                                </Typography>
-                                <Typography variant="body2" mb={3}>
-                                    Jessore
-                                </Typography>
-                                <Typography variant="body2" mb={3}>
-                                    9:30 AM
+                                    {moment(confirmTicket?.journey_time).format(
+                                        "LT"
+                                    )}
                                 </Typography>
                                 <Typography variant="body2" mb={3}>
                                     10:00 AM
                                 </Typography>
                                 <Typography variant="body2" mb={3}>
-                                    A3, A4
+                                    {confirmTicket?.seat_no.map(
+                                        (item) => item + ", "
+                                    )}
                                 </Typography>
                             </Grid>
                         </Grid>

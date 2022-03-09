@@ -178,6 +178,7 @@ export const ticketBooking =
                 dispatch(toggleButtonLoading(false));
 
                 if (response.status === "validate_error") {
+                    // toast.error("Please choose atleast one seat");
                     dispatch({
                         type: types.ASSIGN_BUS_VALIDATE_ERROR,
                         payload: response.data,
@@ -196,6 +197,48 @@ export const ticketBooking =
                             data: response.data,
                         },
                     });
+                    cb();
+                } else if (response.status === "error") {
+                    toast.error(response.message);
+                }
+                dispatch(toggleSiteLoading(false));
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
+export const searhTicket =
+    (data, cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleButtonLoading(true));
+        dispatch(toggleSiteLoading(true));
+        fetch(api_routes.booking.searchTicket, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                dispatch(toggleButtonLoading(false));
+
+                if (response.status === "validate_error") {
+                    // toast.error("Please choose atleast one seat");
+                    dispatch({
+                        type: types.ASSIGN_BUS_VALIDATE_ERROR,
+                        payload: response.data,
+                    });
+                } else if (response.status === "success") {
+                    toast.success(response.message);
+                    dispatch({
+                        type: types.SEARCH_TICKET,
+                        payload: response.data,
+                    });
+
                     cb();
                 } else if (response.status === "error") {
                     toast.error(response.message);

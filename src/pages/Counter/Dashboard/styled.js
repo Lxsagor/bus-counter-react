@@ -38,5 +38,7 @@ export const useStyles = makeStyles((theme) => ({
     searchBtn: {
         borderRadius: "8px !important",
         minHeight: "50px !important",
+        marginLeft: "10px !important",
+        textTransform: "capitalize !important",
     },
 }));

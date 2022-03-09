@@ -9,6 +9,7 @@ const initialState = {
 
     confirmTicket: {},
     searchHistory: {},
+    ticket: {},
 };
 
 const bookingReducer = (state = initialState, action) => {
@@ -47,6 +48,11 @@ const bookingReducer = (state = initialState, action) => {
             return {
                 ...state,
                 confirmTicket: action.payload,
+            };
+        case types.SEARCH_TICKET:
+            return {
+                ...state,
+                ticket: action.payload,
             };
 
         case types.UPDATE_COACH_BY_CONFIRM_TICKET:

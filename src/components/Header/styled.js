@@ -55,4 +55,17 @@ export const useStyles = makeStyles(() => ({
         color: "rgba(198, 30, 30, 0.65)",
         textAlign: "center",
     },
+    printBtn: {
+        minHeight: "50px !important",
+        textTransform: "capitalize !important",
+        borderRadius: "8px !important",
+        marginRight: "10px !important",
+    },
+    cancelBtn: {
+        minHeight: "50px !important",
+        textTransform: "capitalize !important",
+        borderRadius: "8px !important",
+        backgroundColor: "#000 !important",
+        marginLeft: "10px !important",
+    },
 }));
