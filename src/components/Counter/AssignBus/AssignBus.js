@@ -43,14 +43,17 @@ const AssignBus = ({ controlHandler = () => {} }) => {
     const { districts, buttonLoading } = useSelector((state) => state.shared);
     const { buses } = useSelector((state) => state.bus);
     const { drivers, staffs } = useSelector((state) => state.staff);
-    const { id, error, busByType } = useSelector((state) => state.booking);
+    const { id, error, busByType, searchHistory } = useSelector(
+        (state) => state.booking
+    );
     const [formData, setFormData] = useState({
         route_id: id.id,
         bus_no: null,
         bus_type: id.bus_type,
         driver_id: null,
         staff_id: null,
-        time: new Date(),
+        date: searchHistory?.journey_date,
+        time: new Date(searchHistory?.journey_date),
     });
 
     const fieldChangeHandler = (field, value) => {

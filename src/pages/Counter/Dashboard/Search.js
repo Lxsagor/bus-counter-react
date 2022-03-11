@@ -81,7 +81,7 @@ const Search = () => {
                     </Grid>
                 </Grid>
 
-                {ticket && Object.keys(ticket).length > 0 ? (
+                {ticket && Object.keys(ticket).length > 0 && ticket.PNR ? (
                     <Box>
                         <Typography mt={5} variant="h5">
                             Showing Result

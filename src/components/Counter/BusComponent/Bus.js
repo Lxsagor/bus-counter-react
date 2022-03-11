@@ -81,7 +81,7 @@ const Bus = ({ item, bus }) => {
                             </Box>
                         </Grid>
                         <Grid item>
-                            <Box mt={2} mr={2}>
+                            {/* <Box mt={2} mr={2}>
                                 {bus && (
                                     <Typography>
                                         Seat Avalability:
@@ -91,7 +91,7 @@ const Bus = ({ item, bus }) => {
                                             )}
                                     </Typography>
                                 )}
-                            </Box>
+                            </Box> */}
                         </Grid>
                     </Grid>
 

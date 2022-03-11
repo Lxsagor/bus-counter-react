@@ -1,13 +1,19 @@
 import { Box, Divider, Grid, Typography, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useStyles } from "./styled";
 import { Icon } from "@iconify/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Bus from "./Bus";
+import Swal from "sweetalert2";
+import { cancelTicket } from "../../../store/actions/Counter/bookingActions";
 
 const TicketItem = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const { ticket } = useSelector((state) => state.booking);
-
+    const [form, setForm] = useState({
+        pnr: ticket.PNR,
+    });
     return (
         <>
             <Grid container alignItems="center">
@@ -29,7 +35,7 @@ const TicketItem = () => {
                             </Grid>
                             <Divider orientation="vertical" flexItem />
 
-                            <Grid item lg={7}>
+                            <Grid item lg={5}>
                                 <Typography
                                     variant="body2"
                                     className={classes.pnrFont1}
@@ -43,15 +49,58 @@ const TicketItem = () => {
                                     Ticket Printed Few Moments Ago
                                 </Typography> */}
                             </Grid>
-                            <Grid item lg={2}>
-                                <Box mr={2}>
-                                    <Button
-                                        fullWidth
-                                        className={classes.prntBtn}
-                                    >
-                                        Print Again
-                                    </Button>
-                                </Box>
+                            <Grid item lg={4}>
+                                <Grid container spacing={3}>
+                                    <Grid item lg={6}>
+                                        <Box>
+                                            <Button
+                                                fullWidth
+                                                className={classes.prntBtn}
+                                            >
+                                                Print
+                                            </Button>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item lg={6}>
+                                        <Box pr={1}>
+                                            <Button
+                                                fullWidth
+                                                className={classes.prntBtn}
+                                                onClick={() => {
+                                                    Swal.fire({
+                                                        title: "Are you sure?",
+                                                        text: "You want to cancel the ticket!",
+                                                        icon: "warning",
+                                                        showCancelButton: true,
+                                                        confirmButtonColor:
+                                                            "#3085d6",
+                                                        cancelButtonColor:
+                                                            "#d33",
+                                                        confirmButtonText:
+                                                            "Confirm",
+                                                    }).then((result) => {
+                                                        if (
+                                                            result.isConfirmed
+                                                        ) {
+                                                            dispatch(
+                                                                cancelTicket(
+                                                                    form
+                                                                )
+                                                            );
+                                                            Swal.fire(
+                                                                "Success!",
+                                                                "The Ticket is canceled.",
+                                                                "success"
+                                                            );
+                                                        }
+                                                    });
+                                                }}
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Box>

@@ -8,7 +8,7 @@ const BusTicket = () => {
     const classes = useStyles();
     const { confirmTicket } = useSelector((state) => state.booking);
 
-    console.log(confirmTicket.name);
+    console.log(confirmTicket);
     return (
         <>
             <Divider />
@@ -34,6 +34,7 @@ const BusTicket = () => {
                             </Grid>
                             <Grid item lg={5} xs={4}>
                                 <Typography variant="body2" mb={3}>
+                                    {console.log("Name", confirmTicket.name)}
                                     {confirmTicket?.name}
                                 </Typography>
                                 <Typography variant="body2" mb={3}>
