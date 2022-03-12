@@ -81,6 +81,12 @@ export const api_routes = {
         searchTicket: API_URL + "counter/ticket-search",
         cancelTicket: API_URL + "counter/cancel-ticket",
     },
+
+    //user
+
+    ticket: {
+        searchCoach: API_URL + "user/searchCoach",
+    },
 };
 
 export const SuperAdminUrl = {

@@ -53,6 +53,15 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
                 "N",
                 "O",
                 "P",
+                "Q",
+                "R",
+                "S",
+                "T",
+                "U",
+                "V",
+                "X",
+                "Y",
+                "Z",
             ];
 
             for (let i = 0; i < totalRow; i++) {

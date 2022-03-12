@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as types from "../../types";
 import { toggleButtonLoading, toggleSiteLoading } from "../sharedAction";
+import { searchCoach } from "../User/userActions";
 
 toast.configure();
 
@@ -161,9 +162,11 @@ export const assignBus =
     };
 export const ticketBooking =
     (data, cb = () => {}) =>
-    (dispatch) => {
+    (dispatch, getStore) => {
+        const searchHistory = getStore().ticket.searchCoach;
         dispatch(toggleButtonLoading(true));
         dispatch(toggleSiteLoading(true));
+
         fetch(api_routes.booking.ticketBooking, {
             method: "POST",
             headers: {
@@ -176,7 +179,7 @@ export const ticketBooking =
             .then((response) => response.json())
             .then((response) => {
                 dispatch(toggleButtonLoading(false));
-
+                console.log(data, response.data);
                 if (response.status === "validate_error") {
                     // toast.error("Please choose atleast one seat");
                     dispatch({
@@ -189,14 +192,15 @@ export const ticketBooking =
                         type: types.CONFIRM_TICKET,
                         payload: response.data,
                     });
-                    dispatch({
-                        type: types.UPDATE_COACH_BY_CONFIRM_TICKET,
-                        payload: {
-                            route_id: data.route_id,
-                            coach_id: data.coach_id,
-                            data: response.data,
-                        },
-                    });
+                    dispatch(searchCoach(searchHistory));
+                    // dispatch({
+                    //     type: types.UPDATE_COACH_BY_CONFIRM_TICKET,
+                    //     payload: {
+                    //         route_id: data.route_id,
+                    //         coach_id: data.coach_id,
+                    //         data: response.data,
+                    //     },
+                    // });
                     cb();
                 } else if (response.status === "error") {
                     toast.error(response.message);

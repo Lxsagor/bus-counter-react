@@ -1,10 +1,31 @@
 import { Icon } from "@iconify/react";
 import { Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDistricts } from "../../../store/actions/sharedAction";
 import { useStyles } from "./styled";
 
 const RouteTitle = () => {
+    // const { coaches } = useSelector((state) => state.ticket);
+    const { searchCoach } = useSelector((state) => state.ticket);
+
+    const dispatch = useDispatch();
+    const [location, setLocation] = useState({
+        start: "",
+        end: "",
+    });
+    useEffect(() => {
+        let search = JSON.parse(localStorage.getItem("searchPayload")) || null;
+        if (search) {
+            setLocation((prevState) => ({
+                ...prevState,
+                start: search?.start_location?.name,
+                end: search?.end_location?.name,
+            }));
+        }
+    }, []);
+
     const classes = useStyles();
     return (
         <>
@@ -33,7 +54,7 @@ const RouteTitle = () => {
                                         mx={2}
                                         className={classes.routeText}
                                     >
-                                        Dhaka To Rangpur
+                                        {location.start} To {location.end}
                                     </Typography>
                                 </Box>
                             </Grid>

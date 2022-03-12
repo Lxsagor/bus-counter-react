@@ -175,7 +175,7 @@ const AddSchedule = () => {
     };
 
     const [dayTime, setDayTime] = useState({
-        day: "",
+        day: [],
         time: new Date(),
     });
     const [dayTimeError, setDayTimeError] = useState({
@@ -201,7 +201,7 @@ const AddSchedule = () => {
             day_time: dayTimes,
         }));
         setDayTime({
-            day: "",
+            day: [],
             time: new Date(),
         });
     };
@@ -484,44 +484,36 @@ const AddSchedule = () => {
                         </Box>
                         <Grid container spacing={3}>
                             <Grid item lg={4} xs={12}>
-                                <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">
-                                        Day
-                                    </InputLabel>
-                                    <Select
-                                        className={classes.selectBox}
-                                        value={dayTime.day}
-                                        label="Day"
-                                        onChange={(e) =>
-                                            dayTimeChangeHandler(
-                                                "day",
-                                                e.target.value
-                                            )
-                                        }
-                                    >
-                                        <MenuItem value="saturday">
-                                            Saturday
-                                        </MenuItem>
-                                        <MenuItem value="sunday">
-                                            Sunday
-                                        </MenuItem>
-                                        <MenuItem value="monday">
-                                            Monday
-                                        </MenuItem>
-                                        <MenuItem value="tuesday">
-                                            Tuesday
-                                        </MenuItem>
-                                        <MenuItem value="wednesday">
-                                            Wednesday
-                                        </MenuItem>
-                                        <MenuItem value="thursday">
-                                            Thursday
-                                        </MenuItem>
-                                        <MenuItem value="friday">
-                                            Friday
-                                        </MenuItem>
-                                    </Select>
-                                </FormControl>
+                                <TextField
+                                    className={classes.selectBox}
+                                    value={dayTime.day}
+                                    label="Day"
+                                    onChange={(e) =>
+                                        dayTimeChangeHandler(
+                                            "day",
+                                            e.target.value
+                                        )
+                                    }
+                                    fullWidth
+                                    select
+                                    SelectProps={{
+                                        multiple: true,
+                                    }}
+                                >
+                                    <MenuItem value="saturday">
+                                        Saturday
+                                    </MenuItem>
+                                    <MenuItem value="sunday">Sunday</MenuItem>
+                                    <MenuItem value="monday">Monday</MenuItem>
+                                    <MenuItem value="tuesday">Tuesday</MenuItem>
+                                    <MenuItem value="wednesday">
+                                        Wednesday
+                                    </MenuItem>
+                                    <MenuItem value="thursday">
+                                        Thursday
+                                    </MenuItem>
+                                    <MenuItem value="friday">Friday</MenuItem>
+                                </TextField>
                             </Grid>
                             <Grid item lg={4} xs={12}>
                                 <LocalizationProvider
