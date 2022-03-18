@@ -27,18 +27,31 @@ import {
     searchRoute,
 } from "../../../store/actions/Counter/bookingActions";
 import { BeatLoader } from "react-spinners";
+import { FETCH_ROUTES } from "../../../store/types";
+import moment from "moment";
 
 const Dashboard = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { districts } = useSelector((state) => state.shared);
     const { buttonLoading } = useSelector((state) => state.shared);
-    const { routes } = useSelector((state) => state.booking);
+    const { routes, searchHistory } = useSelector((state) => state.booking);
     const [location, setLocation] = useState({
         start_location: null,
         end_location: null,
         journey_date: null,
     });
+    const [coachItems, setCoachItems] = useState([]);
+
+    // console.log(
+    //     routes?.map(
+    //         (item) => item.assignBuses.map((dayTime) => dayTime)
+
+    //         // item.assignBuses?.forEach((tick) =>
+    //         //     moment(new Date(tick.time)).format("DD/MM/YYYY")
+    //     )
+    // );
+
     useEffect(() => {
         dispatch(fetchDistricts());
     }, [dispatch]);
@@ -53,6 +66,36 @@ const Dashboard = () => {
             [field]: value,
         }));
     };
+    // useEffect(() => {
+    //     return () => {
+    //         dispatch({
+    //             type: FETCH_ROUTES,
+    //             payload: {},
+    //         });
+    //     };
+    // }, [dispatch]);
+
+    useEffect(() => {
+        if (routes) {
+            let items = [];
+            routes?.forEach((item) =>
+                item.assignBuses?.forEach((tick) => {
+                    console.log(tick);
+                    if (
+                        moment(new Date(tick.time)).format("DD/MM/YYYY") ===
+                        moment(new Date(searchHistory.journey_date)).format(
+                            "DD/MM/YYYY"
+                        )
+                    ) {
+                        items.push(tick);
+                    }
+                })
+            );
+
+            setCoachItems(items);
+        }
+    }, [routes, routes?.assignBuses, searchHistory.journey_date]);
+    console.log(coachItems);
 
     const searchHandler = (e) => {
         e.preventDefault();
@@ -226,20 +269,18 @@ const Dashboard = () => {
                                             <Typography variant="h6" pl={3}>
                                                 Coaches
                                             </Typography>
-                                            {item.assignBuses.map(
-                                                (busItem, j) => (
-                                                    <Box
-                                                        mb={3}
-                                                        className={classes.bus}
-                                                        key={j}
-                                                    >
-                                                        <Bus
-                                                            item={item}
-                                                            bus={busItem}
-                                                        />
-                                                    </Box>
-                                                )
-                                            )}
+                                            {coachItems?.map((busItem, j) => (
+                                                <Box
+                                                    mb={3}
+                                                    className={classes.bus}
+                                                    key={j}
+                                                >
+                                                    <Bus
+                                                        item={item}
+                                                        bus={busItem}
+                                                    />
+                                                </Box>
+                                            ))}
                                         </>
                                     )}
                                 </>

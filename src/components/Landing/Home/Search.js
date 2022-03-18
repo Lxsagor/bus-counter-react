@@ -153,6 +153,7 @@ const Search = () => {
                         </Typography>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
+                                disabled
                                 onChange={(newValue) =>
                                     fieldChangeHandler("return_date", newValue)
                                 }

@@ -34,7 +34,7 @@ import { fetchDistricts } from "../../../store/actions/sharedAction";
 import { SCHEDULE_VALIDATE_ERROR, FETCH_SCHEDULE } from "../../../store/types";
 import { useStyles } from "./styled";
 import moment from "moment";
-
+import { useDrag, useDrop } from "react-dnd";
 const AddSchedule = () => {
     const classes = useStyles();
     const dispatch = useDispatch();

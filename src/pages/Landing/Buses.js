@@ -24,7 +24,7 @@ import moment from "moment";
 
 const Buses = () => {
     const classes = useStyles();
-    const { coaches } = useSelector((state) => state.ticket);
+    const { coaches, searchCoach } = useSelector((state) => state.ticket);
 
     const [coachItems, setCoachItems] = useState([]);
     const location = useLocation();

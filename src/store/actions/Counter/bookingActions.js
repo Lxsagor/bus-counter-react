@@ -164,6 +164,8 @@ export const ticketBooking =
     (data, cb = () => {}) =>
     (dispatch, getStore) => {
         const searchHistory = getStore().ticket.searchCoach;
+        const searchRoutes = getStore().booking.searchHistory;
+
         dispatch(toggleButtonLoading(true));
         dispatch(toggleSiteLoading(true));
 
@@ -193,6 +195,7 @@ export const ticketBooking =
                         payload: response.data,
                     });
                     dispatch(searchCoach(searchHistory));
+                    dispatch(searchRoute(searchRoutes));
                     // dispatch({
                     //     type: types.UPDATE_COACH_BY_CONFIRM_TICKET,
                     //     payload: {
