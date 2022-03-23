@@ -1,5 +1,11 @@
 import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme) => ({
+    root: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+    },
     button: {
         borderRadius: "8px",
         minHeight: "height: 44px;",
@@ -36,8 +42,8 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
 
         "& .MuiAvatar-root": {
-            width: 34,
-            height: 44,
+            width: 24,
+            height: 34,
             borderRadius: 0,
             marginBottom: 10,
         },

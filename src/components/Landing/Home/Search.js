@@ -14,7 +14,10 @@ import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { LandingUrl } from "../../../constants/urls";
 import { fetchDistricts } from "../../../store/actions/sharedAction";
-import { searchCoach } from "../../../store/actions/User/userActions";
+import {
+    searchCoach,
+    searchCoachs,
+} from "../../../store/actions/User/userActions";
 import { useStyles } from "./styled";
 import moment from "moment";
 
@@ -57,7 +60,7 @@ const Search = () => {
         }
 
         dispatch(
-            searchCoach(formData, () => {
+            searchCoachs(formData, () => {
                 localStorage.setItem("searchPayload", JSON.stringify(location));
                 let url =
                     LandingUrl.landing.buses +

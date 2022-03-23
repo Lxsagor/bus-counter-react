@@ -18,4 +18,13 @@ export const useStyles = makeStyles((theme) => ({
         borderRadius: "8px !important",
         minHeight: "50px !important",
     },
+    timeBox: {
+        display: "flex",
+        // border: "1px solid black",
+        // justifyContent: "center",
+        alignItems: "center",
+    },
+    dltIcon: {
+        cursor: "pointer !important",
+    },
 }));

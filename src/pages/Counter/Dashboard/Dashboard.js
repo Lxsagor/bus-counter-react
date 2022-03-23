@@ -80,9 +80,10 @@ const Dashboard = () => {
             let items = [];
             routes?.forEach((item) =>
                 item.assignBuses?.forEach((tick) => {
-                    console.log(tick);
                     if (
-                        moment(new Date(tick.time)).format("DD/MM/YYYY") ===
+                        moment(new Date(tick.departure_time)).format(
+                            "DD/MM/YYYY"
+                        ) ===
                         moment(new Date(searchHistory.journey_date)).format(
                             "DD/MM/YYYY"
                         )
@@ -91,7 +92,6 @@ const Dashboard = () => {
                     }
                 })
             );
-
             setCoachItems(items);
         }
     }, [routes, routes?.assignBuses, searchHistory.journey_date]);
@@ -257,18 +257,23 @@ const Dashboard = () => {
                         <Box className={classes.root}>
                             {routes?.map((item, i) => (
                                 <>
-                                    <Box mb={3} className={classes.bus} key={i}>
-                                        <Typography variant="h6">
-                                            Routes
-                                        </Typography>
-                                        <Bus item={item} />
-                                    </Box>
-
+                                    {!coachItems.length > 0 && (
+                                        <Box
+                                            mb={3}
+                                            className={classes.bus}
+                                            key={i}
+                                        >
+                                            {/* <Typography variant="h6">
+                                                Routes
+                                            </Typography> */}
+                                            <Bus item={item} />
+                                        </Box>
+                                    )}
                                     {item.assignBuses.length > 0 && (
                                         <>
-                                            <Typography variant="h6" pl={3}>
+                                            {/* <Typography variant="h6" pl={3}>
                                                 Coaches
-                                            </Typography>
+                                            </Typography> */}
                                             {coachItems?.map((busItem, j) => (
                                                 <Box
                                                     mb={3}

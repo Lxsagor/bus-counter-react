@@ -8,7 +8,7 @@ toast.configure();
 
 const TOKEN = localStorage.getItem("token");
 
-export const searchCoach =
+export const searchCoachs =
     (data, cb = () => {}) =>
     (dispatch) => {
         dispatch(toggleButtonLoading(true));

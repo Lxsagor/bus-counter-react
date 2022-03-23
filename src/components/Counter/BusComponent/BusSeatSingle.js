@@ -29,11 +29,14 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
     const dispatch = useDispatch();
     const [seats, setSeats] = useState([]);
     const { error } = useSelector((state) => state.booking);
+    console.log("route", route);
+    console.log("data", data);
 
     useEffect(() => {
         if (data?.bus && data?.bus?.total_seat) {
             let seatCount = parseInt(data?.bus?.total_seat);
             let seatItems = [];
+            let generateSeats = [];
 
             let totalRow = seatCount / 3;
             let seatNames = [
@@ -69,6 +72,7 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
                     seatItems.push(seatNames[i] + j);
                 }
             }
+
             setSeats(seatItems);
         }
     }, [data?.bus]);
@@ -79,9 +83,20 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
         phone: "",
         route_id: route?.id,
         coach_id: data?.id,
-        fare: "1500",
+        fare: "",
         journey_time: data?.time,
     });
+    useEffect(() => {
+        if (route?.fares) {
+            let fare = route.fares
+                .map((item) => parseInt(item.fare))
+                .reduce((prev, curr) => prev + curr, 0);
+            setForm((prevState) => ({
+                ...prevState,
+                fare: fare,
+            }));
+        }
+    }, [route.fares]);
 
     const seatBookHandler = (seatName) => {
         let selectedSeats = [...form.seat_no];
@@ -207,6 +222,30 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
                             <Typography variant="body2">Selected</Typography>
                         </Button>
                     </Grid>
+                    <Grid item>
+                        <Button className={classes.statusBtn}>
+                            <Avatar src={Selected} />
+                            <Typography variant="body2">Selected</Typography>
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button className={classes.statusBtn}>
+                            <Avatar src={Selected} />
+                            <Typography variant="body2">Selected</Typography>
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button className={classes.statusBtn}>
+                            <Avatar src={Selected} />
+                            <Typography variant="body2">Selected</Typography>
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button className={classes.statusBtn}>
+                            <Avatar src={Selected} />
+                            <Typography variant="body2">Selected</Typography>
+                        </Button>
+                    </Grid>
                 </Grid>
             </Box>
 
@@ -260,7 +299,11 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
                         <Grid item xs={12} lg={6}>
                             <Box pl={6}>
                                 <Typography className={classes.fare}>
-                                    Fare $1500
+                                    Fare:
+                                    {route.fares
+                                        .map((item) => parseInt(item.fare))
+                                        .reduce((prev, curr) => prev + curr, 0)}
+                                    ৳
                                 </Typography>
                                 <Box my={4}>
                                     <Typography variant="h5" mb={3}>

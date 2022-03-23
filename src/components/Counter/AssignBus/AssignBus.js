@@ -35,6 +35,9 @@ import {
 import { ASSIGN_BUS_VALIDATE_ERROR, ROUTE_ID } from "../../../store/types";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
+import { fetchCountersGet } from "../../../store/actions/Admin/counterAction";
+import moment from "moment";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const AssignBus = ({ controlHandler = () => {} }) => {
     const classes = useStyles();
@@ -43,6 +46,7 @@ const AssignBus = ({ controlHandler = () => {} }) => {
     const { districts, buttonLoading } = useSelector((state) => state.shared);
     const { buses } = useSelector((state) => state.bus);
     const { drivers, staffs } = useSelector((state) => state.staff);
+    const { counters } = useSelector((state) => state.counter);
     const { id, error, busByType, searchHistory } = useSelector(
         (state) => state.booking
     );
@@ -52,8 +56,12 @@ const AssignBus = ({ controlHandler = () => {} }) => {
         bus_type: id.bus_type,
         driver_id: null,
         staff_id: null,
-        date: searchHistory?.journey_date,
-        time: new Date(searchHistory?.journey_date),
+        departure_date: searchHistory?.journey_date,
+        departure_time: new Date(searchHistory?.journey_date),
+        arrival_date_time: new Date(),
+        boarding_point: [],
+        dropping_point: [],
+        coach_name: "",
     });
 
     const fieldChangeHandler = (field, value) => {
@@ -90,6 +98,9 @@ const AssignBus = ({ controlHandler = () => {} }) => {
     useEffect(() => {
         dispatch(fetchDistricts());
     }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchCountersGet());
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(fetchDriversByget());
@@ -106,6 +117,50 @@ const AssignBus = ({ controlHandler = () => {} }) => {
         dispatch(fetchBusByType(id.bus_type));
     }, [dispatch, id.bus_type]);
 
+    const [boarding_point_item, setBoarding_point_item] = useState({
+        counter_id: null,
+        time: new Date(),
+    });
+
+    const boardingPointFieldChangeHandler = (field, value) => {
+        setBoarding_point_item((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+    };
+    const addBoardingOptions = () => {
+        let boardingPoint = [...formData.boarding_point, boarding_point_item];
+        setFormData((prevState) => ({
+            ...prevState,
+            boarding_point: boardingPoint,
+        }));
+        setBoarding_point_item({
+            counter_id: null,
+            time: new Date(),
+        });
+    };
+    const [dropping_point_item, setDropping_point_item] = useState({
+        counter_id: null,
+        time: new Date(),
+    });
+
+    const droppingPointFieldChangeHandler = (field, value) => {
+        setDropping_point_item((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+    };
+    const addDroppingOptions = () => {
+        let droppingPoint = [...formData.dropping_point, dropping_point_item];
+        setFormData((prevState) => ({
+            ...prevState,
+            dropping_point: droppingPoint,
+        }));
+        setDropping_point_item({
+            counter_id: null,
+            time: new Date(),
+        });
+    };
     const submitHandler = (e) => {
         e.preventDefault();
 
@@ -119,6 +174,17 @@ const AssignBus = ({ controlHandler = () => {} }) => {
         }
         if (form.staff_id && Object.keys(form.staff_id).length > 0) {
             form["staff_id"] = form.staff_id.id;
+        }
+
+        if (formData.boarding_point.length > 0) {
+            formData.boarding_point.forEach((item, i) => {
+                form["boarding_point"][i]["counter_id"] = item.counter_id.id;
+            });
+        }
+        if (formData.dropping_point.length > 0) {
+            formData.dropping_point.forEach((item, i) => {
+                form["dropping_point"][i]["counter_id"] = item.counter_id.id;
+            });
         }
         // if (
         //     form.journey_start_id &&
@@ -155,6 +221,25 @@ const AssignBus = ({ controlHandler = () => {} }) => {
             });
         };
     }, [dispatch]);
+
+    const boardingDelete = (option) => {
+        let boardingPoints = formData.boarding_point.filter(
+            (item) => item !== option
+        );
+        setFormData((prevState) => ({
+            ...prevState,
+            boarding_point: boardingPoints,
+        }));
+    };
+    const droppingDelete = (option) => {
+        let droppingPoints = formData.dropping_point.filter(
+            (item) => item !== option
+        );
+        setFormData((prevState) => ({
+            ...prevState,
+            dropping_point: droppingPoints,
+        }));
+    };
     return (
         <>
             <Box m={3}>
@@ -246,23 +331,33 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                             />
                         </Grid>
                         <Grid item lg={4} xs={12}>
-                            <Typography mb={2}> Bus Type</Typography>
+                            <Typography mb={2}> Coach Name</Typography>
                             <TextField
-                                value={formData.bus_type}
+                                value={formData.coach_name}
                                 fullWidth
                                 className={classes.field}
-                                InputProps={{
-                                    readOnly: true,
-                                }}
+                                onChange={(e) =>
+                                    fieldChangeHandler(
+                                        "coach_name",
+                                        e.target.value
+                                    )
+                                }
+
+                                // InputProps={{
+                                //     readOnly: true,
+                                // }}
                             />
                         </Grid>
                         <Grid item lg={4} xs={12}>
                             <Typography mb={2}>Departure Time</Typography>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <TimePicker
-                                    value={formData.time}
+                                    value={formData.departure_time}
                                     onChange={(newValue) =>
-                                        fieldChangeHandler("time", newValue)
+                                        fieldChangeHandler(
+                                            "departure_time",
+                                            newValue
+                                        )
                                     }
                                     renderInput={(params) => (
                                         <TextField
@@ -275,115 +370,254 @@ const AssignBus = ({ controlHandler = () => {} }) => {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                    </Grid>
-                    {/* <Box my={2}>
-                        <Typography variant="h6">Location</Typography>
-                    </Box>
-                    <Grid container spacing={3}>
                         <Grid item lg={4} xs={12}>
-                            <Autocomplete
-                                options={districts}
-                                optionLabel="name"
-                                getOptionLabel={(option) => option.name}
-                                value={formData.journey_start_id}
-                                onChange={(e, data) =>
-                                    fieldChangeHandler("journey_start_id", data)
-                                }
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        fullWidth
-                                        label="Start from"
-                                        className={classes.field}
-                                        error={errors.journey_start_id.show}
-                                        helperText={
-                                            errors.journey_start_id.text
-                                        }
-                                    />
-                                )}
-                            />
-                        </Grid>
-                        <Grid item lg={4} xs={12}>
-                            <Autocomplete
-                                options={districts}
-                                optionLabel="name"
-                                getOptionLabel={(option) => option.name}
-                                value={formData.journey_end_id}
-                                onChange={(e, data) =>
-                                    fieldChangeHandler("journey_end_id", data)
-                                }
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        fullWidth
-                                        label="Journey End"
-                                        className={classes.field}
-                                        error={errors.journey_end_id.show}
-                                        helperText={errors.journey_end_id.text}
-                                    />
-                                )}
-                            />
-                        </Grid>{" "}
-                        <Grid item lg={4} xs={12}>
+                            <Typography mb={2}>Arrival Time</Typography>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DateTimePicker
-                                    value={formData.date_time}
+                                    label="Time"
+                                    value={formData.arrival_date_time}
                                     onChange={(newValue) =>
                                         fieldChangeHandler(
-                                            "date_time",
+                                            "arrival_date_time",
                                             newValue
                                         )
                                     }
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
-                                            fullWidth
-                                            label="Date and Time"
                                             className={classes.field}
-                                            error={errors.date_time.show}
-                                            helperText={errors.date_time.text}
                                         />
                                     )}
                                 />
                             </LocalizationProvider>
                         </Grid>
-                    </Grid> */}
-                    <Grid container spacing={5}>
-                        <Grid item lg={2}>
-                            <Box my={3}>
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    className={classes.submitBtn}
-                                    type="submit"
-                                    {...(buttonLoading && {
-                                        disabled: true,
-                                        startIcon: (
-                                            <BeatLoader
-                                                color="white"
-                                                loading={true}
-                                                size={10}
-                                            />
-                                        ),
-                                    })}
-                                >
-                                    Assign
-                                </Button>
-                            </Box>
+                    </Grid>
+                    <Grid container spacing={5} sx={{ marginTop: "10px" }}>
+                        <Grid item lg={3} xs={12}>
+                            <Typography mb={2}>
+                                Select Boarding Points
+                            </Typography>
+
+                            <Autocomplete
+                                options={counters}
+                                optionLabel="name"
+                                getOptionLabel={(option) => option.name}
+                                value={boarding_point_item.counter_id}
+                                onChange={(e, data) =>
+                                    boardingPointFieldChangeHandler(
+                                        "counter_id",
+                                        data
+                                    )
+                                }
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        fullWidth
+                                        label="Boarding Points"
+                                        className={classes.field}
+                                    />
+                                )}
+                            />
+                            {formData?.boarding_point?.map((item, i) => (
+                                <>
+                                    <Grid container alignItems="center">
+                                        <Grid item lg={12}>
+                                            <Box className={classes.timeBox}>
+                                                <Typography
+                                                    variant="body1"
+                                                    color="black"
+                                                >
+                                                    <strong>
+                                                        {item?.counter_id.name},
+                                                        {moment(
+                                                            item?.time
+                                                        ).format("LT")}
+                                                    </strong>
+                                                </Typography>
+                                                <DeleteIcon
+                                                    onClick={() =>
+                                                        boardingDelete(item)
+                                                    }
+                                                    className={classes.dltIcon}
+                                                />
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </>
+                            ))}
                         </Grid>
-                        <Grid item lg={2}>
-                            <Box my={3}>
-                                <Button
-                                    fullWidth
-                                    variant="outlined"
-                                    className={classes.submitBtn}
-                                    onClick={() => controlHandler()}
-                                >
-                                    Cancel
-                                </Button>
+                        <Grid item lg={3} xs={12}>
+                            <Typography mb={2}>Select Boarding Time</Typography>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <TimePicker
+                                    label="Time"
+                                    value={boarding_point_item.time}
+                                    onChange={(newValue) =>
+                                        boardingPointFieldChangeHandler(
+                                            "time",
+                                            newValue
+                                        )
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            className={classes.field}
+                                            fullWidth
+                                        />
+                                    )}
+                                />
+                            </LocalizationProvider>
+                            <Box my={2}>
+                                <Grid container justifyContent="flex-end">
+                                    <Grid item lg={3}>
+                                        <Button
+                                            variant="contained"
+                                            fullWidth
+                                            onClick={addBoardingOptions}
+                                            mt={3}
+                                            className={classes.btn}
+                                        >
+                                            Add
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             </Box>
                         </Grid>
                     </Grid>
+                    <Grid container spacing={5} sx={{ marginTop: "10px" }}>
+                        <Grid item lg={3} xs={12}>
+                            <Typography mb={2}>
+                                Select Dropping Points
+                            </Typography>
+
+                            <Autocomplete
+                                options={counters}
+                                optionLabel="name"
+                                getOptionLabel={(option) => option.name}
+                                value={dropping_point_item.counter_id}
+                                onChange={(e, data) =>
+                                    droppingPointFieldChangeHandler(
+                                        "counter_id",
+                                        data
+                                    )
+                                }
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        fullWidth
+                                        label="Dropping Points"
+                                        className={classes.field}
+                                    />
+                                )}
+                            />
+
+                            {formData?.dropping_point?.map((item, i) => (
+                                <>
+                                    <Grid container alignItems="center">
+                                        <Grid item lg={12}>
+                                            <Box
+                                                className={classes.timeBox}
+                                                mb={4}
+                                            >
+                                                <Typography
+                                                    variant="body1"
+                                                    color="black"
+                                                >
+                                                    <strong>
+                                                        {item?.counter_id.name},
+                                                        {moment(
+                                                            item?.time
+                                                        ).format("LT")}
+                                                    </strong>
+                                                </Typography>
+                                                <DeleteIcon
+                                                    onClick={() =>
+                                                        droppingDelete(item)
+                                                    }
+                                                    className={classes.dltIcon}
+                                                />
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </>
+                            ))}
+                        </Grid>
+                        <Grid item lg={3} xs={12}>
+                            <Typography mb={2}>Select Dropping Time</Typography>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <TimePicker
+                                    label="Time"
+                                    value={dropping_point_item.time}
+                                    onChange={(newValue) =>
+                                        droppingPointFieldChangeHandler(
+                                            "time",
+                                            newValue
+                                        )
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            className={classes.field}
+                                            fullWidth
+                                        />
+                                    )}
+                                />
+                            </LocalizationProvider>
+                            <Box my={2}>
+                                <Grid container justifyContent="flex-end">
+                                    <Grid item lg={3}>
+                                        <Button
+                                            variant="contained"
+                                            fullWidth
+                                            onClick={addDroppingOptions}
+                                            mt={3}
+                                            className={classes.btn}
+                                        >
+                                            Add
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Box mt={5}>
+                        <Grid container spacing={5}>
+                            <Grid item lg={2}>
+                                <Box my={3}>
+                                    <Button
+                                        fullWidth
+                                        variant="contained"
+                                        className={classes.submitBtn}
+                                        type="submit"
+                                        {...(buttonLoading && {
+                                            disabled: true,
+                                            startIcon: (
+                                                <BeatLoader
+                                                    color="white"
+                                                    loading={true}
+                                                    size={10}
+                                                />
+                                            ),
+                                        })}
+                                    >
+                                        Assign
+                                    </Button>
+                                </Box>
+                            </Grid>
+                            <Grid item lg={2}>
+                                <Box my={3}>
+                                    <Button
+                                        fullWidth
+                                        variant="outlined"
+                                        className={classes.submitBtn}
+                                        onClick={() => controlHandler()}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </Box>
                 </form>
             </Box>
         </>

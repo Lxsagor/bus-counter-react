@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import queryString from "query-string";
 import moment from "moment";
+import { searchCoachs } from "../../store/actions/User/userActions";
 
 const Buses = () => {
     const classes = useStyles();
@@ -29,6 +30,20 @@ const Buses = () => {
     const [coachItems, setCoachItems] = useState([]);
     const location = useLocation();
     const queryParams = queryString.parse(location.search);
+    const dispatch = useDispatch();
+
+    const [form, setForm] = useState({
+        start_location: queryParams.start_location,
+        end_location: queryParams.end_location,
+        journey_date: queryParams.journey_date,
+        return_date: null,
+    });
+
+    useEffect(() => {
+        if (form && Object.keys(form).length > 0) {
+            dispatch(searchCoachs(form, () => {}));
+        }
+    }, [dispatch, form, searchCoach]);
 
     useEffect(() => {
         if (coaches) {

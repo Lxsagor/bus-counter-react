@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as types from "../../types";
 import { toggleButtonLoading, toggleSiteLoading } from "../sharedAction";
-import { searchCoach } from "../User/userActions";
+import { searchCoachs } from "../User/userActions";
 
 toast.configure();
 
@@ -194,7 +194,7 @@ export const ticketBooking =
                         type: types.CONFIRM_TICKET,
                         payload: response.data,
                     });
-                    dispatch(searchCoach(searchHistory));
+                    dispatch(searchCoachs(searchHistory));
                     dispatch(searchRoute(searchRoutes));
                     // dispatch({
                     //     type: types.UPDATE_COACH_BY_CONFIRM_TICKET,

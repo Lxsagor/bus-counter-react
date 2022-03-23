@@ -484,7 +484,7 @@ const AddSchedule = () => {
                         </Box>
                         <Grid container spacing={3}>
                             <Grid item lg={4} xs={12}>
-                                <TextField
+                                <Select
                                     className={classes.selectBox}
                                     value={dayTime.day}
                                     label="Day"
@@ -495,10 +495,6 @@ const AddSchedule = () => {
                                         )
                                     }
                                     fullWidth
-                                    select
-                                    SelectProps={{
-                                        multiple: true,
-                                    }}
                                 >
                                     <MenuItem value="saturday">
                                         Saturday
@@ -513,7 +509,7 @@ const AddSchedule = () => {
                                         Thursday
                                     </MenuItem>
                                     <MenuItem value="friday">Friday</MenuItem>
-                                </TextField>
+                                </Select>
                             </Grid>
                             <Grid item lg={4} xs={12}>
                                 <LocalizationProvider
