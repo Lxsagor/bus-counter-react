@@ -17,6 +17,9 @@ export const useStyles = makeStyles((theme) => ({
             // width: "368px",
             backgroundColor: "#FFFFFF",
         },
+        "& .MuiInputBase-adornedEnd": {
+            backgroundColor: "#FFFFFF",
+        },
     },
     track: {
         backgroundColor: theme.palette.primary.main,
@@ -145,5 +148,16 @@ export const useStyles = makeStyles((theme) => ({
         borderRadius: "5px !important",
         minHeight: "40px !important",
         textTransform: "capitalize !important",
+    },
+    seatFareBox: {
+        display: "flex",
+        padding: "0px 10px",
+        borderTop: "1px dashed black !important",
+        borderBottom: "1px dashed black !important",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    seatBox: {
+        border: "1px solid black",
     },
 }));

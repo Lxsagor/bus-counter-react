@@ -32,6 +32,7 @@ import { useSelector } from "react-redux";
 import BusSeatSingle from "./BusSeatSingle";
 import BusSeatDouble from "./BusSeatDouble";
 import { CONFIRM_TICKET } from "../../../store/types";
+import SeatSection from "./SeatSection";
 
 const Bus = ({ item, bus }) => {
     const classes = useStyles();
@@ -156,7 +157,12 @@ const Bus = ({ item, bus }) => {
                         />
                     )}
                     {collapseStatus && item?.bus_seat_type === "single" && (
-                        <BusSeatSingle
+                        // <BusSeatSingle
+                        //     data={bus}
+                        //     route={item}
+                        //     setCollapseStatus={setCollapseStatus}
+                        // />
+                        <SeatSection
                             data={bus}
                             route={item}
                             setCollapseStatus={setCollapseStatus}

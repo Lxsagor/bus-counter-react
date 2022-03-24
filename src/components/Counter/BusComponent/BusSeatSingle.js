@@ -222,30 +222,6 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
                             <Typography variant="body2">Selected</Typography>
                         </Button>
                     </Grid>
-                    <Grid item>
-                        <Button className={classes.statusBtn}>
-                            <Avatar src={Selected} />
-                            <Typography variant="body2">Selected</Typography>
-                        </Button>
-                    </Grid>
-                    <Grid item>
-                        <Button className={classes.statusBtn}>
-                            <Avatar src={Selected} />
-                            <Typography variant="body2">Selected</Typography>
-                        </Button>
-                    </Grid>
-                    <Grid item>
-                        <Button className={classes.statusBtn}>
-                            <Avatar src={Selected} />
-                            <Typography variant="body2">Selected</Typography>
-                        </Button>
-                    </Grid>
-                    <Grid item>
-                        <Button className={classes.statusBtn}>
-                            <Avatar src={Selected} />
-                            <Typography variant="body2">Selected</Typography>
-                        </Button>
-                    </Grid>
                 </Grid>
             </Box>
 
