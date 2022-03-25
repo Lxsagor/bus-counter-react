@@ -1,8 +1,8 @@
+import { Icon } from "@iconify/react";
 import {
     Autocomplete,
     Avatar,
     Button,
-    Container,
     Divider,
     Grid,
     TextField,
@@ -10,15 +10,10 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { useStyles } from "./styled";
 import Available from "../../../assets/available.png";
 import Booked from "../../../assets/booked.png";
 import Selected from "../../../assets/selected.png";
-import moment from "moment";
-import { toast } from "react-toastify";
-import { Icon } from "@iconify/react";
-import { useDispatch, useSelector } from "react-redux";
-import { ticketBooking } from "../../../store/actions/Counter/bookingActions";
+import { useStyles } from "./styled";
 
 const SeatSection = ({ data, route, setCollapseStatus }) => {
     const classes = useStyles();
@@ -102,7 +97,11 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
             <Box pb={3}>
                 <Grid container justifyContent="center">
                     <Grid item lg={3} className={classes.seatBox}>
-                        <Grid container justifyContent="flex-end">
+                        <Grid
+                            container
+                            justifyContent="flex-end"
+                            sx={{ marginBottom: "15px" }}
+                        >
                             <Grid item>
                                 <Button className={classes.seatBtn} disabled>
                                     <Icon icon="whh:wheel" width="31px" />
@@ -236,6 +235,7 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
                                 <Grid item lg={4}>
                                     <Button
                                         fullWidth
+                                        disableElevation
                                         sx={{
                                             textTransform: "capitalize",
                                             minHeight: "55px",

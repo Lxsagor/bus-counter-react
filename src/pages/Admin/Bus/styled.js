@@ -44,4 +44,17 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
         alignItems: "center",
     },
+    seatBtn: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        // minWidth: "35px !important",
+        // maxWidth: "30px !important",
+        color: "#000 !important",
+    },
+    seatBox: {
+        border: "1px solid black",
+        maxWidth: "350px",
+    },
 }));

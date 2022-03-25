@@ -1,38 +1,24 @@
 import {
     Avatar,
     Button,
-    Container,
     Dialog,
     DialogContent,
     Divider,
-    Fade,
     Grid,
-    Slide,
-    TextField,
     Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useRef, useState, useEffect } from "react";
-import { useStyles } from "./styled";
-import Busimage from "../../../assets/bus.png";
-import Available from "../../../assets/available.png";
-import Booked from "../../../assets/booked.png";
-import Selected from "../../../assets/selected.png";
-import { Icon } from "@iconify/react";
-import BusSeat from "./BusSeatDouble";
-import BusTicket from "./BusTicket";
-import AssignBus from "../AssignBus/AssignBus";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import {
-    assignBusdialog,
-    routeid,
-} from "../../../store/actions/Counter/bookingActions";
-import { useSelector } from "react-redux";
-import BusSeatSingle from "./BusSeatSingle";
-import BusSeatDouble from "./BusSeatDouble";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Busimage from "../../../assets/bus.png";
+import { routeid } from "../../../store/actions/Counter/bookingActions";
 import { CONFIRM_TICKET } from "../../../store/types";
+import AssignBus from "../AssignBus/AssignBus";
+import BusSeatDouble from "./BusSeatDouble";
+import BusTicket from "./BusTicket";
 import SeatSection from "./SeatSection";
+import { useStyles } from "./styled";
 
 const Bus = ({ item, bus }) => {
     const classes = useStyles();
@@ -67,7 +53,7 @@ const Bus = ({ item, bus }) => {
                                     </Typography>
 
                                     <Typography variant="body1" mb={1}>
-                                        {bus?.coach_name}
+                                        {bus?.coach_name}{" "}
                                         <span>{bus?.bus_type}</span>
                                     </Typography>
                                     <Box display="flex">

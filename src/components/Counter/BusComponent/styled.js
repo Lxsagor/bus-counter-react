@@ -15,6 +15,8 @@ export const useStyles = makeStyles((theme) => ({
         "& .MuiOutlinedInput-input": {
             borderRadius: "8px",
             // width: "368px",
+            // height: 10,
+
             backgroundColor: "#FFFFFF",
         },
         "& .MuiInputBase-adornedEnd": {

@@ -41,6 +41,11 @@ const Dashboard = () => {
         end_location: null,
         journey_date: null,
     });
+    const [form, setForm] = useState({
+        start_location: "",
+        end_location: "",
+        journey_date: "",
+    });
     const [coachItems, setCoachItems] = useState([]);
 
     // console.log(
@@ -96,9 +101,22 @@ const Dashboard = () => {
         }
     }, [routes, routes?.assignBuses, searchHistory.journey_date]);
     console.log(coachItems);
+    useEffect(() => {
+        let search = JSON.parse(localStorage.getItem("searchRoute")) || null;
+        if (search) {
+            setLocation((prevState) => ({
+                ...prevState,
+                start_location: search?.start_location,
+                end_location: search?.end_location,
+                journey_date: search?.journey_date,
+            }));
+        }
+    }, []);
+    console.log(form);
 
     const searchHandler = (e) => {
         e.preventDefault();
+
         let formData = { ...location };
         if (
             formData.start_location &&
@@ -114,7 +132,9 @@ const Dashboard = () => {
         }
 
         dispatch(searchRoute(formData));
+        localStorage.setItem("searchRoute", JSON.stringify(location));
     };
+    console.log("coach", coachItems);
     return (
         <>
             <Box m={5}>
@@ -235,21 +255,21 @@ const Dashboard = () => {
                         </Grid>
                     </Grid>
                 </Box>
-                {routes && routes.length > 0 && (
-                    <>
-                        <Box mt={5} mb={3}>
-                            <Typography variant="h6">
-                                Available Bus List
-                            </Typography>
-                            <Box
-                                sx={{
-                                    width: "42px",
-                                    height: "4px",
-                                    backgroundColor: "#33A551",
-                                }}
-                            ></Box>
-                        </Box>
-                    </>
+                {routes.length > 0 ? (
+                    <Box mt={5} mb={3}>
+                        <Typography variant="h6">Available Bus List</Typography>
+                        <Box
+                            sx={{
+                                width: "42px",
+                                height: "4px",
+                                backgroundColor: "#33A551",
+                            }}
+                        ></Box>
+                    </Box>
+                ) : (
+                    <Box mt={5} mb={3}>
+                        <Typography variant="h6">No bus found</Typography>
+                    </Box>
                 )}
 
                 <Grid container>
