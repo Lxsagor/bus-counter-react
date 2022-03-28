@@ -131,6 +131,10 @@ export const AdminUrl = {
         editbusinfo: "/admin/manage-bus/edit-bus-info/:id",
         addbus: "/admin/manage-bus/add-bus",
     },
+    manageBusLayout: {
+        index: "/admin/bus-layout",
+        addbuslayout: "/admin/bus-layout/add-bus-layout",
+    },
     manageSchedule: {
         index: "/admin/manage-schedule",
         addSchedule: "/admin/manage-schedule/add-schedule",

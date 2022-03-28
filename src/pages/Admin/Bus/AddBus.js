@@ -10,6 +10,7 @@ import { addBus } from "../../../store/actions/Admin/busAction";
 import { BUS_VALIDATE_ERROR, ERROR } from "../../../store/types";
 import { useStyles } from "./styled";
 import { Icon } from "@iconify/react";
+import { toast } from "react-toastify";
 
 const AddBus = () => {
     const classes = useStyles();
@@ -23,6 +24,7 @@ const AddBus = () => {
         chesis_no: "",
         bus_type: "",
         total_seat: "",
+        seat_pattern: [],
     });
     const [errors, setErrors] = useState({
         bus_no: { text: "", show: false },
@@ -38,31 +40,31 @@ const AddBus = () => {
 
         let totalRow = seatCount / 5;
         let seatNames = [
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F",
-            "G",
-            "H",
-            "I",
-            "J",
-            "K",
-            "L",
-            "M",
-            "N",
-            "O",
-            "P",
-            "Q",
-            "R",
-            "S",
-            "T",
-            "U",
-            "V",
-            "X",
-            "Y",
-            "Z",
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i",
+            "j",
+            "k",
+            "l",
+            "m",
+            "n",
+            "o",
+            "p",
+            "q",
+            "r",
+            "s",
+            "t",
+            "u",
+            "v",
+            "x",
+            "y",
+            "z",
         ];
 
         for (let i = 0; i < totalRow; i++) {
@@ -73,7 +75,32 @@ const AddBus = () => {
 
         setSeats(seatItems);
     }, []);
-    console.log(seats);
+
+    const seatBookHandler = (seatName) => {
+        let selectedSeats = [...formData.seat_pattern];
+
+        if (selectedSeats.includes(seatName)) {
+            selectedSeats = selectedSeats.filter((item) => item !== seatName);
+        } else {
+            selectedSeats.push(seatName);
+        }
+
+        setFormData((prevState) => ({
+            ...prevState,
+            seat_pattern: selectedSeats,
+        }));
+    };
+
+    const renderClass = (item) => {
+        let classNames = classes.seatBtn + " ";
+
+        if (formData.seat_pattern.includes(item)) {
+            classNames += classes.selectSeatBtn + " ";
+        }
+
+        return classNames;
+    };
+
     const fieldChangeHandler = (field, value) => {
         setErrors((prevState) => ({
             ...prevState,
@@ -134,6 +161,7 @@ const AddBus = () => {
             });
         };
     }, [dispatch]);
+
     return (
         <>
             <Box m={5}>
@@ -268,8 +296,13 @@ const AddBus = () => {
                                             seats.map((item, i) => (
                                                 <Grid item key={i}>
                                                     <Button
-                                                        className={
-                                                            classes.seatBtn
+                                                        className={renderClass(
+                                                            item
+                                                        )}
+                                                        onClick={() =>
+                                                            seatBookHandler(
+                                                                item
+                                                            )
                                                         }
                                                     >
                                                         <Typography variant="body2">

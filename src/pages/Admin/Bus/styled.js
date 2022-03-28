@@ -52,9 +52,13 @@ export const useStyles = makeStyles((theme) => ({
         // minWidth: "35px !important",
         // maxWidth: "30px !important",
         color: "#000 !important",
+        textTransform: "initial !important",
     },
     seatBox: {
         border: "1px solid black",
         maxWidth: "350px",
+    },
+    selectSeatBtn: {
+        color: "#33A551 !important",
     },
 }));

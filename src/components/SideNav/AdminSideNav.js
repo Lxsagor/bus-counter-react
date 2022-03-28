@@ -40,6 +40,14 @@ const AdminSideNav = () => {
                         </ListItemIcon>
                         <ListItemText>Manage Bus</ListItemText>
                     </ListItem>
+                </NavLink>{" "}
+                <NavLink to={AdminUrl.manageBusLayout.index}>
+                    <ListItem>
+                        <ListItemIcon>
+                            <DirectionsBusIcon />
+                        </ListItemIcon>
+                        <ListItemText>Bus Layout</ListItemText>
+                    </ListItem>
                 </NavLink>
                 <NavLink to={AdminUrl.manageSchedule.index}>
                     <ListItem>

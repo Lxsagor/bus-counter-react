@@ -55,6 +55,24 @@ const AdminRoutes = [
         ),
     },
     {
+        path: AdminUrl.manageBusLayout.index,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/BusLayout/index"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageBusLayout.addbuslayout,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/BusLayout/AddBusLayout"),
+            suspenseOption
+        ),
+    },
+    {
         path: AdminUrl.manageBus.editbusinfo,
         layout: AdminLayout,
         meta: { requiresAuth: false },
