@@ -94,15 +94,24 @@ const AddBusLayout = () => {
 
     const seatLayout = () => {
         let seatRows = [];
+        let seatNumbers = [];
 
         for (let i = 1; i <= value.row; i++) {
-            seatRows.push(<TableRow>{seatColumn(i - 1)}</TableRow>);
+            seatRows.push(
+                <TableRow>{seatColumn(i - 1, seatNumbers)}</TableRow>
+            );
+            // setFormData((prevState) => ({
+            //     ...prevState,
+            //     seat_no: seatNumbers,
+            // }));
         }
+        console.log("seats", seatNumbers);
+        console.log("rows", seatRows);
         return seatRows;
     };
-    const seatColumn = (rowPosition) => {
+
+    const seatColumn = (rowPosition, seatNumbers) => {
         let columns = value.x + value.y + 1;
-        let seatPosition = 1;
         let seatNames = [
             "A",
             "B",
@@ -132,10 +141,11 @@ const AddBusLayout = () => {
         ];
 
         let x = value.x;
-        let seatNumbers = [];
+        let y = value.y;
+
         let seats = [];
         for (let j = 1; j <= columns; j++) {
-            if (seatPosition <= x) {
+            if (j <= x) {
                 seats.push(
                     <TableCell className={classes.actionCell}>
                         <Button className={classes.seatBtn}>
@@ -146,11 +156,31 @@ const AddBusLayout = () => {
                         </Button>
                     </TableCell>
                 );
-                seatNumbers.push(...seatNumbers, seatNames[rowPosition] + j);
-            } else if (seatPosition === x + 1) {
-                seats.push(
-                    <TableCell className={classes.actionCell}></TableCell>
-                );
+                seatNumbers.push(seatNames[rowPosition] + j);
+            } else if (j === x + 1) {
+                let seatXY = x + y;
+                let modulas = formData.total_seat % seatXY;
+
+                if (rowPosition + 1 === parseInt(value.row) && modulas > 0) {
+                    seats.push(
+                        <TableCell className={classes.actionCell}>
+                            <Button className={classes.seatBtn}>
+                                <Typography>
+                                    {seatNames[rowPosition] + "M"}
+                                </Typography>
+                                <Icon
+                                    icon="emojione-monotone:seat"
+                                    width="25px"
+                                />
+                            </Button>
+                        </TableCell>
+                    );
+                    seatNumbers.push(seatNames[rowPosition] + "M");
+                } else {
+                    seats.push(
+                        <TableCell className={classes.actionCell}></TableCell>
+                    );
+                }
             } else {
                 seats.push(
                     <TableCell className={classes.actionCell}>
@@ -162,19 +192,13 @@ const AddBusLayout = () => {
                         </Button>
                     </TableCell>
                 );
-                seatNumbers.push(
-                    ...seatNumbers,
-                    seatNames[rowPosition] + (j - 1)
-                );
+                seatNumbers.push(seatNames[rowPosition] + (j - 1));
             }
-
-            seatPosition++;
-            console.log("seat", seatNumbers);
         }
 
         return seats;
     };
-
+    console.log("form", formData);
     return (
         <>
             <Box m={5}>
@@ -257,16 +281,20 @@ const AddBusLayout = () => {
                                     fullWidth
                                     rows={10}
                                     value={formData.seat_no}
-                                    onChange={(e) =>
-                                        fieldChangeHandler(
-                                            "seat_no",
-                                            e.target.value
-                                        )
-                                    }
+                                    // onChange={(e) =>
+                                    //     fieldChangeHandler(
+                                    //         "seat_no",
+                                    //         e.target.value
+                                    //     )
+                                    // }
                                     className={classes.field}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
                                 />
                             </Grid>
                             <Grid item lg={6}>
+                                {/* <Typography mb={3}>Seat pattern</Typography> */}
                                 <TableContainer sx={{ width: 610 }}>
                                     <Table>
                                         <TableBody>{seatLayout()}</TableBody>

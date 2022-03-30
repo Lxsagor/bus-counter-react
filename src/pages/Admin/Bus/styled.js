@@ -11,6 +11,9 @@ export const useStyles = makeStyles((theme) => ({
             // width: "368px",
             backgroundColor: "#FFFFFF",
         },
+        "& .MuiOutlinedInput-root": {
+            backgroundColor: "#FFFFFF",
+        },
     },
     title: {
         borderRadius: "4px",
@@ -44,21 +47,26 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
         alignItems: "center",
     },
+
+    actionCell: {
+        padding: 0,
+        margin: 0,
+        width: "50px !important",
+        display: "inline-block !important",
+        marginBottom: "0px !important",
+
+        // "& .MuiTableCell-root": {
+        //     padding: 0,
+        //     margin: 0,
+        //     width: "50px !important",
+        //     display: "inline-block !important",
+        // },
+    },
     seatBtn: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        // minWidth: "35px !important",
-        // maxWidth: "30px !important",
         color: "#000 !important",
-        textTransform: "initial !important",
-    },
-    seatBox: {
-        border: "1px solid black",
-        maxWidth: "350px",
-    },
-    selectSeatBtn: {
-        color: "#33A551 !important",
     },
 }));

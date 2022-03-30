@@ -29,6 +29,8 @@ import {
 import { BeatLoader } from "react-spinners";
 import { FETCH_ROUTES } from "../../../store/types";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
+import { CounterUrl } from "../../../constants/urls";
 
 const Dashboard = () => {
     const classes = useStyles();
@@ -36,6 +38,7 @@ const Dashboard = () => {
     const { districts } = useSelector((state) => state.shared);
     const { buttonLoading } = useSelector((state) => state.shared);
     const { routes, searchHistory } = useSelector((state) => state.booking);
+    const history = useHistory();
     const [location, setLocation] = useState({
         start_location: null,
         end_location: null,
@@ -80,29 +83,9 @@ const Dashboard = () => {
     //     };
     // }, [dispatch]);
 
-    useEffect(() => {
-        if (routes) {
-            let items = [];
-            routes?.forEach((item) =>
-                item.assignBuses?.forEach((tick) => {
-                    if (
-                        moment(new Date(tick.departure_time)).format(
-                            "DD/MM/YYYY"
-                        ) ===
-                        moment(new Date(searchHistory.journey_date)).format(
-                            "DD/MM/YYYY"
-                        )
-                    ) {
-                        items.push(tick);
-                    }
-                })
-            );
-            setCoachItems(items);
-        }
-    }, [routes, routes?.assignBuses, searchHistory.journey_date]);
     console.log(coachItems);
     useEffect(() => {
-        let search = JSON.parse(localStorage.getItem("searchRoute")) || null;
+        let search = JSON.parse(localStorage.getItem("search")) || null;
         if (search) {
             setLocation((prevState) => ({
                 ...prevState,
@@ -131,8 +114,13 @@ const Dashboard = () => {
             formData["end_location"] = formData.end_location.id;
         }
 
-        dispatch(searchRoute(formData));
-        localStorage.setItem("searchRoute", JSON.stringify(location));
+        dispatch(
+            searchRoute(formData, () =>
+                history.push(CounterUrl.dashboard.searchHistory)
+            )
+        );
+        localStorage.setItem("searchRoute", JSON.stringify(formData));
+        localStorage.setItem("search", JSON.stringify(location));
     };
     console.log("coach", coachItems);
     return (
@@ -255,64 +243,6 @@ const Dashboard = () => {
                         </Grid>
                     </Grid>
                 </Box>
-                {routes.length > 0 ? (
-                    <Box mt={5} mb={3}>
-                        <Typography variant="h6">Available Bus List</Typography>
-                        <Box
-                            sx={{
-                                width: "42px",
-                                height: "4px",
-                                backgroundColor: "#33A551",
-                            }}
-                        ></Box>
-                    </Box>
-                ) : (
-                    <Box mt={5} mb={3}>
-                        <Typography variant="h6">No bus found</Typography>
-                    </Box>
-                )}
-
-                <Grid container>
-                    <Grid item lg={12} xl={10}>
-                        <Box className={classes.root}>
-                            {routes?.map((item, i) => (
-                                <>
-                                    {!coachItems.length > 0 && (
-                                        <Box
-                                            mb={3}
-                                            className={classes.bus}
-                                            key={i}
-                                        >
-                                            {/* <Typography variant="h6">
-                                                Routes
-                                            </Typography> */}
-                                            <Bus item={item} />
-                                        </Box>
-                                    )}
-                                    {item.assignBuses.length > 0 && (
-                                        <>
-                                            {/* <Typography variant="h6" pl={3}>
-                                                Coaches
-                                            </Typography> */}
-                                            {coachItems?.map((busItem, j) => (
-                                                <Box
-                                                    mb={3}
-                                                    className={classes.bus}
-                                                    key={j}
-                                                >
-                                                    <Bus
-                                                        item={item}
-                                                        bus={busItem}
-                                                    />
-                                                </Box>
-                                            ))}
-                                        </>
-                                    )}
-                                </>
-                            ))}
-                        </Box>
-                    </Grid>
-                </Grid>
             </Box>
         </>
     );

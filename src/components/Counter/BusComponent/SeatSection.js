@@ -5,6 +5,11 @@ import {
     Button,
     Divider,
     Grid,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
     TextField,
     Typography,
 } from "@mui/material";
@@ -18,49 +23,7 @@ import { useStyles } from "./styled";
 const SeatSection = ({ data, route, setCollapseStatus }) => {
     const classes = useStyles();
     const [seats, setSeats] = useState([]);
-    useEffect(() => {
-        if (data?.bus && data?.bus?.total_seat) {
-            let seatCount = parseInt(data?.bus?.total_seat);
-            let seatItems = [];
-
-            let totalRow = seatCount / 3;
-            let seatNames = [
-                "A",
-                "B",
-                "C",
-                "D",
-                "E",
-                "F",
-                "G",
-                "H",
-                "I",
-                "J",
-                "K",
-                "L",
-                "M",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "R",
-                "S",
-                "T",
-                "U",
-                "V",
-                "X",
-                "Y",
-                "Z",
-            ];
-
-            for (let i = 0; i < totalRow; i++) {
-                for (let j = 1; j <= 3; j++) {
-                    seatItems.push(seatNames[i] + j);
-                }
-            }
-
-            setSeats(seatItems);
-        }
-    }, [data?.bus]);
+    console.log(data.bus.seat_no);
 
     return (
         <>
@@ -118,20 +81,7 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
                             spacing={5}
                             justifyContent="space-between"
                         >
-                            {seats &&
-                                seats.map((item, i) => (
-                                    <Grid item key={i}>
-                                        <Button className={classes.seatBtn}>
-                                            <Typography variant="body2">
-                                                {item}
-                                            </Typography>
-                                            <Icon
-                                                icon="emojione-monotone:seat"
-                                                width="35px"
-                                            />
-                                        </Button>
-                                    </Grid>
-                                ))}
+                            <Grid item></Grid>
                         </Grid>
                     </Grid>
 

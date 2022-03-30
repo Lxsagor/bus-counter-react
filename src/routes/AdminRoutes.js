@@ -77,7 +77,7 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/Bus/EditBusInfo"),
+            () => import("../pages/Admin/Bus/AddBus"),
             suspenseOption
         ),
     },

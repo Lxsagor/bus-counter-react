@@ -68,43 +68,46 @@ export const fetchBusByType =
             });
     };
 
-export const searchRoute = (data) => (dispatch) => {
-    dispatch(toggleButtonLoading(true));
-    dispatch(toggleSiteLoading(true));
-    fetch(api_routes.booking.searchRoute, {
-        method: "POST",
-        headers: {
-            "Content-type": "application/json",
-            Accept: "application/json",
-            Authorization: TOKEN,
-        },
-        body: JSON.stringify(data),
-    })
-        .then((response) => response.json())
-        .then((response) => {
-            console.log(response);
-            if (response.status === "success") {
-                dispatch({
-                    type: types.FETCH_ROUTES,
-                    payload: response.data,
-                });
-                dispatch({
-                    type: types.SEARCH_HISTORY,
-                    payload: data,
-                });
-            } else if (response.status === "error") {
-                toast.error(response.message);
-            }
-            dispatch(toggleButtonLoading(false));
-            dispatch(toggleSiteLoading(false));
+export const searchRoute =
+    (data, cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleButtonLoading(true));
+        dispatch(toggleSiteLoading(true));
+        fetch(api_routes.booking.searchRoute, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+            body: JSON.stringify(data),
         })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                if (response.status === "success") {
+                    dispatch({
+                        type: types.FETCH_ROUTES,
+                        payload: response.data,
+                    });
+                    dispatch({
+                        type: types.SEARCH_HISTORY,
+                        payload: data,
+                    });
+                    cb();
+                } else if (response.status === "error") {
+                    toast.error(response.message);
+                }
+                dispatch(toggleButtonLoading(false));
+                dispatch(toggleSiteLoading(false));
+            })
 
-        .catch((err) => {
-            dispatch(toggleButtonLoading(false));
-            dispatch(toggleSiteLoading(false));
-            console.log(err);
-        });
-};
+            .catch((err) => {
+                dispatch(toggleButtonLoading(false));
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
 export const routeid = (id, bus_type) => ({
     type: types.ROUTE_ID,
     payload: {

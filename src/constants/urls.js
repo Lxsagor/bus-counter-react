@@ -174,6 +174,7 @@ export const CounterUrl = {
     dashboard: {
         index: "/counter/dashboard",
         search: "/counter/dashboard/search",
+        searchHistory: "/counter/dashboard/search-history",
     },
     accounts: {
         index: "/counter/accounts",

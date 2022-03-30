@@ -16,6 +16,7 @@ export const useStyles = makeStyles((theme) => ({
         margin: 0,
         width: "50px !important",
         display: "inline-block !important",
+        marginBottom: "0px !important",
 
         // "& .MuiTableCell-root": {
         //     padding: 0,
