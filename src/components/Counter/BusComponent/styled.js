@@ -61,23 +61,10 @@ export const useStyles = makeStyles((theme) => ({
         },
     },
 
-    seatBtn: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        width: 50,
-        minWidth: "35px !important",
-        maxWidth: "50px !important",
-        color: "#000 !important",
-    },
-
     bookSeatBtn: {
         color: "rgba(198, 30, 30, 0.65) !important",
     },
-    selectSeatBtn: {
-        color: "#33A551 !important",
-    },
+
     fare: {
         fontSize: "21px !important",
         fontWeight: "32px !important",
@@ -161,5 +148,23 @@ export const useStyles = makeStyles((theme) => ({
     },
     seatBox: {
         border: "1px solid black",
+    },
+    seatBtn: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#000 !important",
+    },
+    selectSeatBtn: {
+        color: "#33A551 !important",
+    },
+    actionCell: {
+        padding: "0 !important",
+        margin: "0px !important",
+        width: "50px !important",
+        display: "inline-block !important",
+        marginBottom: "0px !important",
+        border: "0px !important",
     },
 }));

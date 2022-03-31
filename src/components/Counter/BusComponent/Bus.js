@@ -137,14 +137,14 @@ const Bus = ({ item, bus }) => {
                             </Grid>
                         </Grid>
                     </Box>
-                    {collapseStatus && item?.bus_seat_type === "double" && (
+                    {/* {collapseStatus && item?.bus_seat_type === "double" && (
                         <BusSeatDouble
                             data={bus}
                             route={item}
                             setCollapseStatus={setCollapseStatus}
                         />
-                    )}
-                    {collapseStatus && item?.bus_seat_type === "single" && (
+                    )} */}
+                    {collapseStatus && (
                         // <BusSeatSingle
                         //     data={bus}
                         //     route={item}
