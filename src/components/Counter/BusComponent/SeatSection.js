@@ -161,6 +161,7 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
 
             let x = value.x;
             let y = value.y;
+            //addd
 
             let seats = [];
             for (let j = 1; j <= columns; j++) {
