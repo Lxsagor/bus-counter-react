@@ -14,16 +14,21 @@ import {
     Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useCallback, useEffect, useState } from "react";
+import moment from "moment";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Available from "../../../assets/available.png";
 import Booked from "../../../assets/booked.png";
 import Selected from "../../../assets/selected.png";
+import { selectedSeat } from "../../../store/actions/Counter/bookingActions";
 import { useStyles } from "./styled";
 
 const SeatSection = ({ data, route, setCollapseStatus }) => {
     const classes = useStyles();
     const [seats, setSeats] = useState([]);
+    const dispatch = useDispatch();
+
     const [form, setForm] = useState({
         seat_no: [],
         subTotal: 0,
@@ -34,11 +39,17 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
         dropping_point: null,
         phone: "",
     });
+    const [formData, setFormData] = useState({
+        seat_no: "",
+        coach_id: data?.id,
+    });
+
     const [value, setValue] = useState({
         x: 0,
         y: 0,
         row: 0,
     });
+
     useEffect(() => {
         let totalSeat = data.bus.total_seat;
         let x = value.x;
@@ -93,8 +104,37 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
             }));
         }
     }, [data.bus.layout, data.bus.total_seat, value.x, value.y]);
+
+    // const seatBookHandler = useCallback(
+    //     (seatName) => {
+    //         let selectedSeats = [...form.seat_no];
+
+    //         if (selectedSeats.includes(seatName)) {
+    //             selectedSeats = selectedSeats.filter(
+    //                 (item) => item !== seatName
+    //             );
+    //         } else {
+    //             if (selectedSeats.length > 3) {
+    //                 toast.error("A user can select only 4 seats");
+    //             } else {
+    //                 selectedSeats.push(seatName);
+    //             }
+    //         }
+
+    //         setForm((prevState) => ({
+    //             ...prevState,
+    //             seat_no: selectedSeats,
+    //         }));
+    //     },
+    //     [form.seat_no]
+    // );
+
     const seatBookHandler = useCallback(
         (seatName) => {
+            let newFormData = {
+                ...formData,
+                seat_no: seatName,
+            };
             let selectedSeats = [...form.seat_no];
 
             if (selectedSeats.includes(seatName)) {
@@ -113,9 +153,17 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
                 ...prevState,
                 seat_no: selectedSeats,
             }));
+            setFormData((prevState) => ({
+                ...prevState,
+                seat_no: seatName,
+            }));
+            dispatch(selectedSeat(newFormData));
         },
-        [form.seat_no]
+        [dispatch, form.seat_no, formData]
     );
+    console.log("formData", formData);
+    console.log("form", form);
+
     const renderClass = useCallback(
         (item) => {
             let classNames = classes.seatBtn + " ";
@@ -128,6 +176,7 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
         },
         [classes.seatBtn, classes.selectSeatBtn, form.seat_no]
     );
+
     const seatColumn = useCallback(
         (rowPosition, seatNumbers) => {
             let columns = value.x + value.y + 1;
@@ -161,7 +210,6 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
 
             let x = value.x;
             let y = value.y;
-            //addd
 
             let seats = [];
             for (let j = 1; j <= columns; j++) {
@@ -286,6 +334,7 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
             [field]: value,
         }));
     };
+
     useEffect(() => {
         if (form.seat_no) {
             setForm((prevState) => ({
@@ -305,8 +354,6 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
         form.subTotal,
         route.fares,
     ]);
-
-    console.log("form", form);
 
     return (
         <>
@@ -379,12 +426,20 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
                             </Typography>
                             <Autocomplete
                                 options={data.boarding_counters}
-                                getOptionLabel={(option) => option.name}
+                                getOptionLabel={(option) =>
+                                    option?.counter?.name
+                                }
                                 fullWidth
                                 value={form.boarding_point}
                                 onChange={(e, data) =>
                                     fieldChangeHandler("boarding_point", data)
                                 }
+                                renderOption={(props, option) => (
+                                    <li {...props}>
+                                        {option?.counter?.name}{" "}
+                                        {moment(option?.time).format("LT")}
+                                    </li>
+                                )}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -398,12 +453,20 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
                             </Typography>
                             <Autocomplete
                                 options={data.dropping_counters}
-                                getOptionLabel={(option) => option.name}
+                                getOptionLabel={(option) =>
+                                    option?.counter?.name
+                                }
                                 fullWidth
                                 value={form.dropping_point}
                                 onChange={(e, data) =>
                                     fieldChangeHandler("dropping_point", data)
                                 }
+                                renderOption={(props, option) => (
+                                    <li {...props}>
+                                        {option?.counter?.name}{" "}
+                                        {moment(option?.time).format("LT")}
+                                    </li>
+                                )}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}

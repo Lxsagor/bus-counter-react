@@ -82,6 +82,12 @@ export const api_routes = {
         cancelTicket: API_URL + "counter/cancel-ticket",
     },
 
+    //busbd
+    seat: {
+        selectedSeat: API_URL + "create-seat",
+        removedSeat: API_URL + "delete-seat",
+    },
+
     //user
 
     ticket: {

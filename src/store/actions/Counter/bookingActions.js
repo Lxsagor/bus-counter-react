@@ -301,3 +301,35 @@ export const cancelTicket =
                 console.log(err);
             });
     };
+export const selectedSeat =
+    (data, cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleButtonLoading(true));
+        dispatch(toggleSiteLoading(true));
+        fetch(api_routes.seat.selectedSeat, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                dispatch(toggleButtonLoading(false));
+
+                if (response.status === "success") {
+                    toast.success(response.message);
+
+                    cb();
+                } else if (response.status === "error") {
+                    toast.error(response.message);
+                }
+                dispatch(toggleSiteLoading(false));
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
