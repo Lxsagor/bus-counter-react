@@ -6,8 +6,8 @@ import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import { useStyles } from "./styled";
 import { Add } from "@mui/icons-material";
-import ContactTable from "../../../components/Contact/ContactTable";
-import AddContactDialog from "../../../components/AddContactDialog";
+import ContactTable from "../../../components/SuperAdmin/Contact/ContactTable";
+import AddContactDialog from "../../../components/SuperAdmin/AddContactDialog";
 import SearchBox from "../../../components/SearchBox";
 
 const Contact = () => {

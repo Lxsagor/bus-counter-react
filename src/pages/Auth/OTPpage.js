@@ -5,15 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { AuthUrl } from "../../constants/urls";
-import { confirm, resend } from "../../store/actions/authActions";
-import { ERROR } from "../../store/types";
+import { confirm, resend } from "../../store/actions/Auth/authActions";
+import { AUTH_VALIDATE_ERROR } from "../../store/types";
 import { useStyles } from "./styled";
 
 const OTPpage = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { forget,authLoading } = useSelector((state) => state.auth);
+    const { forget } = useSelector((state) => state.auth);
+    const { buttonLoading } = useSelector((state) => state.shared);
 
     const [OTP, setOTP] = useState("");
     function handleChange(OTP) {
@@ -38,14 +39,13 @@ const OTPpage = () => {
         dispatch(
             resend(newRecord, () => {
                 // navigate("/verify");
-                console.log(newRecord);
             })
         );
     };
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: AUTH_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -76,7 +76,7 @@ const OTPpage = () => {
                                 fullWidth
                                 variant="contained"
                                 type="submit"
-                                {...(authLoading && {
+                                {...(buttonLoading && {
                                     disabled: true,
                                     startIcon: (
                                         <BeatLoader

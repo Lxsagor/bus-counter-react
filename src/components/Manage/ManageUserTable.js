@@ -11,10 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { SuperAdminUrl } from "../../constants/urls";
 import {
-    fetchAdmin,
     fetchCompanies,
     fetchCompany,
-} from "../../store/actions/companyAction";
+} from "../../store/actions/SuperAdmin/companyAction";
+import { fetchAdmin } from "../../store/actions/SuperAdmin/adminAction";
 import ExtendSubs from "./ExtendSubs";
 import { useStyles } from "./styled";
 
@@ -25,9 +25,6 @@ const DashboardTable = () => {
     const companies = useSelector((state) => state.company.companies);
     const [extend, setExtend] = React.useState(false);
 
-    useEffect(() => {
-        dispatch(fetchCompanies());
-    }, [dispatch]);
     // const submitHandler = (e) => {
     //     e.preventDefault();
 
@@ -38,7 +35,6 @@ const DashboardTable = () => {
     //     );
     // };
 
-    console.log(companies);
 
     const extendSub = (id) => {
         dispatch(

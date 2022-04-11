@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import PaymentCard from "../../PaymentCard/PaymentCard";
+import PaymentCard from "../PaymentCard/PaymentCard";
 import { useStyles } from "./styled";
 
 const PaymentAccept = () => {

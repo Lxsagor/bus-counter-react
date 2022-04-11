@@ -10,6 +10,7 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import HistoryIcon from "@mui/icons-material/History";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { Icon } from "@iconify/react";
 const AdminSideNav = () => {
     const classes = useStyles();
@@ -39,13 +40,37 @@ const AdminSideNav = () => {
                         </ListItemIcon>
                         <ListItemText>Manage Bus</ListItemText>
                     </ListItem>
-                </NavLink>
+                </NavLink>{" "}
+                {/* <NavLink to={AdminUrl.manageBusLayout.index}>
+                    <ListItem>
+                        <ListItemIcon>
+                            <DirectionsBusIcon />
+                        </ListItemIcon>
+                        <ListItemText>Bus Layout</ListItemText>
+                    </ListItem>
+                </NavLink> */}
                 <NavLink to={AdminUrl.manageSchedule.index}>
                     <ListItem>
                         <ListItemIcon>
                             <EventNoteIcon />
                         </ListItemIcon>
                         <ListItemText>Manage Schedule</ListItemText>
+                    </ListItem>
+                </NavLink>
+                <NavLink to={AdminUrl.manageTrack.index}>
+                    <ListItem>
+                        <ListItemIcon>
+                            <LocationOnIcon />
+                        </ListItemIcon>
+                        <ListItemText>Manage Track</ListItemText>
+                    </ListItem>
+                </NavLink>
+                <NavLink to={AdminUrl.manageFare.index}>
+                    <ListItem>
+                        <ListItemIcon>
+                            <AttachMoneyIcon />
+                        </ListItemIcon>
+                        <ListItemText>Manage Fare</ListItemText>
                     </ListItem>
                 </NavLink>
                 <NavLink to={AdminUrl.trackBus.index}>

@@ -1,54 +1,91 @@
+import { DateTimePicker, TimePicker } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
     Autocomplete,
     Box,
     Button,
     Grid,
     IconButton,
-    TextareaAutosize,
     TextField,
     Typography,
+    FormControl,
+    Select,
+    InputLabel,
+    MenuItem,
 } from "@mui/material";
 import Chip from "@mui/material/Chip";
-import React, { useState } from "react";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
 import "date-fns";
-import { useStyles } from "./styled";
-import { DateTimePicker, TimePicker } from "@mui/lab";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
+import { AdminUrl } from "../../../constants/urls";
 import {
     addSchedule,
-    fetchBusesGet,
-    fetchCountersGet,
-} from "../../../store/actions/counterAction";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import { ERROR } from "../../../store/types";
-import { AdminUrl } from "../../../constants/urls";
-import { useHistory } from "react-router-dom";
-
+    fetchSchedule,
+    updateSchedule,
+} from "../../../store/actions/Admin/scheduleAction.js";
+import { fetchBusesGet } from "../../../store/actions/Admin/busAction";
+import { fetchCountersGet } from "../../../store/actions/Admin/counterAction";
+import { fetchDistricts } from "../../../store/actions/sharedAction";
+import { SCHEDULE_VALIDATE_ERROR, FETCH_SCHEDULE } from "../../../store/types";
+import { useStyles } from "./styled";
+import moment from "moment";
+import { useDrag, useDrop } from "react-dnd";
 const AddSchedule = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { counters, buses, error } = useSelector((state) => state.counter);
+    const { error, schedule } = useSelector((state) => state.schedule);
+    const { buttonLoading, districts } = useSelector((state) => state.shared);
+    const { id } = useParams();
+
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchSchedule(id));
+        }
+    }, [dispatch, id]);
+
     const [formData, setFormData] = useState({
-        bus_id: "",
-        bus_no: null,
-        start_counter_id: null,
-        end_counter_id: null,
-        mid_counters_id: [],
-        date_time: null,
+        bus_type: "",
+        bus_seat_type: "",
+        routes_id: [],
+        day_time: [],
         fares: [],
     });
 
+    useEffect(() => {
+        if (schedule && Object.keys(schedule).length > 0) {
+            let data = {
+                ...schedule,
+            };
+
+            if (schedule.hasOwnProperty("routes")) {
+                // data["mid_counters_id"] = schedule.mid_counters;
+                setMidCounters(schedule.routes);
+            }
+            // if (schedule.hasOwnProperty("day_time")) {
+            //     // data["mid_counters_id"] = schedule.mid_counters;
+            //     setMidCounters(schedule.routes);
+            // }
+
+            setFormData((prevState) => ({
+                ...prevState,
+                ...data,
+            }));
+        }
+    }, [schedule]);
+
     const [errors, setErrors] = useState({
-        bus_no: { text: "", show: false },
-        start_counter_id: { text: "", show: false },
-        end_counter_id: { text: "", show: false },
-        mid_counters_id: { text: "", show: false },
-        date_time: { text: "", show: false },
+        bus_type: { text: "", show: false },
+        bus_seat_type: { text: "", show: false },
+        routes_id: { text: "", show: false },
+        day: { text: "", show: false },
+        time: { text: "", show: false },
+        fares: { text: "", show: false },
     });
     useEffect(() => {
         if (error && Object.keys(error).length > 0) {
@@ -60,6 +97,7 @@ const AddSchedule = () => {
             });
         }
     }, [error]);
+
     const fieldChangeHandler = (field, value) => {
         setErrors((prevState) => ({
             ...prevState,
@@ -70,19 +108,24 @@ const AddSchedule = () => {
             [field]: value,
         }));
     };
-    useEffect(() => {
-        dispatch(fetchBusesGet());
-    }, [dispatch]);
 
     useEffect(() => {
-        dispatch(fetchCountersGet());
+        dispatch(fetchDistricts());
     }, [dispatch]);
 
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: SCHEDULE_VALIDATE_ERROR,
                 payload: null,
+            });
+        };
+    }, [dispatch]);
+    useEffect(() => {
+        return () => {
+            dispatch({
+                type: FETCH_SCHEDULE,
+                payload: {},
             });
         };
     }, [dispatch]);
@@ -95,33 +138,16 @@ const AddSchedule = () => {
         setMidCounters(counters);
         setSelecteMidCounter(null);
     };
-
-    const [newFareItemStatus, setNewFareItemStatus] = useState(false);
     const [fareItem, setFareItem] = useState({
-        starting_counter_id: null,
-        destination_counter_id: null,
+        starting_district_id: null,
+        destination_district_id: null,
         fare: "",
     });
     const [fareItemError, setFareItemError] = useState({
-        starting_counter_id: { text: "", show: false },
-        destination_counter_id: { text: "", show: false },
+        starting_district_id: { text: "", show: false },
+        destination_district_id: { text: "", show: false },
         fare: { text: "", show: false },
     });
-
-    const addFareOptions = () => {
-        let fares = [...formData.fares, fareItem];
-        setFormData((prevState) => ({
-            ...prevState,
-            fares: fares,
-        }));
-        setNewFareItemStatus(false);
-        setFareItem({
-            starting_counter_id: null,
-            destination_counter_id: null,
-            fare: "",
-        });
-    };
-
     const fareFieldChangeHandler = (field, value) => {
         setFareItemError((prevState) => ({
             ...prevState,
@@ -133,57 +159,115 @@ const AddSchedule = () => {
             [field]: value,
         }));
     };
+    const addFareOptions = () => {
+        let fares = [...formData.fares, fareItem];
+        setFormData((prevState) => ({
+            ...prevState,
+            fares: fares,
+        }));
+        setFareItem({
+            starting_district_id: null,
+            destination_district_id: null,
+            fare: "",
+        });
+    };
 
+    const [dayTime, setDayTime] = useState({
+        day: [],
+        time: new Date(),
+    });
+    const [dayTimeError, setDayTimeError] = useState({
+        day: { text: "", show: false },
+        time: { text: "", show: false },
+    });
+
+    const dayTimeChangeHandler = (field, value) => {
+        setDayTimeError((prevState) => ({
+            ...prevState,
+            [field]: { text: "", show: false },
+        }));
+
+        setDayTime((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+    };
+    const addDayTimeOptions = () => {
+        let dayTimes = [...formData.day_time, dayTime];
+        setFormData((prevState) => ({
+            ...prevState,
+            day_time: dayTimes,
+        }));
+        setDayTime({
+            day: [],
+            time: new Date(),
+        });
+    };
     const submitHandler = (e) => {
         e.preventDefault();
         let form = { ...formData };
 
-        if (formData.bus_no && formData.bus_no.hasOwnProperty("id")) {
-            form["bus_id"] = formData.bus_no.id;
-            form["bus_no"] = formData.bus_no.bus_no;
-        }
-
-        if (
-            formData.start_counter_id &&
-            formData.start_counter_id.hasOwnProperty("id")
-        ) {
-            form["start_counter_id"] = formData.start_counter_id.id;
-        }
-        if (
-            formData.end_counter_id &&
-            formData.end_counter_id.hasOwnProperty("id")
-        ) {
-            form["end_counter_id"] = formData.end_counter_id.id;
-        }
         if (formData.fares.length > 0) {
             formData.fares.forEach((item, i) => {
-                form["fares"][i]["starting_counter_id"] =
-                    item.starting_counter_id.id;
-                form["fares"][i]["destination_counter_id"] =
-                    item.destination_counter_id.id;
+                form["fares"][i]["starting_district_id"] =
+                    item.starting_district_id.id;
+                form["fares"][i]["destination_district_id"] =
+                    item.destination_district_id.id;
             });
         }
-        // if (formData.mid_counters_id.length > 0) {
-        //     formData.mid_counters_id.forEach((item, i) => {
-        //         form["mid_counters_id"] = [i][item.id];
-        //         console.log(item.id);
-        //     });
-        // }
+
         if (midCounters.length > 0) {
+            let mid_counters_id = [];
+
             midCounters.forEach((item) => {
-                form["mid_counters_id"].push(item.id);
+                mid_counters_id.push(item.id);
+                // form["mid_counters_id"].push(item.id);
             });
+
+            form["routes_id"] = mid_counters_id;
         }
-        console.log(form);
         dispatch(
             addSchedule(form, () => history.push(AdminUrl.manageSchedule.index))
         );
+
+        // if (form.hasOwnProperty("id")) {
+        //     dispatch(
+        //         updateSchedule(form, () =>
+        //             history.push(AdminUrl.manageSchedule.index)
+        //         )
+        //     );
+        // } else {
+        //
+        // }
+    };
+
+    const midCounterDelete = (counter) => {
+        let counters = midCounters.filter((item) => item !== counter);
+        setMidCounters(counters);
+    };
+    const timeDelete = (option) => {
+        let dayTimes = formData.day_time.filter((item) => item !== option);
+        setFormData((prevState) => ({
+            ...prevState,
+            day_time: dayTimes,
+        }));
+    };
+    const fareDelete = (option) => {
+        let fareitems = formData.fares.filter((item) => item !== option);
+        setFormData((prevState) => ({
+            ...prevState,
+            fares: fareitems,
+        }));
     };
 
     return (
         <>
             <Box m={5}>
-                <Typography variant="h6">Assign Bus</Typography>
+                <Typography variant="h6">
+                    {formData.hasOwnProperty("id")
+                        ? "Update Schedule"
+                        : "Add Schedule"}
+                </Typography>
                 <Box
                     mb={3}
                     sx={{
@@ -197,32 +281,76 @@ const AddSchedule = () => {
                         <Grid container spacing={3}>
                             <Grid item lg={4} xs={12}>
                                 <Typography variant="h6" mb={2}>
-                                    Select Bus No.
+                                    Select Bus Type.
                                 </Typography>
-                                <Autocomplete
-                                    options={buses}
-                                    optionLabel="bus_no"
-                                    getOptionLabel={(option) => option.bus_no}
-                                    value={formData.bus_no}
-                                    onChange={(e, data) =>
-                                        fieldChangeHandler("bus_no", data)
-                                    }
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            fullWidth
-                                            className={classes.field}
-                                            error={errors.bus_no.show}
-                                            helperText={errors.bus_no.text}
-                                        />
-                                    )}
-                                />
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">
+                                        Bus Type
+                                    </InputLabel>
+                                    <Select
+                                        value={formData.bus_type}
+                                        label="Bus Type"
+                                        className={classes.selectBox}
+                                        onChange={(e) =>
+                                            fieldChangeHandler(
+                                                "bus_type",
+                                                e.target.value
+                                            )
+                                        }
+                                        error={errors.bus_type.show}
+                                        helperText={errors.bus_type.text}
+                                    >
+                                        <MenuItem value="ac">AC</MenuItem>
+                                        <MenuItem value="non_ac">
+                                            Non-AC
+                                        </MenuItem>
+                                        <MenuItem value="business">
+                                            Business
+                                        </MenuItem>
+                                        <MenuItem value="classic">
+                                            Classic
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item lg={4} xs={12}>
+                                <Typography variant="h6" mb={2}>
+                                    Select Bus Seat Type.
+                                </Typography>
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">
+                                        Seat Type
+                                    </InputLabel>
+                                    <Select
+                                        value={formData.bus_seat_type}
+                                        className={classes.selectBox}
+                                        label="Seat Type"
+                                        onChange={(e) =>
+                                            fieldChangeHandler(
+                                                "bus_seat_type",
+                                                e.target.value
+                                            )
+                                        }
+                                        error={errors.bus_seat_type.show}
+                                        helperText={errors.bus_seat_type.text}
+                                    >
+                                        <MenuItem value="single">
+                                            Single{" "}
+                                        </MenuItem>
+                                        <MenuItem value="double">
+                                            Double
+                                        </MenuItem>
+                                        <MenuItem value="triple">
+                                            Triple
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>
                             </Grid>
                         </Grid>
                     </Box>
 
                     <Box mt={3}>
-                        <Typography variant="h6" mb={2}>
+                        {/* <Typography variant="h6" mb={2}>
                             Location
                         </Typography>
                         <Grid container spacing={3}>
@@ -278,16 +406,16 @@ const AddSchedule = () => {
                                     )}
                                 />
                             </Grid>
-                        </Grid>
+                        </Grid> */}
                     </Box>
                     <Box mt={3}>
                         <Grid container spacing={3}>
                             <Grid item lg={4} xs={12}>
                                 <Typography variant="h6" mb={2}>
-                                    Select Mid Counters
+                                    Select Routes
                                 </Typography>
-                                <Autocomplete
-                                    options={counters}
+                                {/* <Autocomplete
+                                    options={districts}
                                     optionLabel="name"
                                     getOptionLabel={(option) => option.name}
                                     value={selectedMidCounter}
@@ -303,14 +431,37 @@ const AddSchedule = () => {
                                             className={classes.field}
                                         />
                                     )}
-                                />
+                                /> */}
+                                <Select
+                                    fullWidth
+                                    value={null}
+                                    onChange={(e) =>
+                                        midCounterFieldChangeHandler(
+                                            e.target.value
+                                        )
+                                    }
+                                    className={classes.selectBox}
+                                >
+                                    {districts?.map(
+                                        (item, i) =>
+                                            !midCounters.includes(item) && (
+                                                <MenuItem value={item} key={i}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            )
+                                    )}
+                                </Select>
                                 <Box my={1}>
                                     {midCounters.map((item, i) => (
                                         <Chip
+                                            key={i}
                                             label={item.name}
                                             variant="outlined"
                                             color="primary"
                                             sx={{ margin: "2px" }}
+                                            onDelete={() =>
+                                                midCounterDelete(item)
+                                            }
                                         />
                                     ))}
                                 </Box>
@@ -319,119 +470,204 @@ const AddSchedule = () => {
                     </Box>
 
                     <Box mt={3}>
+                        <Box my={3} className={classes.fareBox}>
+                            <Typography variant="h6" mr={1}>
+                                Set Day and Time
+                            </Typography>
+                            <IconButton>
+                                <AddCircleRoundedIcon />
+                            </IconButton>
+                        </Box>
                         <Grid container spacing={3}>
                             <Grid item lg={4} xs={12}>
-                                <Typography variant="h6" mb={2}>
-                                    Date
-                                </Typography>
-
+                                <Select
+                                    className={classes.selectBox}
+                                    value={dayTime.day}
+                                    label="Day"
+                                    onChange={(e) =>
+                                        dayTimeChangeHandler(
+                                            "day",
+                                            e.target.value
+                                        )
+                                    }
+                                    fullWidth
+                                >
+                                    <MenuItem value="saturday">
+                                        Saturday
+                                    </MenuItem>
+                                    <MenuItem value="sunday">Sunday</MenuItem>
+                                    <MenuItem value="monday">Monday</MenuItem>
+                                    <MenuItem value="tuesday">Tuesday</MenuItem>
+                                    <MenuItem value="wednesday">
+                                        Wednesday
+                                    </MenuItem>
+                                    <MenuItem value="thursday">
+                                        Thursday
+                                    </MenuItem>
+                                    <MenuItem value="friday">Friday</MenuItem>
+                                </Select>
+                            </Grid>
+                            <Grid item lg={4} xs={12}>
                                 <LocalizationProvider
                                     dateAdapter={AdapterDateFns}
                                 >
-                                    <DateTimePicker
-                                        // label="Subscription End Date"
+                                    <TimePicker
+                                        label="Time"
+                                        value={dayTime.time}
                                         onChange={(newValue) =>
-                                            fieldChangeHandler(
-                                                "date_time",
+                                            dayTimeChangeHandler(
+                                                "time",
                                                 newValue
                                             )
                                         }
-                                        value={formData.date_time}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
-                                                fullWidth
                                                 className={classes.field}
+                                                fullWidth
                                             />
                                         )}
                                     />
                                 </LocalizationProvider>
+                                {/* <TextField
+                                    mb={3}
+                                    label="Time"
+                                    onChange={(e) =>
+                                        dayTimeChangeHandler(
+                                            "time",
+                                            e.target.value
+                                        )
+                                    }
+                                    value={dayTime.time}
+                                /> */}
+                                <Box mt={3}>
+                                    <Grid container justifyContent="flex-end">
+                                        <Grid item lg={3}>
+                                            <Button
+                                                variant="contained"
+                                                fullWidth
+                                                onClick={addDayTimeOptions}
+                                                mt={3}
+                                                className={classes.btn}
+                                            >
+                                                Add Time
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
                             </Grid>
                         </Grid>
                     </Box>
-                    <Box mt={4} className={classes.fareBox}>
-                        <Typography variant="h6" mr={1}>
-                            Set Fare
-                        </Typography>
-                        <IconButton onClick={() => setNewFareItemStatus(true)}>
-                            <AddCircleRoundedIcon />
-                        </IconButton>
-                    </Box>
-
-                    {newFareItemStatus && (
+                    {formData?.day_time?.map((item, i) => (
                         <>
+                            <Grid container alignItems="center">
+                                <Grid item lg={3}>
+                                    <Box className={classes.timeBox}>
+                                        <Typography
+                                            variant="body1"
+                                            color="black"
+                                        >
+                                            <strong>
+                                                {item?.day},{""}
+                                                {moment(item?.time).format(
+                                                    "LT"
+                                                )}
+                                            </strong>
+                                        </Typography>
+                                        <DeleteIcon
+                                            onClick={() => timeDelete(item)}
+                                            className={classes.dltIcon}
+                                        />
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </>
+                    ))}
+
+                    {midCounters?.length > 1 && (
+                        <>
+                            <Box mt={3} className={classes.fareBox}>
+                                <Typography variant="h6" mr={1}>
+                                    Set Fare
+                                </Typography>
+                                <IconButton>
+                                    <AddCircleRoundedIcon />
+                                </IconButton>
+                            </Box>
+
                             <Box my={3}>
                                 <Grid container spacing={3}>
                                     <Grid item lg={4} xs={12}>
-                                        <Typography>
-                                            Select Starting Counter
-                                        </Typography>
-
-                                        <Autocomplete
-                                            options={counters}
-                                            optionLabel="name"
-                                            getOptionLabel={(option) =>
-                                                option.name
+                                        <Typography>Starting From</Typography>
+                                        <Select
+                                            fullWidth
+                                            value={
+                                                fareItem.starting_district_id
                                             }
-                                            value={fareItem.starting_counter_id}
-                                            onChange={(e, data) =>
+                                            onChange={(e) =>
                                                 fareFieldChangeHandler(
-                                                    "starting_counter_id",
-                                                    data
+                                                    "starting_district_id",
+                                                    e.target.value
                                                 )
                                             }
+                                            className={classes.selectBox}
+                                        >
+                                            {midCounters?.map((item, i) => (
+                                                <MenuItem value={item} key={i}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+
+                                        {/* <Autocomplete
+                                    options={districts}
+                                    optionLabel="name"
+                                    getOptionLabel={(option) => option.name}
+                                    value={fareItem.starting_district_id}
+                                    onChange={(e, data) =>
+                                        fareFieldChangeHandler(
+                                            "starting_district_id",
+                                            data
+                                        )
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            fullWidth
+                                            className={classes.field}
                                             error={
                                                 fareItemError
-                                                    .starting_counter_id.show
+                                                    .starting_district_id.show
                                             }
                                             helperText={
                                                 fareItemError
-                                                    .starting_counter_id.text
+                                                    .starting_district_id.text
                                             }
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    fullWidth
-                                                    className={classes.field}
-                                                />
-                                            )}
                                         />
+                                    )}
+                                /> */}
                                     </Grid>
                                     <Grid item lg={4} xs={12}>
-                                        <Typography>
-                                            Select Destination Counter
-                                        </Typography>
-                                        <Autocomplete
-                                            options={counters}
-                                            optionLabel="name"
-                                            getOptionLabel={(option) =>
-                                                option.name
-                                            }
+                                        <Typography>Destination</Typography>
+                                        <Select
+                                            fullWidth
                                             value={
-                                                fareItem.destination_counter_id
+                                                fareItem.destination_district_id
                                             }
-                                            onChange={(e, data) =>
+                                            onChange={(e) =>
                                                 fareFieldChangeHandler(
-                                                    "destination_counter_id",
-                                                    data
+                                                    "destination_district_id",
+                                                    e.target.value
                                                 )
                                             }
-                                            error={
-                                                fareItemError
-                                                    .destination_counter_id.show
-                                            }
-                                            helperText={
-                                                fareItemError
-                                                    .destination_counter_id.text
-                                            }
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    fullWidth
-                                                    className={classes.field}
-                                                />
-                                            )}
-                                        />
+                                            className={classes.selectBox}
+                                        >
+                                            {midCounters?.map((item, i) => (
+                                                <MenuItem value={item} key={i}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
                                     </Grid>
                                     <Grid item lg={4} xs={12}>
                                         <Typography>Fare</Typography>
@@ -457,48 +693,54 @@ const AddSchedule = () => {
                                         variant="contained"
                                         fullWidth
                                         onClick={addFareOptions}
+                                        className={classes.btn}
                                     >
                                         Add Fare
                                     </Button>
                                 </Grid>
                             </Grid>
+
+                            {formData.fares.map((item, i) => (
+                                <>
+                                    <Grid container alignItems="center">
+                                        <Grid item lg={3}>
+                                            <Box display="flex">
+                                                <Typography
+                                                    variant="body1"
+                                                    color="black"
+                                                    mb={1}
+                                                >
+                                                    <strong>
+                                                        {
+                                                            item
+                                                                ?.starting_district_id
+                                                                .name
+                                                        }{" "}
+                                                        To{" "}
+                                                        {
+                                                            item
+                                                                ?.destination_district_id
+                                                                .name
+                                                        }
+                                                    </strong>
+                                                </Typography>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item lg={1}>
+                                            <Typography
+                                                variant="body1"
+                                                color="black"
+                                                mb={1}
+                                                ml={8}
+                                            >
+                                                {item?.fare}.00BDT
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </>
+                            ))}
                         </>
                     )}
-
-                    {formData.fares.map((item, i) => (
-                        <>
-                            <Grid container alignItems="center">
-                                <Grid item lg={3}>
-                                    <Box display="flex">
-                                        <Typography
-                                            variant="body1"
-                                            color="black"
-                                            mb={1}
-                                        >
-                                            <strong>
-                                                {item?.starting_counter_id.name}{" "}
-                                                To{" "}
-                                                {
-                                                    item?.destination_counter_id
-                                                        .name
-                                                }
-                                            </strong>
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid item lg={1}>
-                                    <Typography
-                                        variant="body1"
-                                        color="black"
-                                        mb={1}
-                                        ml={8}
-                                    >
-                                        {item?.fare}.00BDT
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </>
-                    ))}
 
                     <Box mt={5}>
                         <Grid container spacing={3}>
@@ -508,8 +750,20 @@ const AddSchedule = () => {
                                     variant="contained"
                                     className={classes.button}
                                     type="submit"
+                                    {...(buttonLoading && {
+                                        disabled: true,
+                                        startIcon: (
+                                            <BeatLoader
+                                                color="white"
+                                                loading={true}
+                                                size={10}
+                                            />
+                                        ),
+                                    })}
                                 >
-                                    Assign Bus
+                                    {formData.hasOwnProperty("id")
+                                        ? "Update Schedule"
+                                        : "Assign Schedule"}
                                 </Button>
                             </Grid>
                         </Grid>

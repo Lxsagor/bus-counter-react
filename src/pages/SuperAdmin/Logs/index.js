@@ -6,7 +6,7 @@ import { DatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import "date-fns";
 import { useStyles } from "./styled";
-import LogsTable from "../../../components/Logs/LogsTable";
+import LogsTable from "../../../components/SuperAdmin/Logs/LogsTable";
 import DataPaginator from "../../../components/shared/DataPaginator";
 
 const Logs = () => {

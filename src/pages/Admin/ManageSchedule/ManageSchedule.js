@@ -14,18 +14,18 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import "date-fns";
 import { useStyles } from "./styled";
-import ManageScheduleTable from "../../../components/ManageSchedule/ManageScheduleTable";
+import ManageScheduleTable from "../../../components/Admin/ManageSchedule/ManageScheduleTable";
 import DataPaginator from "../../../components/shared/DataPaginator";
 import { useHistory } from "react-router-dom";
 import { AdminUrl } from "../../../constants/urls";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchSchedules } from "../../../store/actions/counterAction";
+import { fetchSchedules } from "../../../store/actions/Admin/scheduleAction";
 
 const ManageSchedule = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { loading } = useSelector((state) => state.counter);
+    const { schedules } = useSelector((state) => state.schedule);
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
@@ -36,6 +36,16 @@ const ManageSchedule = () => {
             ...prevState,
             [field]: value,
         }));
+    };
+    useEffect(() => {
+        dispatch(fetchSchedules());
+    }, [dispatch]);
+
+    const [page, setPage] = useState(1);
+
+    const handleChange = (event, value) => {
+        setPage(value);
+        dispatch(fetchSchedules(value));
     };
 
     return (
@@ -51,7 +61,7 @@ const ManageSchedule = () => {
                     }}
                 ></Box>
                 <Box mt={3}>
-                    <Grid container>
+                    {/* <Grid container>
                         <Grid item lg={2}>
                             <FormControlLabel
                                 control={<Checkbox defaultChecked />}
@@ -64,7 +74,7 @@ const ManageSchedule = () => {
                                 label="Search By Counter"
                             />
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                     <Box mt={3}>
                         <Grid container spacing={4}>
                             <Grid item lg={4} md={4} xs={12}>
@@ -79,6 +89,7 @@ const ManageSchedule = () => {
                                             )
                                         }
                                         // Keyword
+                                        // This is a new enter
                                         value={formData.keyword}
                                         renderInput={(params) => (
                                             <TextField
@@ -106,7 +117,7 @@ const ManageSchedule = () => {
                 <Box mt={5} mb={3}>
                     <Grid container justifyContent="space-between">
                         <Grid item lg={2}>
-                            <Typography variant="h6">Showing Result</Typography>
+                            <Typography variant="h6">Schedules</Typography>
                         </Grid>
                         <Grid item lg={3}>
                             <Box display="flex">
@@ -135,7 +146,13 @@ const ManageSchedule = () => {
                 </Box>
                 <ManageScheduleTable />
                 <Box m={3}>
-                    <DataPaginator />
+                    <DataPaginator
+                        count={Math.floor(
+                            schedules?.meta?.total / schedules?.meta?.per_page
+                        )}
+                        page={page}
+                        onChange={handleChange}
+                    />
                 </Box>
             </Box>
         </>

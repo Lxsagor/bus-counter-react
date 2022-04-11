@@ -7,16 +7,19 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoginStepper from "../../components/Landing/Auth/Stepper/LoginStepper";
-import { AdminUrl, SuperAdminUrl } from "../../constants/urls";
-import { login, toggleAuthLoading } from "../../store/actions/authActions";
-import { ERROR, TOGGLE_AUTH_LOADING } from "../../store/types";
+import { AdminUrl, CounterUrl, SuperAdminUrl } from "../../constants/urls";
+import {
+    login,
+    togglebuttonLoading,
+} from "../../store/actions/Auth/authActions";
+import { AUTH_VALIDATE_ERROR, TOGGLE_BUTTON_LOADING } from "../../store/types";
 import { useStyles } from "./styled";
 import BeatLoader from "react-spinners/BeatLoader";
 
 const Login = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { authLoading } = useSelector((state) => state.auth);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const dispatch = useDispatch();
     const [currentStep, setCurrentStep] = useState(0);
     const { error } = useSelector((state) => state.auth);
@@ -58,7 +61,7 @@ const Login = () => {
             }));
         } else {
             dispatch(
-                login(formData, () => history.push(AdminUrl.dashboard.index))
+                login(formData, () => history.push(CounterUrl.dashboard.index))
             );
         }
     };
@@ -77,20 +80,12 @@ const Login = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: AUTH_VALIDATE_ERROR,
                 payload: null,
             });
         };
     }, [dispatch]);
 
-    useEffect(() => {
-        return () => {
-            dispatch({
-                type: TOGGLE_AUTH_LOADING,
-                payload: false,
-            });
-        };
-    }, [dispatch]);
     return (
         <Box className={classes.loginBG} pt={10}>
             <Container maxWidth="md">
@@ -149,7 +144,7 @@ const Login = () => {
                                 variant="contained"
                                 mb={2}
                                 type="submit"
-                                {...(authLoading && {
+                                {...(buttonLoading && {
                                     disabled: true,
                                     startIcon: (
                                         <BeatLoader

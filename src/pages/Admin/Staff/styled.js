@@ -47,15 +47,7 @@ export const useStyles = makeStyles((theme) => ({
         padding: "10px",
         marginRight: "20px",
     },
-    uploadicon: {
-        marginRight: "10px",
-    },
-    uploadbtn: {
-        border: "2px dashed black",
-        "& .MuiButton-root": {
-            border: "2px dashed !important",
-        },
-    },
+
     uploadText: {
         opacity: "0.5",
         fontSize: "10px !important",
@@ -79,5 +71,16 @@ export const useStyles = makeStyles((theme) => ({
 
     driverDText: {
         opacity: "0.5",
+    },
+    userBox: {
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "center",
+    },
+    upImgBtn: {
+        textTransform: "capitalize !important",
+        border: "none !important",
+        borderBottom: "1px solid black !important",
+        color: "#000 !important",
     },
 }));

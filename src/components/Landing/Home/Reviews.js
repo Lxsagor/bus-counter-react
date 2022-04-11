@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import OwlCarouselcomp from "../../OwlCarousel/OwlCarousel";
+import OwlCarouselcomp from "../OwlCarousel/OwlCarousel";
 import { useStyles } from "./styled";
 
 const Reviews = () => {

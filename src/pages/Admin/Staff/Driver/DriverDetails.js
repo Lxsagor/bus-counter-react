@@ -1,9 +1,50 @@
-import { Avatar, Box, Grid, Typography, Button } from "@mui/material";
-import React from "react";
+import {
+    Avatar,
+    Box,
+    Grid,
+    Typography,
+    Button,
+    Stack,
+    Chip,
+} from "@mui/material";
+import React, { useEffect } from "react";
 import { useStyles } from "../styled";
+import { useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+    deleteDriver,
+    fetchDriver,
+} from "../../../../store/actions/Admin/staffAction";
+import { STAFF_VALIDATE_ERROR, FETCH_DRIVER } from "../../../../store/types";
+import Swal from "sweetalert2";
+import { AdminUrl } from "../../../../constants/urls";
 
 const DriverDetails = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { driver } = useSelector((state) => state.staff);
+    const { id } = useParams();
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchDriver(id));
+        }
+    }, [dispatch, id]);
+
+    const renderName = (url) => {
+        let name = url.split("/");
+        return name[name.length - 1];
+    };
+
+    useEffect(() => {
+        return () => {
+            dispatch({
+                type: FETCH_DRIVER,
+                payload: {},
+            });
+        };
+    }, [dispatch]);
     return (
         <>
             <Box m={5}>
@@ -18,7 +59,14 @@ const DriverDetails = () => {
                 ></Box>
                 <Box my={5}>
                     <Box my={5}>
-                        <Avatar />
+                        <Avatar
+                            src={driver.image}
+                            style={{
+                                width: "10%",
+                                height: "10%",
+                                borderRadius: 0,
+                            }}
+                        />
                     </Box>
                     <Grid container spacing={5}>
                         <Grid item lg={2}>
@@ -26,7 +74,7 @@ const DriverDetails = () => {
                         </Grid>
                         <Grid item lg={6}>
                             <Typography className={classes.driverDText}>
-                                John Doe
+                                {driver.name}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -37,7 +85,7 @@ const DriverDetails = () => {
                             </Grid>
                             <Grid item lg={6}>
                                 <Typography className={classes.driverDText}>
-                                    Road : 05 , KDC Road , Rangpur ,Bangladesh
+                                    {driver.address}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -49,30 +97,22 @@ const DriverDetails = () => {
                             </Grid>
                             <Grid item lg={6}>
                                 <Typography className={classes.driverDText}>
-                                    01564891236156
+                                    {driver.phone}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Box>
                     <Box my={3}>
                         <Typography className={classes.driverDText}>
-                            Praesent felis velit, sodales et felis a, rhoncus
-                            ornare arcu. Donec nec nunc pretium, elementum augue
-                            a, ultricies quam. Cras vel augue semper, semper leo
-                            in, semper risus. Class aptent taciti sociosqu ad
-                            litora torquent per conubia nostra, per inceptos
-                            himenaeos. Praesent odio nunc, facilisis et pharetra
-                            ut, commodo vel justo. Duis malesuada mi et arcu
-                            blandit placerat. Nunc et mauris tortor. Donec
-                            malesuada dui vehicula ultricies facilisis. Aliquam
-                            consequat dapibus porttitor. Phasellus suscipit nisi
-                            semper, lacinia arcu eu, convallis ligula. Vivamus
-                            dapibus laoreet diam, quis feugiat erat posuere vel.
-                            Donec non tortor sed mauris ornare accumsan id sed
-                            tortor. Vivamus ultricies dui ac dolor maximus
-                            sagittis. Integer fringilla pretium ipsum vitae
-                            laoreet.
+                            {driver.details}
                         </Typography>
+                    </Box>
+                    <Box my={3}>
+                        <Stack direction="row" spacing={3} mb={3}>
+                            {driver?.docs?.map((item, i) => (
+                                <Chip key={i} label={renderName(item)} />
+                            ))}
+                        </Stack>
                     </Box>
                 </Box>
                 <Grid container>
@@ -80,6 +120,14 @@ const DriverDetails = () => {
                         <Button
                             variant="contained"
                             className={classes.editDBtn}
+                            onClick={() =>
+                                history.push(
+                                    AdminUrl.staff.editDriver.replace(
+                                        ":id",
+                                        driver.id
+                                    )
+                                )
+                            }
                         >
                             Edit Information
                         </Button>
@@ -88,6 +136,32 @@ const DriverDetails = () => {
                         <Button
                             variant="contained"
                             className={classes.deleteDBtn}
+                            onClick={() => {
+                                Swal.fire({
+                                    title: "Are you sure?",
+                                    text: "You want to delete the driver!",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#3085d6",
+                                    cancelButtonColor: "#d33",
+                                    confirmButtonText: "Confirm",
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        dispatch(
+                                            deleteDriver(driver.id, () =>
+                                                history.push(
+                                                    AdminUrl.staff.index
+                                                )
+                                            )
+                                        );
+                                        Swal.fire(
+                                            "Success!",
+                                            "The Driver is deleted.",
+                                            "success"
+                                        );
+                                    }
+                                });
+                            }}
                         >
                             Delete Driver
                         </Button>

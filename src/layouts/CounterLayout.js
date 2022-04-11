@@ -4,6 +4,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Xcounter from "../assets/Xcounter.png";
 import AdminHeader from "../components/Header/AdminHeader";
+import CounterHeader from "../components/Header/CounterHeader";
 import CounterSideNav from "../components/SideNav/CounterSideNav";
 import { useStyles } from "./styled";
 
@@ -81,12 +82,11 @@ const CounterLayout = ({ children }) => {
                     pb={5}
                 >
                     <Container maxWidth="xl">
-                        <AdminHeader
+                        <CounterHeader
                             setDrawerOpen={setDrawerOpen}
                             drawerOpen={drawerOpen}
                         />
                         {children}
-                        {/* {console.log(children)} */}
                     </Container>
                 </Box>
             </Box>

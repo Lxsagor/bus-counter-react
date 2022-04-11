@@ -26,7 +26,7 @@ import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined
 import { useDispatch } from "react-redux";
 import { LandingUrl } from "../../constants/urls";
 import { useHistory } from "react-router-dom";
-import { logout } from "../../store/actions/authActions";
+import { logout } from "../../store/actions/Auth/authActions";
 
 const AdminHeader = ({ setDrawerOpen, drawerOpen }) => {
     const classes = useStyles();

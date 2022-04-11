@@ -4,13 +4,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 import { SuperAdminUrl } from "../../../constants/urls";
-import { addAdmin, fetchCompany } from "../../../store/actions/companyAction";
-import { ERROR } from "../../../store/types";
+import { fetchCompany } from "../../../store/actions/SuperAdmin/companyAction";
+import { addAdmin } from "../../../store/actions/SuperAdmin/adminAction";
+import { ADMIN_VALIDATE_ERROR } from "../../../store/types";
 import { useStyles } from "./styled";
 
 const AddAdmin = () => {
-    const { company, error } = useSelector((state) => state.company);
+    const { company } = useSelector((state) => state.company);
+    const { error } = useSelector((state) => state.admin);
+    const { buttonLoading } = useSelector((state) => state.shared);
     const history = useHistory();
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
@@ -70,7 +74,7 @@ const AddAdmin = () => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: ADMIN_VALIDATE_ERROR,
                 payload: null,
             });
         };
@@ -217,6 +221,16 @@ const AddAdmin = () => {
                                             minHeight: "55px",
                                         }}
                                         type="submit"
+                                        {...(buttonLoading && {
+                                            disabled: true,
+                                            startIcon: (
+                                                <BeatLoader
+                                                    color="white"
+                                                    loading={true}
+                                                    size={10}
+                                                />
+                                            ),
+                                        })}
                                     >
                                         Add Admin
                                     </Button>

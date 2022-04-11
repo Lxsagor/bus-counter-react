@@ -32,7 +32,7 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/Counter/AddCounter"),
+            () => import("../pages/Admin/Counter/EditCounter"),
             suspenseOption
         ),
     },
@@ -55,11 +55,29 @@ const AdminRoutes = [
         ),
     },
     {
+        path: AdminUrl.manageBusLayout.index,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/BusLayout/index"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageBusLayout.addbuslayout,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/BusLayout/AddBusLayout"),
+            suspenseOption
+        ),
+    },
+    {
         path: AdminUrl.manageBus.editbusinfo,
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/Bus/EditBusInfo"),
+            () => import("../pages/Admin/Bus/AddBus"),
             suspenseOption
         ),
     },
@@ -95,7 +113,61 @@ const AdminRoutes = [
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/ManageSchedule/EditSchedule"),
+            () => import("../pages/Admin/ManageSchedule/AddSchedule"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageTrack.index,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Track/Track"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageTrack.addTrack,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Track/AddTrack"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageTrack.editTrack,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Track/AddTrack"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageFare.index,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Fare/Fare"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageFare.addFare,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Fare/AddFare"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.manageFare.editFare,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Fare/AddFare"),
             suspenseOption
         ),
     },
@@ -138,6 +210,15 @@ const AdminRoutes = [
         ),
     },
     {
+        path: AdminUrl.staff.editDriver,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Driver/AddDriver"),
+            suspenseOption
+        ),
+    },
+    {
         path: AdminUrl.staff.driverDetails,
         layout: AdminLayout,
         meta: { requiresAuth: false },
@@ -148,20 +229,29 @@ const AdminRoutes = [
     },
 
     {
-        path: AdminUrl.staff.addHelper,
+        path: AdminUrl.staff.addStaff,
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/Staff/Helper/AddHelper"),
+            () => import("../pages/Admin/Staff/Staff/AddStaff"),
             suspenseOption
         ),
     },
     {
-        path: AdminUrl.staff.helperDetails,
+        path: AdminUrl.staff.editStaff,
         layout: AdminLayout,
         meta: { requiresAuth: false },
         component: LazyLoading(
-            () => import("../pages/Admin/Staff/Helper/HelperDetails"),
+            () => import("../pages/Admin/Staff/Staff/AddStaff"),
+            suspenseOption
+        ),
+    },
+    {
+        path: AdminUrl.staff.staffDetails,
+        layout: AdminLayout,
+        meta: { requiresAuth: false },
+        component: LazyLoading(
+            () => import("../pages/Admin/Staff/Staff/StaffDetails"),
             suspenseOption
         ),
     },

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchCompany } from "../../store/actions/companyAction";
+import { searchCompany } from "../../store/actions/SuperAdmin/companyAction";
 import { useStyles } from "./styled";
 
 const ManageSearchBox = ({

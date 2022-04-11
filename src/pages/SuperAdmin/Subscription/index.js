@@ -1,6 +1,6 @@
 import { Box, MenuItem, Select, Typography } from "@mui/material";
 import React from "react";
-import SubsTable from "../../../components/Subscription/SubsTable";
+import SubsTable from "../../../components/SuperAdmin/Subscription/SubsTable";
 
 const Subscription = () => {
     return (

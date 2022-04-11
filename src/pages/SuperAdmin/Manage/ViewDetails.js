@@ -17,18 +17,17 @@ import AdminTable from "../../../components/Manage/AdminTable";
 import { SuperAdminUrl } from "../../../constants/urls";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    fetchCompany,
-    searchAdmin,
-} from "../../../store/actions/companyAction";
-import AddContactDialog from "../../../components/AddContactDialog";
+import { fetchCompany } from "../../../store/actions/SuperAdmin/companyAction";
+import { searchAdmin } from "../../../store/actions/SuperAdmin/adminAction";
+import AddContactDialog from "../../../components/SuperAdmin/AddContactDialog";
 import { useParams } from "react-router-dom";
 
 const ViewDetails = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { admins, company } = useSelector((state) => state.company);
+    const { company } = useSelector((state) => state.company);
+    const { admins } = useSelector((state) => state.admin);
     const [addContact, setAddContact] = React.useState(false);
     const { id } = useParams();
 

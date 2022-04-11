@@ -9,6 +9,9 @@ export const api_routes = {
     auth_changePass: API_URL + "auth/changePass",
     auth_me: API_URL + "auth/me",
 
+    //file
+    file: API_URL + "file-uploader",
+
     // SuperAdmin
     companies: {
         index: API_URL + "companies",
@@ -22,6 +25,7 @@ export const api_routes = {
     districts: {
         index: API_URL + "divisions/:divisionId/districts",
         show: API_URL + "divisions/:divisionId/districts/:id",
+        get: API_URL + "districts",
     },
     admins: {
         index: API_URL + "company/:id/users",
@@ -42,11 +46,53 @@ export const api_routes = {
         index: API_URL + "buses",
         get: API_URL + "buses-get",
         show: API_URL + "buses/:id",
+        busgetByType: API_URL + "buses-by-type/:type",
     },
 
     schedules: {
         index: API_URL + "schedulesbuses",
         show: API_URL + "schedulesbuses/:id",
+    },
+    fares: {
+        index: API_URL + "fares",
+        show: API_URL + "fares/:id",
+    },
+    tracks: {
+        index: API_URL + "tracks",
+        show: API_URL + "tracks/:id",
+    },
+    drivers: {
+        index: API_URL + "drivers",
+        show: API_URL + "drivers/:id",
+        get: API_URL + "drivers-get",
+    },
+    staffs: {
+        index: API_URL + "staffs",
+        show: API_URL + "staffs/:id",
+        get: API_URL + "staffs-get",
+    },
+
+    //counter
+    booking: {
+        routes: API_URL + "counter/routes",
+        searchRoute: API_URL + "counter/route-search",
+        assignBus: API_URL + "counter/assignBus",
+        ticketBooking: API_URL + "counter/ticketBooking",
+        searchTicket: API_URL + "counter/ticket-search",
+        cancelTicket: API_URL + "counter/cancel-ticket",
+    },
+
+    //busbd
+    seat: {
+        selectedSeat: API_URL + "create-seat",
+        removedSeat: API_URL + "delete-seat",
+        get: API_URL + "getSeats",
+    },
+
+    //user
+
+    ticket: {
+        searchCoach: API_URL + "user/searchCoach",
     },
 };
 
@@ -83,30 +129,46 @@ export const AdminUrl = {
         index: "/admin/dashboard",
     },
     manageCounter: {
-        index: "/admin/manageCounter",
-        add: "/admin/manageCounter/add",
-        edit: "/admin/manageCounter/edit/:id",
+        index: "/admin/manage-counter",
+        add: "/admin/manage-counter/add",
+        edit: "/admin/manage-counter/edit/:id",
     },
     manageBus: {
-        index: "/admin/manageBus",
-        editbusinfo: "/admin/manageBus/editbusinfo/:id",
-        addbus: "/admin/manageBus/addbus",
+        index: "/admin/manage-bus",
+        editbusinfo: "/admin/manage-bus/edit-bus-info/:id",
+        addbus: "/admin/manage-bus/add-bus",
+    },
+    manageBusLayout: {
+        index: "/admin/bus-layout",
+        addbuslayout: "/admin/bus-layout/add-bus-layout",
     },
     manageSchedule: {
-        index: "/admin/manageSchedule",
-        addSchedule: "/admin/manageSchedule/addSchedule",
-        editSchedule: "/admin/manageSchedule/editSchedule",
+        index: "/admin/manage-schedule",
+        addSchedule: "/admin/manage-schedule/add-schedule",
+        editSchedule: "/admin/manage-schedule/:id/edit-schedule",
+    },
+    manageTrack: {
+        index: "/admin/manage-track",
+        addTrack: "/admin/manage-track/add-track",
+        editTrack: "/admin/manage-track/:id/edit-track",
+    },
+    manageFare: {
+        index: "/admin/manage-fare",
+        addFare: "/admin/manage-fare/add-fare",
+        editFare: "/admin/manage-fare/:id/edit-fare",
     },
     trackBus: {
         index: "/admin/trackBus",
     },
     staff: {
         index: "/admin/staff",
-        addAdmin: "/admin/staff/addAdmin",
-        addDriver: "/admin/staff/addDriver",
-        driverDetails: "/admin/staff/driver-details",
-        addHelper: "/admin/staff/addHelper",
-        helperDetails: "/admin/staff/helper-details",
+        addAdmin: "/admin/staff/add-admin",
+        addDriver: "/admin/staff/add-driver",
+        editDriver: "/admin/staff/:id/edit-driver",
+        driverDetails: "/admin/staff/:id/driver-details",
+        addStaff: "/admin/staff/add-staff",
+        staffDetails: "/admin/staff/:id/staff-details",
+        editStaff: "/admin/staff/:id/edit-staff",
     },
     accountHistory: {
         index: "/admin/accountHistory",
@@ -119,6 +181,7 @@ export const CounterUrl = {
     dashboard: {
         index: "/counter/dashboard",
         search: "/counter/dashboard/search",
+        searchHistory: "/counter/dashboard/search-history",
     },
     accounts: {
         index: "/counter/accounts",

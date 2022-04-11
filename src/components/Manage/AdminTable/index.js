@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogContent, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,25 +6,22 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import React, { useEffect, useState } from "react";
-import { useStyles } from "./styled";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import { SuperAdminUrl } from "../../../constants/urls";
-import { useHistory } from "react-router-dom";
-import SuspendCompany from "../../Suspend/SuspendCompanyDialog";
-import { useDispatch } from "react-redux";
 import {
     fetchAdmins,
     suspendAdmin,
-} from "../../../store/actions/companyAction";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+} from "../../../store/actions/SuperAdmin/adminAction";
+import { useStyles } from "./styled";
 
 const CounterLogTable = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const classes = useStyles();
     const [suspendCompanyDialog, setSuspendCompanyDialog] = useState(false);
-    const { admins } = useSelector((state) => state.company);
+    const { admins } = useSelector((state) => state.admin);
     const { id } = useParams();
 
     useEffect(() => {
@@ -94,12 +91,15 @@ const CounterLogTable = () => {
                                             color="error"
                                             onClick={() => {
                                                 Swal.fire({
-                                                    title: "Do you want to suspend the admin?",
+                                                    title: "Are you sure?",
+                                                    text: "You want to suspend the admin!",
+                                                    icon: "warning",
                                                     showCancelButton: true,
                                                     confirmButtonColor:
-                                                        " #c62828",
+                                                        "#3085d6",
+                                                    cancelButtonColor: "#d33",
                                                     confirmButtonText:
-                                                        "Suspend",
+                                                        "Confirm",
                                                 }).then((result) => {
                                                     if (result.isConfirmed) {
                                                         dispatch(
@@ -109,8 +109,8 @@ const CounterLogTable = () => {
                                                             )
                                                         );
                                                         Swal.fire(
-                                                            "Suspended!",
-                                                            "",
+                                                            "Success!",
+                                                            "The Admin is suspended.",
                                                             "success"
                                                         );
                                                     }
@@ -130,11 +130,15 @@ const CounterLogTable = () => {
                                             // color="error"
                                             onClick={() => {
                                                 Swal.fire({
-                                                    title: "Do you want to active the admin?",
+                                                    title: "Are you sure?",
+                                                    text: "You want to active the admin!",
+                                                    icon: "warning",
                                                     showCancelButton: true,
-                                                    confirmButtonText: "Active",
                                                     confirmButtonColor:
                                                         "rgb(35, 115, 56)",
+                                                    cancelButtonColor: "#d33",
+                                                    confirmButtonText:
+                                                        "Confirm",
                                                 }).then((result) => {
                                                     if (result.isConfirmed) {
                                                         dispatch(
@@ -144,8 +148,8 @@ const CounterLogTable = () => {
                                                             )
                                                         );
                                                         Swal.fire(
-                                                            "Activate!",
-                                                            "",
+                                                            "Success!",
+                                                            "The Admin is activated.",
                                                             "success"
                                                         );
                                                     }

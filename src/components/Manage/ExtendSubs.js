@@ -2,14 +2,14 @@ import { Box, Button, Dialog, DialogContent, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { Grid } from "@mui/material";
-import { useStyles } from "../Contact/styled";
+import { useStyles } from "../SuperAdmin/Contact/styled";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { useDispatch } from "react-redux";
-import { ERROR } from "../../store/types";
-import { extendSubs } from "../../store/actions/companyAction";
+import { COMPANY_VALIDATE_ERROR, ERROR } from "../../store/types";
+import { extendSubs } from "../../store/actions/SuperAdmin/companyAction";
 
 const ExtendSubs = ({ isControl = false, controlHandler = () => {} }) => {
     const { company, error } = useSelector((state) => state.company);
@@ -65,7 +65,7 @@ const ExtendSubs = ({ isControl = false, controlHandler = () => {} }) => {
     useEffect(() => {
         return () => {
             dispatch({
-                type: ERROR,
+                type: COMPANY_VALIDATE_ERROR,
                 payload: null,
             });
         };
