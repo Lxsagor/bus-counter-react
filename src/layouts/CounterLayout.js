@@ -87,7 +87,6 @@ const CounterLayout = ({ children }) => {
                             drawerOpen={drawerOpen}
                         />
                         {children}
-                        {/* {console.log(children)} */}
                     </Container>
                 </Box>
             </Box>

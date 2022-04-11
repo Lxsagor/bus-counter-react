@@ -61,7 +61,6 @@ export const fetchCounters = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            console.log(response);
             if (response.status === "success") {
                 dispatch({
                     type: types.FETCH_COUNTERS,
@@ -89,7 +88,6 @@ export const fetchCounter =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_COUNTER,
@@ -116,7 +114,6 @@ export const fetchCountersGet = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            console.log(response);
             if (response.status === "success") {
                 dispatch({
                     type: types.FETCH_COUNTERS,
@@ -143,7 +140,6 @@ export const searchCounter = (data) => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            console.log(response);
             if (response.status === "success") {
                 dispatch({
                     type: types.FETCH_COUNTERS,

@@ -75,7 +75,6 @@ const Search = () => {
             })
         );
     };
-    console.log(location);
     return (
         <>
             <Box mt={7} className={classes.ticketOption}>

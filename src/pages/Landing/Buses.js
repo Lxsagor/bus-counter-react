@@ -49,12 +49,6 @@ const Buses = () => {
         if (coaches) {
             let items = [];
             coaches.forEach((item) => {
-                console.log(moment(new Date(item.time)).format("DD/MM/YYYY"));
-                console.log(
-                    moment(new Date(queryParams.journey_date)).format(
-                        "DD/MM/YYYY"
-                    )
-                );
                 if (
                     moment(new Date(item.time)).format("DD/MM/YYYY") ===
                     queryParams.journey_date

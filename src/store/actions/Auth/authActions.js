@@ -48,7 +48,6 @@ export const login =
                     toast.error(response.message);
                 }
                 dispatch(toggleSiteLoading(false));
-                console.log(response);
             })
             .catch((err) => {
                 console.log(err);
@@ -95,8 +94,6 @@ export const forget =
                     toast.error(response.message);
                 }
                 dispatch(toggleSiteLoading(false));
-
-                console.log(response);
             })
             .catch((err) => {
                 dispatch(toggleSiteLoading(false));
@@ -138,8 +135,6 @@ export const confirm =
                     toast.error(response.message);
                 }
                 dispatch(toggleSiteLoading(false));
-
-                console.log(response);
             })
             .catch((err) => {
                 dispatch(toggleSiteLoading(false));
@@ -234,8 +229,6 @@ export const logout =
             .then((response) => {
                 dispatch(toggleButtonLoading(false));
 
-                console.log(response);
-
                 if (response.status === "success") {
                     toast.success(response.message);
                     localStorage.removeItem("token");
@@ -261,7 +254,6 @@ export const fetchMe = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            console.log(response);
             if (response.status === "success") {
                 dispatch({
                     type: types.CURRENT_USER,

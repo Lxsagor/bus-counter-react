@@ -64,7 +64,6 @@ const Verify = () => {
                 changePass(formData, () => history.push(AuthUrl.auth.login))
             );
         }
-        console.log(formData);
     };
 
     useEffect(() => {

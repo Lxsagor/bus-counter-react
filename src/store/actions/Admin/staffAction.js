@@ -60,7 +60,6 @@ export const fetchDrivers =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_DRIVERS,
@@ -89,7 +88,6 @@ export const fetchDriversByget =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_DRIVERS,
@@ -118,7 +116,6 @@ export const fetchDriver =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_DRIVER,
@@ -281,7 +278,6 @@ export const fetchStaffsByGet =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_STAFFS,
@@ -310,7 +306,6 @@ export const fetchStaff =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_STAFF,

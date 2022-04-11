@@ -86,6 +86,7 @@ export const api_routes = {
     seat: {
         selectedSeat: API_URL + "create-seat",
         removedSeat: API_URL + "delete-seat",
+        get: API_URL + "getSeats",
     },
 
     //user

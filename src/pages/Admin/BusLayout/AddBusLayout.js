@@ -105,8 +105,7 @@ const AddBusLayout = () => {
             //     seat_no: seatNumbers,
             // }));
         }
-        console.log("seats", seatNumbers);
-        console.log("rows", seatRows);
+
         return seatRows;
     };
 
@@ -198,7 +197,6 @@ const AddBusLayout = () => {
 
         return seats;
     };
-    console.log("form", formData);
     return (
         <>
             <Box m={5}>

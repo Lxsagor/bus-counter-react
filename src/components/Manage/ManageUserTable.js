@@ -35,7 +35,6 @@ const DashboardTable = () => {
     //     );
     // };
 
-    console.log(companies);
 
     const extendSub = (id) => {
         dispatch(

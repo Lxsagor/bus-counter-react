@@ -31,8 +31,6 @@ const Bus = ({ item, bus }) => {
         dispatch(routeid(item.id, item.bus_type));
         setAssignBus(true);
     };
-    console.log("item", item);
-    console.log("bus", bus);
 
     return (
         <>

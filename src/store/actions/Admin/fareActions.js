@@ -23,7 +23,6 @@ export const fetchFares =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_FARES,
@@ -69,7 +68,6 @@ export const addFare =
                 }
 
                 dispatch(toggleSiteLoading(false));
-                console.log(response);
             })
             .catch((err) => {
                 dispatch(toggleSiteLoading(false));
@@ -90,7 +88,6 @@ export const fetchFare =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_FARE,
@@ -127,7 +124,6 @@ export const updateFare =
             .then((response) => {
                 dispatch(toggleButtonLoading(false));
 
-                console.log(response);
                 if (response.status === "validate_error") {
                     dispatch({
                         type: types.FARE_VALIDATE_ERROR,

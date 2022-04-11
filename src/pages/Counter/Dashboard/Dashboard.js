@@ -51,15 +51,6 @@ const Dashboard = () => {
     });
     const [coachItems, setCoachItems] = useState([]);
 
-    // console.log(
-    //     routes?.map(
-    //         (item) => item.assignBuses.map((dayTime) => dayTime)
-
-    //         // item.assignBuses?.forEach((tick) =>
-    //         //     moment(new Date(tick.time)).format("DD/MM/YYYY")
-    //     )
-    // );
-
     useEffect(() => {
         dispatch(fetchDistricts());
     }, [dispatch]);
@@ -83,7 +74,6 @@ const Dashboard = () => {
     //     };
     // }, [dispatch]);
 
-    console.log(coachItems);
     useEffect(() => {
         let search = JSON.parse(localStorage.getItem("search")) || null;
         if (search) {
@@ -95,7 +85,6 @@ const Dashboard = () => {
             }));
         }
     }, []);
-    console.log(form);
 
     const searchHandler = (e) => {
         e.preventDefault();
@@ -122,7 +111,6 @@ const Dashboard = () => {
         localStorage.setItem("searchRoute", JSON.stringify(formData));
         localStorage.setItem("search", JSON.stringify(location));
     };
-    console.log("coach", coachItems);
     return (
         <>
             <Box m={5}>

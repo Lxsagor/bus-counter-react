@@ -29,8 +29,6 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
     const dispatch = useDispatch();
     const [seats, setSeats] = useState([]);
     const { error } = useSelector((state) => state.booking);
-    console.log("route", route);
-    console.log("data", data);
 
     useEffect(() => {
         if (data?.bus && data?.bus?.total_seat) {
@@ -161,7 +159,6 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
     const [reservedSeats, setReservedSeats] = useState([]);
 
     useEffect(() => {
-        console.log(data?.ticket_books?.map((item) => item.status));
         if (data?.ticket_books && data?.ticket_books.length > 0) {
             let reservedItems = [];
 
@@ -174,8 +171,6 @@ const BusSeatSingle = ({ data, route, setCollapseStatus }) => {
             setReservedSeats(reservedItems);
         }
     }, [data?.ticket_books]);
-
-    // console.log(reservedSeats);
 
     const renderClass = (item) => {
         let classNames = classes.seatBtn + " ";

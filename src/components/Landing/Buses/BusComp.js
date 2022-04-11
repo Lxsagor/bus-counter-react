@@ -23,7 +23,6 @@ const BusComp = ({ item }) => {
     const dispatch = useDispatch();
 
     const classes = useStyles();
-    console.log(item.schedule_bus.routes);
     return (
         <>
             <TableRow>

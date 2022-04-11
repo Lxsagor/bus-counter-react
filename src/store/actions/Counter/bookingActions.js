@@ -23,7 +23,6 @@ export const fetchRoutes =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_ROUTES,
@@ -184,7 +183,6 @@ export const ticketBooking =
             .then((response) => response.json())
             .then((response) => {
                 dispatch(toggleButtonLoading(false));
-                console.log(data, response.data);
                 if (response.status === "validate_error") {
                     // toast.error("Please choose atleast one seat");
                     dispatch({
@@ -325,6 +323,37 @@ export const selectedSeat =
                     cb();
                 } else if (response.status === "error") {
                     toast.error(response.message);
+                }
+                dispatch(toggleSiteLoading(false));
+            })
+            .catch((err) => {
+                dispatch(toggleSiteLoading(false));
+                console.log(err);
+            });
+    };
+export const getSeats =
+    (data, cb = () => {}) =>
+    (dispatch) => {
+        dispatch(toggleSiteLoading(true));
+        console.log(data);
+
+        fetch(api_routes.seat.get, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+                Authorization: TOKEN,
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                if (response.status === "success") {
+                    dispatch({
+                        type: types.FETCH_SEATS,
+                        payload: response.data,
+                    });
+                    cb();
                 }
                 dispatch(toggleSiteLoading(false));
             })

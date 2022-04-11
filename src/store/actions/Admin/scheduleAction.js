@@ -61,7 +61,6 @@ export const fetchSchedules =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_SCHEDULES,
@@ -90,7 +89,6 @@ export const fetchSchedule =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_SCHEDULE,

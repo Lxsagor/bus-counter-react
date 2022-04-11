@@ -156,7 +156,6 @@ const AddDriver = () => {
             });
         };
     }, [dispatch]);
-    console.log(formData);
 
     const docDelete = (file) => {
         let files = formData.docs.filter((item) => item !== file);

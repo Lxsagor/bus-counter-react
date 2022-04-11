@@ -88,7 +88,6 @@ const AddCounter = () => {
         ) {
             formData["district_id"] = formData.district_id.id;
         }
-        console.log(formData);
         dispatch(
             addCounter(formData, () =>
                 history.push(AdminUrl.manageCounter.index)

@@ -16,18 +16,21 @@ import {
 import { Box } from "@mui/system";
 import moment from "moment";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Available from "../../../assets/available.png";
 import Booked from "../../../assets/booked.png";
 import Selected from "../../../assets/selected.png";
-import { selectedSeat } from "../../../store/actions/Counter/bookingActions";
+import {
+    getSeats,
+    selectedSeat,
+} from "../../../store/actions/Counter/bookingActions";
 import { useStyles } from "./styled";
 
 const SeatSection = ({ data, route, setCollapseStatus }) => {
     const classes = useStyles();
-    const [seats, setSeats] = useState([]);
     const dispatch = useDispatch();
+    const { seats } = useSelector((state) => state.booking);
 
     const [form, setForm] = useState({
         seat_no: [],
@@ -49,6 +52,48 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
         y: 0,
         row: 0,
     });
+    const [reservedSeats, setReservedSeats] = useState([]);
+
+    useEffect(() => {
+        if (seats.length > 0) {
+            let reservedItems = [];
+
+            seats?.forEach((item) => {
+                reservedItems.push(item.seat_no);
+            });
+            setForm((prevState) => ({
+                ...prevState,
+                seat_no: reservedItems,
+            }));
+
+            // setReservedSeats(reservedItems);
+        }
+    }, [seats]);
+
+    const seatBookHandler = useCallback(
+        (seatName) => {
+            let newFormData = {
+                ...formData,
+                seat_no: seatName,
+            };
+
+            let selectedSeats = [...form.seat_no];
+
+            if (selectedSeats.includes(seatName)) {
+                selectedSeats = selectedSeats.filter(
+                    (item) => item !== seatName
+                );
+            } else {
+                selectedSeats.push(seatName);
+            }
+            setFormData((prevState) => ({
+                ...prevState,
+                seat_no: seatName,
+            }));
+            dispatch(selectedSeat(newFormData));
+        },
+        [dispatch, form.seat_no, formData]
+    );
 
     useEffect(() => {
         let totalSeat = data.bus.total_seat;
@@ -129,40 +174,9 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
     //     [form.seat_no]
     // );
 
-    const seatBookHandler = useCallback(
-        (seatName) => {
-            let newFormData = {
-                ...formData,
-                seat_no: seatName,
-            };
-            let selectedSeats = [...form.seat_no];
-
-            if (selectedSeats.includes(seatName)) {
-                selectedSeats = selectedSeats.filter(
-                    (item) => item !== seatName
-                );
-            } else {
-                if (selectedSeats.length > 3) {
-                    toast.error("A user can select only 4 seats");
-                } else {
-                    selectedSeats.push(seatName);
-                }
-            }
-
-            setForm((prevState) => ({
-                ...prevState,
-                seat_no: selectedSeats,
-            }));
-            setFormData((prevState) => ({
-                ...prevState,
-                seat_no: seatName,
-            }));
-            dispatch(selectedSeat(newFormData));
-        },
-        [dispatch, form.seat_no, formData]
-    );
-    console.log("formData", formData);
-    console.log("form", form);
+    useEffect(() => {
+        dispatch(getSeats(formData));
+    }, [dispatch, formData]);
 
     const renderClass = useCallback(
         (item) => {
@@ -425,6 +439,7 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
                                 Boarding Point
                             </Typography>
                             <Autocomplete
+                                size="small"
                                 options={data.boarding_counters}
                                 getOptionLabel={(option) =>
                                     option?.counter?.name
@@ -452,6 +467,7 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
                                 Dropping Point
                             </Typography>
                             <Autocomplete
+                                size="small"
                                 options={data.dropping_counters}
                                 getOptionLabel={(option) =>
                                     option?.counter?.name
@@ -563,6 +579,7 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
                             >
                                 <Grid item lg={7}>
                                     <TextField
+                                        size="small"
                                         fullWidth
                                         label="Number"
                                         className={classes.field}
@@ -576,12 +593,12 @@ const SeatSection = ({ data, route, setCollapseStatus }) => {
                                 </Grid>
                                 <Grid item lg={4}>
                                     <Button
+                                        size="small"
                                         disabled={!form.phone}
                                         fullWidth
                                         disableElevation
                                         sx={{
                                             textTransform: "capitalize",
-                                            minHeight: "55px",
                                         }}
                                         variant="contained"
                                         color="error"

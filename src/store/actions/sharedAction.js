@@ -113,7 +113,6 @@ export const uploadFile =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     toast.success(response.message);
                     dispatch({
@@ -121,7 +120,6 @@ export const uploadFile =
                         payload: response.data,
                     });
                     cb(response.data);
-                    console.log(response.data);
                 }
             })
             .catch((err) => console.log(err));

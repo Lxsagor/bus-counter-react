@@ -15,7 +15,6 @@ const SearchHistory = () => {
 
     useEffect(() => {
         let search = JSON.parse(localStorage.getItem("searchRoute")) || null;
-        console.log("search", search);
         if (search) {
             dispatch(searchRoute(search));
         }

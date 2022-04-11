@@ -57,8 +57,6 @@ const AddSchedule = () => {
         fares: [],
     });
 
-    console.log(formData);
-
     useEffect(() => {
         if (schedule && Object.keys(schedule).length > 0) {
             let data = {
@@ -219,7 +217,6 @@ const AddSchedule = () => {
         }
 
         if (midCounters.length > 0) {
-            console.log("mid", form.mid_counters_id);
             let mid_counters_id = [];
 
             midCounters.forEach((item) => {
@@ -229,7 +226,6 @@ const AddSchedule = () => {
 
             form["routes_id"] = mid_counters_id;
         }
-        console.log(form);
         dispatch(
             addSchedule(form, () => history.push(AdminUrl.manageSchedule.index))
         );

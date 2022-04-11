@@ -60,7 +60,6 @@ export const fetchBuses = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            console.log(response);
             if (response.status === "success") {
                 dispatch({
                     type: types.FETCH_BUSES,
@@ -87,7 +86,6 @@ export const fetchBusesGet = () => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            console.log(response);
             if (response.status === "success") {
                 dispatch({
                     type: types.FETCH_BUSES,
@@ -148,7 +146,6 @@ export const updateBus =
             .then((response) => {
                 dispatch(toggleButtonLoading(false));
 
-                console.log(response);
                 if (response.status === "validate_error") {
                     dispatch({
                         type: types.BUS_VALIDATE_ERROR,

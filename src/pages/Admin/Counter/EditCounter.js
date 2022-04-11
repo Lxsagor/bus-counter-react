@@ -34,7 +34,6 @@ const EditCounter = () => {
     );
     const { buttonLoading } = useSelector((state) => state.auth);
     const { counter } = useSelector((state) => state.counter);
-    console.log(counter?.counter_managers?.map((item) => item.name));
     const [formData, setFormData] = useState({
         division_id: null,
         district_id: null,
@@ -101,7 +100,6 @@ const EditCounter = () => {
         ) {
             formData["district_id"] = formData.district_id.id;
         }
-        console.log(formData);
         dispatch(
             addCounter(formData, () =>
                 history.push(AdminUrl.manageCounter.index)

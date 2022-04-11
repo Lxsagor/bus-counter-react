@@ -32,7 +32,6 @@ const Fare = () => {
         destination_district_id: null,
         fare: "",
     });
-    console.log(formData);
 
     const [errors, setErrors] = useState({
         starting_district_id: { text: "", show: false },

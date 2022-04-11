@@ -293,8 +293,6 @@ const AddBus = () => {
                 <TableRow>{seatColumn(i - 1, seatNumbers)}</TableRow>
             );
         }
-        console.log("seats", seatNumbers);
-        console.log("rows", seatRows);
 
         // setFormData((prevState) => ({
         //     ...prevState,
@@ -313,14 +311,12 @@ const AddBus = () => {
         }));
     }, [seatLayout]);
 
-    console.log(formData);
     useEffect(() => {
         if (id) {
             dispatch(fetchBus(id));
         }
     }, [dispatch, id]);
-    console.log("id", id);
-    console.log("bus", bus);
+
     // useEffect(() => {
     //     if (bus && Object.keys(bus).length > 0) {
     //         let data = {
@@ -341,10 +337,8 @@ const AddBus = () => {
     //             ...prevState,
     //             ...data,
     //         }));
-    //         console.log("data", data);
     //     }
     // }, [bus]);
-    // console.log("form", formData);
 
     return (
         <>

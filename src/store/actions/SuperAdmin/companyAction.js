@@ -23,7 +23,6 @@ export const fetchCompanies =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_COMPANIES,
@@ -74,7 +73,6 @@ export const addCompany =
                 }
 
                 dispatch(toggleSiteLoading(false));
-                console.log(response);
             })
             .catch((err) => {
                 dispatch(toggleSiteLoading(false));
@@ -95,7 +93,6 @@ export const fetchCompany =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_COMPANY,
@@ -128,7 +125,6 @@ export const extendSubs =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     toast.success(response.message);
                     dispatch({
@@ -161,7 +157,6 @@ export const searchCompany = (data) => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            console.log(response);
             if (response.status === "success") {
                 dispatch({
                     type: types.FETCH_COMPANIES,

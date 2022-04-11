@@ -198,7 +198,6 @@ const AssignBus = ({ controlHandler = () => {} }) => {
         // ) {
         //     form["journey_end_id"] = form.journey_end_id.id;
         // }
-        // console.log(form);
         dispatch(
             assignBus(form, () => {
                 controlHandler();

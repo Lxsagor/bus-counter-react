@@ -23,7 +23,6 @@ export const fetchTracks =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_TRACKS,
@@ -69,7 +68,6 @@ export const addTrack =
                 }
 
                 dispatch(toggleSiteLoading(false));
-                console.log(response);
             })
             .catch((err) => {
                 dispatch(toggleSiteLoading(false));
@@ -90,7 +88,6 @@ export const fetchTrack =
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
                 if (response.status === "success") {
                     dispatch({
                         type: types.FETCH_TRACK,
@@ -127,7 +124,6 @@ export const updateTrack =
             .then((response) => {
                 dispatch(toggleButtonLoading(false));
 
-                console.log(response);
                 if (response.status === "validate_error") {
                     dispatch({
                         type: types.TRACK_VALIDATE_ERROR,
@@ -194,7 +190,6 @@ export const searchTrack = (data) => (dispatch) => {
     })
         .then((response) => response.json())
         .then((response) => {
-            console.log(response);
             if (response.status === "success") {
                 dispatch({
                     type: types.FETCH_TRACKS,

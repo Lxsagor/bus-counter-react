@@ -39,7 +39,6 @@ const OTPpage = () => {
         dispatch(
             resend(newRecord, () => {
                 // navigate("/verify");
-                console.log(newRecord);
             })
         );
     };

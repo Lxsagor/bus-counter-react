@@ -31,7 +31,6 @@ const Search = () => {
             dispatch(searhTicket(form, () => {}));
         }
     };
-    console.log(form);
     return (
         <>
             <Box m={5}>

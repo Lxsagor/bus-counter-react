@@ -142,8 +142,6 @@ const BusSeatDouble = ({ data, route, setCollapseStatus }) => {
         }
     }, [data?.ticket_books]);
 
-    console.log(reservedSeats);
-
     const renderClass = (item) => {
         let classNames = classes.seatBtn + " ";
 
